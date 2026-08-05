@@ -181,8 +181,22 @@ body{background:var(--bg);color:var(--white);font-family:var(--sans);-webkit-fon
 .fallback p{color:var(--text);max-width:440px;line-height:1.7}
 
 @media(max-width:760px){
-  #panels{width:100%;right:0;left:0;top:auto;bottom:0;height:auto;align-items:flex-end;padding-bottom:6vh}
-  .panel{right:auto;left:50%;transform:translateX(-50%);width:92%;max-width:none}
+  /* На узком экране карточка идёт СВЕРХУ, а не снизу: узел графа виден
+   в нижней части кадра, и карточка над ним не перекрывает точку,
+   к которой относится. Снизу она закрывала сам узел. */
+  #panels{width:100%;right:0;left:0;bottom:auto;
+    top:calc(9vh + env(safe-area-inset-top));height:auto;
+    align-items:flex-start;padding-bottom:0}
+  /* Рост карточки сохраняется и на узком экране: центрирование и масштаб
+   собраны в одном transform, иначе translateX(-50%) перебивал бы эффект.
+   Точка роста — верхний край: карточка разворачивается вниз, от узла. */
+  .panel{right:auto;left:50%;width:92%;max-width:none;
+    transform-origin:center top;
+    transform:translateX(-50%) translateY(calc(-14px * (1 - var(--g,0)))) scale(calc(.92 + .08 * var(--g,0)))}
+  /* Нить идёт вниз от карточки к узлу, а не вбок. */
+  .panel::before{left:50%;top:auto;bottom:-7vh;width:1px;
+    height:calc(7vh * var(--g,0));
+    background:linear-gradient(var(--pfl,#D4AF5A),transparent)}
   .pcard{padding:20px 20px 16px}.pcard .yr{font-size:32px;margin-bottom:12px}.ev{font-size:12px;padding:2px 0}
   #snd{bottom:auto;top:22px;right:26px;left:auto}
 }
