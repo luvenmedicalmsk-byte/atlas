@@ -347,6 +347,20 @@ a{color:inherit;text-decoration:none}
 .tier-meta{font-size:12.5px;color:var(--mute);margin:7px auto 0;line-height:1.45;max-width:40ch}
 .tier.t3 .tier-meta{font-size:13.5px;color:var(--text);margin-top:9px}
 .tier-price{font-family:var(--serif);font-weight:600;font-size:clamp(20px,3.6vw,26px);color:var(--gold);margin-top:14px}
+/* Лицензии точками: занятые гаснут, свободные горят золотом. Число рядом
+   остаётся — точки показывают пропорцию, число даёт точность.
+   Без мигания и пульсации: спокойный индикатор, а не сигнал тревоги. */
+.lic{display:flex;align-items:center;justify-content:center;gap:9px;margin-top:14px;
+  flex-wrap:wrap}
+.lic-dots{display:flex;gap:5px}
+.lic-dots i{width:6px;height:6px;border-radius:50%;display:block;
+  background:rgba(212,175,90,.92);box-shadow:0 0 7px rgba(212,175,90,.45);
+  transition:background .8s ease,box-shadow .8s ease,transform .8s ease}
+/* Занятая лицензия: точка тускнеет и слегка сжимается — след остаётся,
+   поэтому видно, сколько было изначально. */
+.lic-dots i.off{background:rgba(212,175,90,.16);box-shadow:none;transform:scale(.8)}
+.lic-txt{font-family:var(--label);font-size:9.5px;letter-spacing:.1em;
+  text-transform:uppercase;color:rgba(212,175,90,.62);white-space:nowrap}
 .tier-price.big{font-size:clamp(32px,6.4vw,50px);margin-top:16px}
 .tier-price .was{font-family:var(--serif);font-size:.66em;color:rgba(226,214,190,.72);text-decoration:line-through;text-decoration-color:rgba(200,180,140,.7);text-decoration-thickness:1.5px;margin-right:12px;font-weight:500;vertical-align:middle}
 .tier-btn{display:inline-block;margin-top:18px;font-family:var(--label);font-size:11px;letter-spacing:.08em;text-transform:uppercase;font-weight:600;border-radius:40px;padding:14px 28px;color:var(--gold);border:1.5px solid var(--gold);background:transparent;transition:background .3s,transform .3s,box-shadow .3s}
@@ -892,16 +906,18 @@ a{color:inherit;text-decoration:none}
         <div class="tier-name">Импульс</div>
         <div class="tier-meta"><span class="cy">Atlas Intelligence</span> · 2 месяца</div>
         <div class="tier-price"><span class="was">26 730 ₽</span>19 800 ₽</div>
-        <a class="tier-btn" href="https://payform.ru/brccTwi/" target="_blank" rel="noopener">Осталось 8 лицензий</a>
-        <div class="paynote tiernote">Рассрочка &#183; международная оплата &#183; USDT<br><a href="https://t.me/anirisao" target="_blank" rel="noopener">Оформить доступ</a></div>
+        <div class="lic"><span class="lic-dots"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i class="off"></i><i class="off"></i></span><span class="lic-txt">8 из 10 лицензий</span></div>
+        <a class="tier-btn" href="https://payform.ru/brccTwi/" target="_blank" rel="noopener">Получить доступ</a>
+        <div class="paynote tiernote">Рассрочка &#183; международная оплата &#183; USDT<br><a href="https://t.me/anirisao" target="_blank" rel="noopener">Написать менеджеру</a></div>
       </div>
       <div class="tier-arrow">↓</div>
       <div class="tier t2">
         <div class="tier-name">Событие</div>
         <div class="tier-meta"><span class="cy">Atlas Intelligence</span> · 6 месяцев</div>
         <div class="tier-price"><span class="was">78 300 ₽</span>58 000 ₽</div>
-        <a class="tier-btn" href="https://payform.ru/htccTzw/" target="_blank" rel="noopener">Осталось 8 лицензий</a>
-        <div class="paynote tiernote">Рассрочка &#183; международная оплата &#183; USDT<br><a href="https://t.me/anirisao" target="_blank" rel="noopener">Оформить доступ</a></div>
+        <div class="lic"><span class="lic-dots"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i class="off"></i><i class="off"></i></span><span class="lic-txt">8 из 10 лицензий</span></div>
+        <a class="tier-btn" href="https://payform.ru/htccTzw/" target="_blank" rel="noopener">Получить доступ</a>
+        <div class="paynote tiernote">Рассрочка &#183; международная оплата &#183; USDT<br><a href="https://t.me/anirisao" target="_blank" rel="noopener">Написать менеджеру</a></div>
       </div>
       <div class="tier-arrow">↓</div>
       <div class="tier t3">
@@ -909,8 +925,9 @@ a{color:inherit;text-decoration:none}
         <div class="tier-name">Процесс</div>
         <div class="tier-meta"><span class="cy">Atlas Intelligence</span> 15 месяцев<br>+ <span class="rd">Архив системных рисков</span> (пожизненно)</div>
         <div class="tier-price big"><span class="was">307 800 ₽</span>228 000 ₽</div>
-        <a class="tier-btn" href="https://payform.ru/niccTCx/" target="_blank" rel="noopener">Осталось 3 лицензии</a>
-        <div class="paynote tiernote">Рассрочка &#183; международная оплата &#183; USDT<br><a href="https://t.me/anirisao" target="_blank" rel="noopener">Оформить доступ</a></div>
+        <div class="lic"><span class="lic-dots"><i></i><i></i><i></i><i class="off"></i><i class="off"></i><i class="off"></i><i class="off"></i><i class="off"></i><i class="off"></i><i class="off"></i></span><span class="lic-txt">3 из 10 лицензий</span></div>
+        <a class="tier-btn" href="https://payform.ru/niccTCx/" target="_blank" rel="noopener">Получить доступ</a>
+        <div class="paynote tiernote">Рассрочка &#183; международная оплата &#183; USDT<br><a href="https://t.me/anirisao" target="_blank" rel="noopener">Написать менеджеру</a></div>
       </div>
     </div>
   </section>
