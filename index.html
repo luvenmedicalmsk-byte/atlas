@@ -354,42 +354,98 @@ a{color:inherit;text-decoration:none}
 /* Обложка документа: объём вместо плоского iframe. Лёгкий наклон и тень
    создают ощущение бумаги — читатель понимает, что перед ним документ,
    а не встроенный просмотрщик. */
-.doc-cover{position:relative;width:132px;height:176px;margin:4px auto 20px;cursor:pointer;
-  perspective:900px}
-.doc-cover .pg{position:absolute;inset:0;border-radius:4px 8px 8px 4px;
-  background:linear-gradient(158deg,#15141c 0%,#0c0b12 62%,#08070c 100%);
-  border:1px solid rgba(212,175,90,.28);
-  box-shadow:0 18px 42px rgba(0,0,0,.62),0 2px 0 rgba(212,175,90,.10) inset;
-  transform:rotateY(-13deg) rotateZ(-1.2deg);transform-origin:left center;
-  transition:transform .7s cubic-bezier(.2,.7,.2,1),box-shadow .7s ease}
-/* Корешок: узкая полоса слева, как у настоящей обложки. */
-.doc-cover .pg::before{content:'';position:absolute;left:0;top:0;bottom:0;width:7px;
-  border-radius:4px 0 0 4px;background:linear-gradient(90deg,rgba(212,175,90,.30),rgba(212,175,90,0))}
-.doc-cover:hover .pg{transform:rotateY(-6deg) rotateZ(-.4deg);
-  box-shadow:0 24px 54px rgba(0,0,0,.7),0 0 0 1px rgba(212,175,90,.22)}
-.doc-cover .lbl{position:absolute;left:16px;right:12px;top:26px;text-align:left;
-  font-family:var(--serif);font-size:14px;line-height:1.25;color:#e7d9ad;
-  transform:rotateY(-13deg);transform-origin:left center;pointer-events:none}
-.doc-cover .sub{position:absolute;left:16px;right:12px;bottom:20px;text-align:left;
-  font-family:var(--label);font-size:8px;letter-spacing:.13em;text-transform:uppercase;
-  color:rgba(212,175,90,.55);transform:rotateY(-13deg);transform-origin:left center;
+/* Веер из трёх листов: внутри действительно лежит отчёт, а не ссылка.
+   Нижние листы видны краями — объём читается до наведения. */
+.doc-cover{position:relative;width:190px;height:250px;margin:6px auto 22px;
+  cursor:pointer;perspective:1200px}
+.doc-cover .sheet{position:absolute;inset:0;border-radius:3px 7px 7px 3px;
+  background:linear-gradient(158deg,#14131b 0%,#0c0b12 60%,#08070c 100%);
+  border:1px solid rgba(212,175,90,.18);
+  transition:transform .8s cubic-bezier(.2,.7,.2,1),box-shadow .8s ease}
+/* Задние листы сдвинуты и повёрнуты: веер, а не стопка. */
+.doc-cover .s3{transform:translate(16px,10px) rotate(4.2deg);opacity:.55}
+.doc-cover .s2{transform:translate(8px,5px) rotate(2.1deg);opacity:.78}
+.doc-cover .s1{
+  background:linear-gradient(158deg,#1a1822 0%,#100e17 55%,#0a0910 100%);
+  border-color:rgba(212,175,90,.34);
+  box-shadow:0 20px 46px rgba(0,0,0,.6),inset 0 1px 0 rgba(212,175,90,.10);
+  transform:rotate(-.8deg)}
+/* Корешок у верхнего листа. */
+.doc-cover .s1::before{content:'';position:absolute;left:0;top:0;bottom:0;width:8px;
+  border-radius:3px 0 0 3px;
+  background:linear-gradient(90deg,rgba(212,175,90,.34),rgba(212,175,90,0))}
+/* Отражение под веером — намёк на глянцевую поверхность стола. */
+.doc-cover::after{content:'';position:absolute;left:12%;right:12%;bottom:-16px;height:22px;
+  background:radial-gradient(60% 100% at 50% 0%,rgba(212,175,90,.16),transparent 70%);
+  filter:blur(5px);pointer-events:none}
+/* При наведении веер раскрывается, верхний лист приподнимается. */
+.doc-cover:hover .s1,.doc-cover:focus-visible .s1{
+  transform:translateY(-9px) rotate(-1.6deg);
+  box-shadow:0 30px 60px rgba(0,0,0,.68),0 0 0 1px rgba(212,175,90,.26)}
+.doc-cover:hover .s2{transform:translate(13px,7px) rotate(3.4deg)}
+.doc-cover:hover .s3{transform:translate(25px,14px) rotate(6.6deg)}
+/* Текст обложки. Первая страница отчёта, а не подпись к иконке. */
+.doc-cover .cv{position:absolute;left:22px;right:16px;top:26px;text-align:left;
   pointer-events:none}
-/* Полноэкранный просмотрщик: документ открывается поверх страницы, а не
-   разворачивается внутри блока — иначе непонятно, что произошло. */
-#pdfFull{position:fixed;inset:0;z-index:120;background:rgba(4,3,8,.94);
-  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
-  display:none;flex-direction:column;opacity:0;transition:opacity .35s ease}
+.doc-cover .cv .br{font-family:var(--label);font-size:8px;letter-spacing:.2em;
+  text-transform:uppercase;color:rgba(212,175,90,.6);margin-bottom:12px}
+.doc-cover .cv .tt{font-family:var(--serif);font-size:19px;line-height:1.18;
+  color:#ecdfbe;margin-bottom:9px}
+.doc-cover .cv .rule{width:34px;height:1px;background:rgba(212,175,90,.4);margin-bottom:10px}
+.doc-cover .cv .mt{font-family:var(--label);font-size:8.5px;letter-spacing:.12em;
+  text-transform:uppercase;color:rgba(203,213,225,.42);line-height:1.9}
+.doc-cover .cv .nt{position:absolute;left:0;right:0;top:150px;
+  font-size:11px;line-height:1.45;color:rgba(203,213,225,.5)}
+@media (prefers-reduced-motion: reduce){
+  .doc-cover .sheet{transition:none}
+}
+/* Собственный просмотрщик: страницы рендерятся в canvas, а не отдаются
+   встроенному просмотрщику браузера. Отчёт остаётся частью Atlas —
+   тот же фон, та же типографика, те же золотые акценты. */
+#pdfFull{position:fixed;inset:0;z-index:120;
+  background:radial-gradient(120% 80% at 50% 0%,#0e0d15 0%,#06050a 62%);
+  display:none;flex-direction:column;opacity:0;transition:opacity .4s ease}
 #pdfFull.on{display:flex;opacity:1}
-#pdfFull .bar{display:flex;align-items:center;gap:10px;padding:14px 16px;flex-wrap:wrap;
-  border-bottom:1px solid rgba(255,255,255,.08)}
-#pdfFull .ttl{flex:1;min-width:140px;font-family:var(--label);font-size:10px;
-  letter-spacing:.12em;text-transform:uppercase;color:rgba(203,213,225,.7)}
-#pdfFull .act{font-family:var(--label);font-size:10px;letter-spacing:.08em;
-  text-transform:uppercase;font-weight:600;color:var(--gold);text-decoration:none;
-  border:1px solid rgba(212,175,90,.4);border-radius:30px;padding:9px 16px;
-  background:transparent;cursor:pointer;white-space:nowrap}
-#pdfFull .act.x{color:rgba(203,213,225,.75);border-color:rgba(255,255,255,.16)}
-#pdfFull iframe{flex:1;width:100%;border:0;background:#0b0a10}
+#pdfFull .bar{display:flex;align-items:center;gap:8px;padding:12px 14px;flex-wrap:wrap;
+  border-bottom:1px solid rgba(212,175,90,.12);background:rgba(6,5,10,.7);
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+#pdfFull .ttl{flex:1;min-width:120px;font-family:var(--label);font-size:9.5px;
+  letter-spacing:.13em;text-transform:uppercase;color:rgba(212,175,90,.6)}
+#pdfFull .act{font-family:var(--label);font-size:9.5px;letter-spacing:.08em;
+  text-transform:uppercase;font-weight:600;color:rgba(212,175,90,.85);text-decoration:none;
+  border:1px solid rgba(212,175,90,.3);border-radius:30px;padding:8px 14px;
+  background:transparent;cursor:pointer;white-space:nowrap;transition:all .3s ease}
+#pdfFull .act:hover{background:rgba(212,175,90,.1);color:var(--gold)}
+#pdfFull .act.x{color:rgba(203,213,225,.7);border-color:rgba(255,255,255,.14)}
+/* Сцена страницы: страница «лежит» на тёмном фоне с мягкой тенью. */
+#pdfFull .stage{flex:1;overflow:auto;display:flex;align-items:flex-start;
+  justify-content:center;padding:26px 16px 90px;-webkit-overflow-scrolling:touch}
+#pdfFull .page{position:relative;border-radius:3px;overflow:hidden;
+  box-shadow:0 30px 80px rgba(0,0,0,.7),0 0 0 1px rgba(212,175,90,.14);
+  transition:opacity .45s ease,transform .45s cubic-bezier(.25,.8,.3,1)}
+#pdfFull .page.turn{opacity:0;transform:translateX(var(--dir,18px)) scale(.985)}
+#pdfFull canvas{display:block;max-width:100%;height:auto}
+/* Нижняя панель: индикатор страницы и перелистывание. */
+#pdfFull .nav{position:absolute;left:0;right:0;bottom:0;display:flex;align-items:center;
+  justify-content:center;gap:14px;padding:14px 16px calc(14px + env(safe-area-inset-bottom));
+  background:linear-gradient(transparent,rgba(6,5,10,.92) 42%)}
+#pdfFull .nb{width:38px;height:38px;border-radius:50%;border:1px solid rgba(212,175,90,.28);
+  background:rgba(6,5,10,.7);color:rgba(212,175,90,.85);font-size:15px;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;transition:all .3s ease}
+#pdfFull .nb:hover:not(:disabled){background:rgba(212,175,90,.12);color:var(--gold)}
+#pdfFull .nb:disabled{opacity:.3;cursor:default}
+#pdfFull .pnum{font-family:var(--label);font-size:10px;letter-spacing:.14em;
+  color:rgba(203,213,225,.6);min-width:64px;text-align:center}
+#pdfFull .pnum b{color:var(--gold);font-weight:600}
+/* Точки страниц: положение в документе видно без чтения цифр. */
+#pdfFull .dots{display:flex;gap:5px}
+#pdfFull .dots i{width:5px;height:5px;border-radius:50%;
+  background:rgba(212,175,90,.22);cursor:pointer;transition:all .4s ease}
+#pdfFull .dots i.cur{background:var(--gold);transform:scale(1.35);
+  box-shadow:0 0 8px rgba(212,175,90,.6)}
+#pdfFull .ld{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  font-family:var(--label);font-size:10px;letter-spacing:.16em;text-transform:uppercase;
+  color:rgba(212,175,90,.5)}
 .doc-preview.open{max-height:640px;margin-top:20px}
 .doc-preview iframe{width:100%;height:600px;border:1px solid rgba(255,255,255,.1);border-radius:10px;background:#0b0a10}
 .mapbg{position:absolute;inset:-6% -8%;z-index:-1;pointer-events:none;opacity:.32;background-image:radial-gradient(rgba(140,180,205,.85) 1px,transparent 1.4px);background-size:13px 13px;-webkit-mask-image:radial-gradient(115% 78% at 50% 46%,#000 32%,transparent 76%);mask-image:radial-gradient(115% 78% at 50% 46%,#000 32%,transparent 76%);animation:mapdrift 26s ease-in-out infinite}
@@ -1019,15 +1075,22 @@ a{color:inherit;text-decoration:none}
     <div class="num">09 · Документ</div>
     <h2><span class="cy">Atlas Intelligence</span> · Platform Overview</h2>
     <div class="docbox">
-      <div class="doc-cover" id="docCover" role="button" tabindex="0" aria-label="Открыть документ">
-        <div class="pg"></div>
-        <div class="lbl">Atlas<br>Intelligence</div>
-        <div class="sub">Platform Overview</div>
+      <div class="doc-cover" id="docCover" role="button" tabindex="0" aria-label="Открыть документ Platform Overview">
+        <div class="sheet s3"></div>
+        <div class="sheet s2"></div>
+        <div class="sheet s1"></div>
+        <div class="cv">
+          <div class="br">Atlas Intelligence</div>
+          <div class="tt">Platform<br>Overview</div>
+          <div class="rule"></div>
+          <div class="mt">июль 2026<br>9 страниц</div>
+          <div class="nt">Первый документ<br>для знакомства</div>
+        </div>
       </div>
       <div class="doc-body">
         <div class="doc-t">Обзор платформы · июль 2026</div>
         <div class="doc-s">Документ для первого знакомства. Написан без внутренней терминологии.</div>
-        <div class="doc-meta">PDF · 9 страниц</div>
+        <div class="doc-meta">Документ, который читают перед получением доступа</div>
       </div>
       <div class="doc-actions">
         <button class="doc-btn" id="docToggle" type="button">Смотреть онлайн</button>
@@ -1758,48 +1821,111 @@ function frame(now){requestAnimationFrame(frame);var r=host.getBoundingClientRec
 requestAnimationFrame(frame);})();</script>
 <div id="pdfFull" role="dialog" aria-modal="true" aria-label="Просмотр документа">
   <div class="bar">
-    <div class="ttl">Atlas Intelligence · Platform Overview · PDF, 9 страниц</div>
-    <a class="act" id="pfOpen" href="#" target="_blank" rel="noopener">Открыть в браузере</a>
+    <div class="ttl">Atlas Intelligence · Platform Overview</div>
+    <button class="act" id="pfZoom" type="button">Масштаб 100%</button>
+    <a class="act" id="pfOpen" href="#" target="_blank" rel="noopener">В браузере</a>
     <a class="act" id="pfDl" href="#" download="Atlas_Intelligence_Platform_Overview.pdf">Скачать</a>
     <button class="act x" id="pfX" type="button">Закрыть</button>
   </div>
-  <iframe id="pfFrame" title="Atlas Intelligence Platform Overview" src="about:blank"></iframe>
+  <div class="stage" id="pfStage">
+    <div class="page" id="pfPage"><canvas id="pfCanvas"></canvas></div>
+    <div class="ld" id="pfLoad">Загрузка документа</div>
+  </div>
+  <div class="nav">
+    <button class="nb" id="pfPrev" type="button" aria-label="Предыдущая страница">‹</button>
+    <span class="dots" id="pfDots"></span>
+    <span class="pnum" id="pfNum"><b>1</b> / 9</span>
+    <button class="nb" id="pfNext" type="button" aria-label="Следующая страница">›</button>
+  </div>
 </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 <script>(function(){
-  // Скрипт стоит ПОСЛЕ разметки оверлея. Раньше он шёл выше по документу,
-  // getElementById('pdfFull') возвращал null, функция выходила по return —
-  // и ни клик по обложке, ни кнопка не работали вовсе.
   var dl=document.getElementById('docDl'); if(!dl) return;
   var raw=dl.getAttribute('href');
-  var full=document.getElementById('pdfFull'),
-      frm=document.getElementById('pfFrame'),
-      op=document.getElementById('pfOpen'),
-      pdl=document.getElementById('pfDl'),
-      x=document.getElementById('pfX'),
-      cover=document.getElementById('docCover'),
+  var full=document.getElementById('pdfFull'), stage=document.getElementById('pfStage'),
+      page=document.getElementById('pfPage'), cvs=document.getElementById('pfCanvas'),
+      load=document.getElementById('pfLoad'), num=document.getElementById('pfNum'),
+      dots=document.getElementById('pfDots'), prev=document.getElementById('pfPrev'),
+      next=document.getElementById('pfNext'), zoom=document.getElementById('pfZoom'),
+      op=document.getElementById('pfOpen'), pdl=document.getElementById('pfDl'),
+      x=document.getElementById('pfX'), cover=document.getElementById('docCover'),
       btn=document.getElementById('docToggle');
-  if(!full||!frm) return;
+  if(!full||!cvs) return;
 
-  // Safari на iOS ИГНОРИРУЕТ атрибут download у data: URI — файл не
-  // сохраняется. Blob-ссылка это ограничение снимает. Создаётся один раз
-  // и переиспользуется всеми тремя ссылками.
-  var url=raw;
+  // Safari на iOS игнорирует download у data: URI — переводим в Blob.
+  var url=raw, bytes=null;
   try{
-    var b64=raw.split(',')[1];
-    var bin=atob(b64), len=bin.length, arr=new Uint8Array(len);
-    for(var q=0;q<len;q++) arr[q]=bin.charCodeAt(q);
-    url=URL.createObjectURL(new Blob([arr],{type:'application/pdf'}));
+    var bin=atob(raw.split(',')[1]), len=bin.length; bytes=new Uint8Array(len);
+    for(var q=0;q<len;q++) bytes[q]=bin.charCodeAt(q);
+    url=URL.createObjectURL(new Blob([bytes],{type:'application/pdf'}));
     dl.setAttribute('href',url);
   }catch(e){}
   if(op) op.setAttribute('href',url);
   if(pdl) pdl.setAttribute('href',url);
 
-  var openedBy=null;
+  var doc=null, cur=1, total=0, scale=1, openedBy=null, busy=false;
+  var ZOOM=[1,1.4,1.8], zi=0;
+
+  function render(n,dir){
+    if(!doc||busy) return; busy=true;
+    doc.getPage(n).then(function(p){
+      // Базовый масштаб подбирается по ширине сцены: страница должна
+      // помещаться целиком, а не обрезаться по краям.
+      var pad=32, avail=Math.min(stage.clientWidth-pad, 820);
+      var v1=p.getViewport({scale:1});
+      var base=avail/v1.width;
+      var dpr=Math.min(window.devicePixelRatio||1,2);
+      var vp=p.getViewport({scale:base*ZOOM[zi]*dpr});
+      cvs.width=vp.width; cvs.height=vp.height;
+      cvs.style.width=(vp.width/dpr)+'px'; cvs.style.height=(vp.height/dpr)+'px';
+      return p.render({canvasContext:cvs.getContext('2d'),viewport:vp}).promise;
+    }).then(function(){
+      if(load) load.style.display='none';
+      // Появление страницы со стороны, откуда пришли: вперёд — справа,
+      // назад — слева. Направление подсказывает, куда идёт чтение.
+      page.style.setProperty('--dir',(dir==='back'?'-18px':'18px'));
+      page.classList.remove('turn');
+      cur=n; sync(); busy=false;
+    }).catch(function(){ busy=false; });
+  }
+  function sync(){
+    if(num) num.innerHTML='<b>'+cur+'</b> / '+total;
+    if(prev) prev.disabled=(cur<=1);
+    if(next) next.disabled=(cur>=total);
+    if(dots) [].forEach.call(dots.children,function(d,k){
+      d.className=(k+1===cur?'cur':'');
+    });
+  }
+  function go(n,dir){
+    if(!doc||n<1||n>total||n===cur||busy) return;
+    page.style.setProperty('--dir',(dir==='back'?'18px':'-18px'));
+    page.classList.add('turn');
+    setTimeout(function(){ render(n,dir); stage.scrollTop=0; },260);
+  }
+
+  function boot(){
+    if(doc||!window.pdfjsLib) return;
+    pdfjsLib.GlobalWorkerOptions.workerSrc=
+      'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+    pdfjsLib.getDocument({data:bytes?bytes.slice(0):undefined,url:bytes?undefined:url})
+      .promise.then(function(d){
+        doc=d; total=d.numPages;
+        if(dots){ dots.innerHTML='';
+          for(var k=0;k<total;k++){
+            var e=document.createElement('i');
+            (function(kk){ e.addEventListener('click',function(){ go(kk+1, kk+1<cur?'back':'fwd'); }); })(k);
+            dots.appendChild(e);
+          }
+        }
+        render(1,'fwd');
+      }).catch(function(){ if(load) load.textContent='Не удалось открыть документ'; });
+  }
+
   function open(from){
     openedBy=from||null;
-    if(frm.getAttribute('src')==='about:blank') frm.setAttribute('src',url);
     full.classList.add('on');
     document.documentElement.style.overflow='hidden';
+    boot();
     setTimeout(function(){ if(x) x.focus(); },60);
   }
   function close(){
@@ -1815,10 +1941,27 @@ requestAnimationFrame(frame);})();</script>
   }
   if(btn) btn.addEventListener('click',function(){open(btn);});
   if(x) x.addEventListener('click',close);
+  if(prev) prev.addEventListener('click',function(){go(cur-1,'back');});
+  if(next) next.addEventListener('click',function(){go(cur+1,'fwd');});
+  if(zoom) zoom.addEventListener('click',function(){
+    zi=(zi+1)%ZOOM.length;
+    zoom.textContent='Масштаб '+Math.round(ZOOM[zi]*100)+'%';
+    render(cur,'fwd');
+  });
   full.addEventListener('click',function(e){ if(e.target===full) close(); });
   document.addEventListener('keydown',function(e){
-    if(e.key==='Escape'&&full.classList.contains('on')) close();
+    if(!full.classList.contains('on')) return;
+    if(e.key==='Escape') close();
+    else if(e.key==='ArrowRight') go(cur+1,'fwd');
+    else if(e.key==='ArrowLeft') go(cur-1,'back');
   });
+  // Свайп по странице: на телефоне это основной способ листать.
+  var sx=0;
+  stage.addEventListener('touchstart',function(e){ sx=e.touches[0].clientX; },{passive:true});
+  stage.addEventListener('touchend',function(e){
+    var d=e.changedTouches[0].clientX-sx;
+    if(Math.abs(d)>56) go(cur+(d<0?1:-1), d<0?'fwd':'back');
+  },{passive:true});
 })();</script>
 <script>(function(){
   // Ход точки запускается один раз, когда блок попадает в кадр: если бы
