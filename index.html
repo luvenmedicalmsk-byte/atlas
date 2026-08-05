@@ -46,7 +46,25 @@
   --lh-loose:1.7;    /* мелкие подписи */
   /* Длина строки для журнального набора: 45-75 знаков. Больше — глаз
      теряет начало следующей строки, меньше — рвётся ритм чтения. */
-  --measure:66ch}
+  --measure:66ch;
+  /* ═══ СВЕТ И МАТЕРИАЛЫ ═══════════════════════════════════════════════
+     Одна большая размытая тень — признак плоского интерфейса: реальный
+     объект отбрасывает ДВЕ тени. Плотную контактную у самой поверхности
+     и широкую рассеянную от общего освещения. Без первой предмет висит,
+     без второй — вырезан из бумаги.
+
+     Свет в сцене идёт сверху: у теней есть смещение по Y, у верхней
+     кромки объектов — тонкий блик. */
+  --sh-contact:0 2px 6px -2px rgba(0,0,0,.7);
+  --sh-ambient:0 28px 68px -34px rgba(0,0,0,.86);
+  --sh-lift:0 44px 96px -40px rgba(0,0,0,.9);
+  /* Блик верхней кромки: свет ложится на край, а не на всю плоскость. */
+  --edge-top:inset 0 1px 0 rgba(255,255,255,.07);
+  --edge-gold:inset 0 1px 0 rgba(212,175,90,.14);
+  /* Стекло: два уровня. Плотное для панелей поверх контента, лёгкое —
+     для карточек, где фон должен угадываться. */
+  --glass-heavy:blur(22px) saturate(1.35);
+  --glass-light:blur(8px) saturate(1.12)}
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{background:var(--bg);color:var(--white);font-family:var(--sans);-webkit-font-smoothing:antialiased;overflow-x:hidden}
@@ -72,7 +90,7 @@ body{background:var(--bg);color:var(--white);font-family:var(--sans);-webkit-fon
 
 #panels{position:fixed;z-index:4;pointer-events:none;top:0;bottom:0;right:0;width:min(410px,44vw);display:flex;align-items:center}
 .panel{position:absolute;right:4vw;width:100%;max-width:388px;opacity:0}
-.pcard{position:relative;border-radius:16px;padding:28px 28px 24px;overflow:hidden;isolation:isolate;background-color:rgba(11,10,16,.95);background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='mp'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23mp)' opacity='0.5'/%3E%3C/svg%3E");background-blend-mode:overlay;border:1px solid var(--pfl,rgba(200,167,90,.34));box-shadow:0 30px 70px -40px rgba(0,0,0,.92),inset 0 0 30px -20px var(--pfl,rgba(212,175,90,.3)),inset 0 1px 0 rgba(255,255,255,.05)}
+.pcard{position:relative;border-radius:16px;padding:28px 28px 24px;overflow:hidden;isolation:isolate;background-color:rgba(11,10,16,.95);background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='mp'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23mp)' opacity='0.5'/%3E%3C/svg%3E");background-blend-mode:overlay;border:1px solid var(--pfl,rgba(200,167,90,.34));box-shadow:var(--sh-contact),0 30px 70px -40px rgba(0,0,0,.92),inset 0 0 30px -20px var(--pfl,rgba(212,175,90,.3)),inset 0 1px 0 rgba(255,255,255,.05)}
 .pcard::after{display:none}
 .pcard>*{position:relative;z-index:1}
 .pcard .pfl{position:absolute;inset:-30%;z-index:0;filter:blur(50px);opacity:.5;pointer-events:none}
@@ -225,7 +243,7 @@ a{color:inherit;text-decoration:none}
 /* layer screens 05/06 */
 .layer{max-width:680px;margin:24px auto 0;border-radius:18px;overflow:hidden;isolation:isolate;position:relative;padding:36px 32px 32px;
   background:linear-gradient(160deg,var(--lg),rgba(12,11,20,.4));backdrop-filter:blur(26px) saturate(1.5);-webkit-backdrop-filter:blur(26px) saturate(1.5);
-  border:1px solid var(--lb);box-shadow:0 40px 90px -50px var(--ls),inset 0 1px 0 rgba(255,255,255,.12)}
+  border:1px solid var(--lb);box-shadow:var(--sh-contact),0 40px 90px -50px var(--ls),inset 0 1px 0 rgba(255,255,255,.12)}
 .layer>*{position:relative;z-index:1}
 .layer .lt{font-family:var(--label);font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:var(--ac);font-weight:600;margin-bottom:12px}
 .layer h3{font-family:var(--serif);font-weight:600;font-size:clamp(24px,4vw,34px);line-height:1.05;margin-bottom:12px}
@@ -360,7 +378,7 @@ a{color:inherit;text-decoration:none}
 #domCap b{font-weight:600}
 .merge-phrase{position:absolute;left:0;right:0;bottom:5%;text-align:center;font-family:var(--serif);font-weight:600;font-size:clamp(22px,4.2vw,40px);color:var(--gold);opacity:0;transition:opacity 1.3s var(--e-out);text-shadow:0 2px 30px rgba(4,3,8,.85)}
 .merge-phrase.on{opacity:1}
-.docbox{max-width:620px;margin:24px auto 0;display:flex;flex-direction:column;align-items:center;text-align:center;border-radius:14px;padding:28px 28px;background-color:rgba(11,10,16,.94);border:1px solid rgba(31,170,204,.26);box-shadow:inset 0 0 34px -22px rgba(31,170,204,.5)}
+.docbox{max-width:620px;margin:24px auto 0;display:flex;flex-direction:column;align-items:center;text-align:center;border-radius:14px;padding:28px 28px;background-color:rgba(11,10,16,.94);border:1px solid rgba(31,170,204,.26);box-shadow:inset 0 0 34px -22px rgba(31,170,204,.5),var(--edge-top)}
 .doc-ico{width:40px;height:40px;color:var(--cyan);margin-bottom:16px}
 .doc-ico svg{width:100%;height:100%}
 .doc-body{width:100%}
@@ -392,7 +410,7 @@ a{color:inherit;text-decoration:none}
 .doc-cover .s1{
   background:linear-gradient(158deg,#1a1822 0%,#100e17 55%,#0a0910 100%);
   border-color:rgba(212,175,90,.34);
-  box-shadow:0 20px 46px rgba(0,0,0,.6),inset 0 1px 0 rgba(212,175,90,.10);
+  box-shadow:var(--sh-contact),0 20px 46px rgba(0,0,0,.6),inset 0 1px 0 rgba(212,175,90,.10);
   transform:rotate(-.8deg)}
 /* Корешок у верхнего листа. */
 .doc-cover .s1::before{content:'';position:absolute;left:0;top:0;bottom:0;width:8px;
@@ -465,7 +483,7 @@ a{color:inherit;text-decoration:none}
 #pdfFull .stage{flex:1;overflow:auto;display:flex;align-items:flex-start;
   justify-content:center;padding:28px 16px 90px;-webkit-overflow-scrolling:touch}
 #pdfFull .page{position:relative;border-radius:3px;overflow:hidden;
-  box-shadow:0 30px 80px rgba(0,0,0,.7),0 0 0 1px rgba(212,175,90,.14);
+  box-shadow:var(--sh-contact),0 30px 80px rgba(0,0,0,.7),0 0 0 1px rgba(212,175,90,.14);
   transition:opacity .45s var(--e-soft),transform .45s cubic-bezier(.25,.8,.3,1)}
 #pdfFull .page.turn{opacity:0;transform:translateX(var(--dir,18px)) scale(.985)}
 #pdfFull canvas{display:block;max-width:100%;height:auto}
@@ -499,7 +517,7 @@ a{color:inherit;text-decoration:none}
 .dotline::after{content:"";position:absolute;left:50%;top:40px;width:9px;height:9px;border-radius:50%;transform:translateX(-50%);background:var(--gold);box-shadow:0 0 11px 1px rgba(212,175,90,.6)}
 .live .live-ticker .den100{color:var(--mute-2);font-size:13px}
 .reviews{max-width:660px;margin:16px auto 0;display:flex;flex-direction:column;gap:16px;text-align:left}
-.review{border-radius:14px;padding:24px 28px;background-color:rgba(11,10,16,.9);border:1px solid rgba(212,175,90,.14)}
+.review{border-radius:14px;padding:24px 28px;background-color:rgba(11,10,16,.9);border:1px solid rgba(212,175,90,.14);box-shadow:var(--edge-top)}
 .review .rv-name{font-family:var(--serif);font-weight:600;font-size:20px;color:var(--gold);margin-bottom:2px}
 /* Строка под именем: кто это. Без неё отзыв — просто текст с подписью. */
 .review .rv-role{font-family:var(--label);font-size:9px;letter-spacing:.12em;
@@ -538,7 +556,7 @@ a{color:inherit;text-decoration:none}
      массовым приёмом и делает карточку похожей на сотни других.
      Blur слабый — 6px: фон угадывается, но не размывается в кашу. */
   background:rgba(6,5,10,.94);
-  backdrop-filter:blur(6px) saturate(1.1);-webkit-backdrop-filter:blur(6px) saturate(1.1);
+  backdrop-filter:var(--glass-light);-webkit-backdrop-filter:var(--glass-light);
   opacity:0;transform:translateY(24px) scale(.98);
   transition:transform .45s var(--e-soft),box-shadow .45s var(--e-soft),opacity .85s var(--e-soft)}
 /* Внутреннее свечение: тонкая золотая дымка у верхнего края, будто источник
@@ -556,7 +574,7 @@ a{color:inherit;text-decoration:none}
 .tier:hover::after{opacity:1;animation:tierFlow 2.6s cubic-bezier(.35,.1,.25,1) infinite}
 @keyframes tierFlow{0%{left:-45%}100%{left:108%}}
 /* Рамка чуть ярче при наведении — свет как будто подсвечивает край изнутри. */
-.tier:hover{box-shadow:0 26px 64px -40px rgba(212,175,90,.42),
+.tier:hover{box-shadow:var(--sh-contact),0 26px 64px -40px rgba(212,175,90,.42),
   inset 0 0 40px -26px rgba(212,175,90,.5)}
 /* Содержимое поверх световых слоёв: при isolation:isolate псевдоэлементы
    с отрицательным z-index ушли бы под фон карточки и не были бы видны. */
@@ -569,8 +587,8 @@ a{color:inherit;text-decoration:none}
 #tiers.in .tier.t2{transition-delay:.35s}
 #tiers.in .tier.t3{transition-delay:.65s}
 .tier.t1{width:min(300px,84%);padding:20px 24px;border:1px solid rgba(212,175,90,.14)}
-.tier.t2{width:min(410px,92%);padding:24px 24px;border:1px solid rgba(212,175,90,.24);box-shadow:0 22px 54px -36px rgba(212,175,90,.3)}
-.tier.t3{width:min(560px,100%);padding:36px 32px;border:1px solid rgba(212,175,90,.55);background:linear-gradient(160deg,rgba(212,175,90,.09),rgba(11,10,16,.94));box-shadow:0 34px 90px -40px rgba(212,175,90,.5),inset 0 0 44px -22px rgba(212,175,90,.4)}
+.tier.t2{width:min(410px,92%);padding:24px 24px;border:1px solid rgba(212,175,90,.24);box-shadow:var(--sh-contact),0 22px 54px -36px rgba(212,175,90,.3),var(--edge-gold)}
+.tier.t3{width:min(560px,100%);padding:36px 32px;border:1px solid rgba(212,175,90,.55);background:linear-gradient(160deg,rgba(212,175,90,.09),rgba(11,10,16,.94));box-shadow:var(--sh-contact),0 34px 90px -40px rgba(212,175,90,.5),inset 0 0 44px -22px rgba(212,175,90,.4),var(--edge-gold)}
 .tier.t3:hover{box-shadow:0 46px 110px -40px rgba(212,175,90,.68),inset 0 0 44px -14px rgba(212,175,90,.62)}
 .tier-name{font-family:var(--serif);font-weight:600;font-size:clamp(22px,4vw,32px);color:var(--white);line-height:1}
 .tier.t3 .tier-name{font-size:clamp(30px,5.4vw,46px);color:var(--gold)}
@@ -739,7 +757,7 @@ a{color:inherit;text-decoration:none}
 #vswitch{position:fixed;right:18px;bottom:18px;z-index:85;display:flex;gap:2px;padding:3px;border-radius:22px;background:rgba(10,9,16,.72);border:1px solid rgba(255,255,255,.12);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);opacity:0;transition:opacity .5s;pointer-events:none}
 #vswitch button{font-family:var(--label);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--mute);background:transparent;border:none;padding:8px 12px;border-radius:20px;cursor:pointer;transition:color .3s,background .3s}
 #vswitch button.active{color:#06050A;background:var(--gold)}
-#ecohalf .card,#ecohalf .layer,#ecohalf .pk,#ecohalf .lvl{background-color:rgba(11,10,16,.94)!important;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='m'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23m)' opacity='0.55'/%3E%3C/svg%3E")!important;background-blend-mode:overlay;backdrop-filter:none!important;-webkit-backdrop-filter:none!important;border:1px solid var(--ac,rgba(200,167,90,.34))!important;box-shadow:0 26px 64px -36px rgba(0,0,0,.9),inset 0 0 34px -20px var(--ag,rgba(212,175,90,.4)),inset 0 1px 0 rgba(255,255,255,.05)!important}
+#ecohalf .card,#ecohalf .layer,#ecohalf .pk,#ecohalf .lvl{background-color:rgba(11,10,16,.94)!important;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='m'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23m)' opacity='0.55'/%3E%3C/svg%3E")!important;background-blend-mode:overlay;backdrop-filter:none!important;-webkit-backdrop-filter:none!important;border:1px solid var(--ac,rgba(200,167,90,.34))!important;box-shadow:var(--sh-contact),0 26px 64px -36px rgba(0,0,0,.9),inset 0 0 34px -20px var(--ag,rgba(212,175,90,.4)),inset 0 1px 0 rgba(255,255,255,.05)!important}
 #ecohalf .flow{background-color:rgba(11,10,16,.9)!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
 #ecohalf .fl,#ecohalf .pfl{display:none!important}
 .pausehold{pointer-events:none}
