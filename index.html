@@ -1280,13 +1280,19 @@ for(var dI=0;dI<5;dI++){
     RK.push({
       ang: base + (k-1)*0.42 + (Math.random()-0.5)*0.05,
       c: RKDOM[dI].c,
-      rad: 0.455 + (k===1?0.055:0) + (twoLbl&&k!==1&&nm?0.085:0) + Math.random()*0.03,
+      // Множитель к эллипсу ядра, а не абсолютный радиус. Раньше здесь стояло
+      // 0.455-0.54 и делилось на RY=0.155 — по вертикали выходило 3.5x, точки
+      // улетали на 54% высоты в каждую сторону, за пределы читаемой зоны.
+      // Теперь 1.28-1.42: кольцо идёт сразу за ядром и целиком в кадре.
+      rad: 1.28 + (k===1?0.05:0) + (twoLbl&&k!==1&&nm?0.09:0) + Math.random()*0.02,
       ph: dI*1.4 + k*0.9,
       nm: nm,
       // Три ступени: подписанная крупная 2.6, подписанная средняя 2.0,
       // остальные 1.5 - вес узла виден до чтения названия.
       sz: nm ? (k===1?2.6:2.0) : 1.5,
-      d: 0.62 + dI*0.035 + k*0.012 // появляются по доменам, волной
+      // Появление сдвинуто с 0.62-0.79 на 0.42-0.53: точки видны почти сразу
+      // после сборки ядра, а не в самом конце анимации.
+      d: 0.42 + dI*0.022 + k*0.008
     });
   }
 }
@@ -1313,8 +1319,9 @@ function frame(now){requestAnimationFrame(frame);var r=hero.getBoundingClientRec
    var rn=RK[i], am4=cl((bp-rn.d)/0.22);
    if(am4<=0) continue;
    var an4=rn.ang+t*0.018;
-   var rx=(cx+Math.cos(an4)*RX*rn.rad/0.30)*W+Math.sin(t*0.4+rn.ph)*W*0.003;
-   var ry=(cy+Math.sin(an4)*RY*rn.rad/0.155)*H+oy+Math.cos(t*0.35+rn.ph)*H*0.003;
+   // Одинаковый множитель по обеим осям — кольцо повторяет форму ядра.
+   var rx=(cx+Math.cos(an4)*RX*rn.rad)*W+Math.sin(t*0.4+rn.ph)*W*0.003;
+   var ry=(cy+Math.sin(an4)*RY*rn.rad)*H+oy+Math.cos(t*0.35+rn.ph)*H*0.003;
    // Нить к ядру — очень слабая: риск связан с системой, но не давит на неё.
    ctx.strokeStyle='rgba('+rn.c[0]+','+rn.c[1]+','+rn.c[2]+','+(0.055*am4).toFixed(3)+')';
    ctx.lineWidth=0.8;ctx.beginPath();ctx.moveTo(cp[0],cp[1]);ctx.lineTo(rx,ry);ctx.stroke();
@@ -1327,7 +1334,15 @@ function frame(now){requestAnimationFrame(frame);var r=hero.getBoundingClientRec
      ctx.save();
      ctx.globalCompositeOperation='source-over';
      ctx.font='500 '+(W<420?9:10)+'px Inter,system-ui,sans-serif';
-     ctx.textAlign = ux<-0.25 ? 'right' : (ux>0.25 ? 'left' : 'center');
+     var al = ux<-0.25 ? 'right' : (ux>0.25 ? 'left' : 'center');
+     // Зажим по краям экрана. Без него длинные названия уходили за кадр:
+     // «Экономический спад» справа, «Кибербезопасность» и «Неравенство» слева.
+     // Считаем фактическую ширину и при упоре в край подтягиваем текст внутрь.
+     var tw=ctx.measureText(rn.nm).width, PAD=6;
+     var left = al==='right' ? lx-tw : (al==='left' ? lx : lx-tw/2);
+     if(left<PAD){ lx += PAD-left; }
+     else if(left+tw>W-PAD){ lx -= (left+tw)-(W-PAD); }
+     ctx.textAlign = al;
      ctx.textBaseline='middle';
      // Тень под текстом: на светлых участках сцены иначе теряется.
      ctx.shadowColor='rgba(4,3,8,.9)';ctx.shadowBlur=6;
