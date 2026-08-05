@@ -400,7 +400,37 @@ a{color:inherit;text-decoration:none}
 .live .live-ticker .den100{color:var(--mute-2);font-size:13px}
 .reviews{max-width:660px;margin:14px auto 0;display:flex;flex-direction:column;gap:16px;text-align:left}
 .review{border-radius:14px;padding:24px 26px;background-color:rgba(11,10,16,.9);border:1px solid rgba(212,175,90,.14)}
-.review .rv-name{font-family:var(--serif);font-weight:600;font-size:19px;color:var(--gold);margin-bottom:10px}
+.review .rv-name{font-family:var(--serif);font-weight:600;font-size:19px;color:var(--gold);margin-bottom:2px}
+/* Строка под именем: кто это. Без неё отзыв — просто текст с подписью. */
+.review .rv-role{font-family:var(--label);font-size:9px;letter-spacing:.13em;
+  text-transform:uppercase;color:rgba(212,175,90,.5);margin-bottom:13px}
+/* Первая фраза крупнее: смысл считывается за секунду, остальное — по желанию. */
+.review .rv-lead{font-family:var(--serif);font-size:17px;line-height:1.45;
+  color:#e6ddc4;margin-bottom:11px}
+/* Свёрнутый текст: три строки и мягкое затухание к низу. */
+.review .rv-body{position:relative;max-height:4.9em;overflow:hidden;
+  transition:max-height .7s cubic-bezier(.25,.8,.3,1)}
+.review .rv-body::after{content:'';position:absolute;left:0;right:0;bottom:0;height:2.1em;
+  background:linear-gradient(rgba(11,10,16,0),rgba(11,10,16,.96));
+  opacity:1;transition:opacity .5s ease;pointer-events:none}
+.review.open .rv-body{max-height:60em}
+.review.open .rv-body::after{opacity:0}
+.rv-more{margin-top:12px;font-family:var(--label);font-size:9.5px;letter-spacing:.11em;
+  text-transform:uppercase;color:rgba(212,175,90,.72);background:none;border:none;
+  padding:0;cursor:pointer;transition:color .3s ease}
+.rv-more:hover{color:var(--gold)}
+/* Появление по очереди и лёгкий подъём при входе в кадр. Без плавания
+   и автоскролла: отзыв читают, а движущийся текст читать неудобно. */
+.review{opacity:0;transform:translateY(18px);
+  transition:opacity .9s ease,transform .9s cubic-bezier(.22,.7,.25,1),border-color .5s ease}
+.review.seen{opacity:1;transform:none}
+.review.seen:nth-child(1){transition-delay:0s}
+.review.seen:nth-child(2){transition-delay:.18s}
+.review.seen:nth-child(3){transition-delay:.36s}
+.review:hover{border-color:rgba(212,175,90,.3)}
+@media (prefers-reduced-motion: reduce){
+  .review{opacity:1;transform:none;transition:none}
+}
 .review p{font-size:14.5px;color:var(--text);line-height:1.62}
 .funnel{max-width:600px;margin:32px auto 0;display:flex;flex-direction:column;align-items:center}
 .tier{position:relative;border-radius:16px;text-align:center;overflow:hidden;isolation:isolate;
@@ -963,15 +993,24 @@ a{color:inherit;text-decoration:none}
     <div class="reviews">
       <div class="review">
         <div class="rv-name">Алёна</div>
-        <p>Всё получилось. Зависла там на часы, невероятно увлекательно и абсолютно фантастический интерфейс. Моя благодарность Мии и всей команде. Хотела сказать, насколько же Атлас облегчил восприятие информации на уровне helicopter view. Пролистала перед сном минут 15–20, и у меня есть понимание полноты картины, причём в очень адекватном и сжатом формате. Спасибо.</p>
+        <div class="rv-role">Первые пользователи · июль 2026</div>
+        <div class="rv-lead">«Невероятно увлекательно и абсолютно фантастический интерфейс.»</div>
+        <div class="rv-body"><p>Всё получилось. Зависла там на часы. Моя благодарность Мии и всей команде. Хотела сказать, насколько же Атлас облегчил восприятие информации на уровне helicopter view. Пролистала перед сном минут 15–20, и у меня есть понимание полноты картины, причём в очень адекватном и сжатом формате. Спасибо.</p></div>
+        <button class="rv-more" type="button">Читать полностью</button>
       </div>
       <div class="review">
         <div class="rv-name">Лилия</div>
-        <p>Посмотрела Атлас. Очень ёмко и информативно, системно, удобно пользоваться и изучать заранее, принимать решения. И при этом выбирать и создавать свою реальность, не попадаться в негативные. Этот Атлас: всё на ладони и всё видно. Спасибо.</p>
+        <div class="rv-role">Первые пользователи · июль 2026</div>
+        <div class="rv-lead">«Всё на ладони и всё видно.»</div>
+        <div class="rv-body"><p>Посмотрела Атлас. Очень ёмко и информативно, системно, удобно пользоваться и изучать заранее, принимать решения. И при этом выбирать и создавать свою реальность, не попадаться в негативные. Спасибо.</p></div>
+        <button class="rv-more" type="button">Читать полностью</button>
       </div>
       <div class="review">
         <div class="rv-name">Дарья</div>
-        <p>Благодарю за возможность прикоснуться к Архиву и Атласу сигналов. Первое впечатление поражает масштабностью картины, представленной перед вами. Проделана огромная работа, учтено всё самое важное, кропотливый труд. Ты видишь весь мир одномоментно, каждый его уголок и события, происходящие в нём. Цепочка событий непрерывно связывает всё вокруг. В процессе изучения хочется подтянуться в своём развитии и знаниях, осознать, что этот процесс бесконечен. И далеко не каждому по силам самостоятельно собрать воедино эту картину мира, предвидеть возможные риски и последствия. В мире, где всё непредсказуемо меняется, повышена тревожность, Атлас сигналов даёт ответы, помогает предвидеть и идти на опережение. Надёжность источников важное звено. И в дополнение отмечу эстетику. Обожаю уникальность подачи материала.</p>
+        <div class="rv-role">Первые пользователи · июль 2026</div>
+        <div class="rv-lead">«Ты видишь весь мир одномоментно, каждый его уголок и события, происходящие в нём.»</div>
+        <div class="rv-body"><p>Благодарю за возможность прикоснуться к Архиву и Атласу сигналов. Первое впечатление поражает масштабностью картины, представленной перед вами. Проделана огромная работа, учтено всё самое важное, кропотливый труд. Цепочка событий непрерывно связывает всё вокруг. В процессе изучения хочется подтянуться в своём развитии и знаниях, осознать, что этот процесс бесконечен. И далеко не каждому по силам самостоятельно собрать воедино эту картину мира, предвидеть возможные риски и последствия. В мире, где всё непредсказуемо меняется, повышена тревожность, Атлас сигналов даёт ответы, помогает предвидеть и идти на опережение. Надёжность источников важное звено. И в дополнение отмечу эстетику. Обожаю уникальность подачи материала.</p></div>
+        <button class="rv-more" type="button">Читать полностью</button>
       </div>
     </div>
   </section>
@@ -1783,6 +1822,33 @@ requestAnimationFrame(frame);})();</script>
     });
   },{threshold:.3});
   io.observe(el);
+})();</script>
+<script>(function(){
+  // Разворот отзыва и появление по очереди.
+  var revs=[].slice.call(document.querySelectorAll('.review'));
+  if(!revs.length) return;
+  revs.forEach(function(r){
+    var b=r.querySelector('.rv-more'), body=r.querySelector('.rv-body');
+    if(!b||!body) return;
+    // Если текст и так помещается, кнопка не нужна: она бы обещала
+    // продолжение, которого нет.
+    if(body.scrollHeight<=body.clientHeight+4){ b.style.display='none'; return; }
+    b.addEventListener('click',function(){
+      var open=r.classList.toggle('open');
+      b.textContent=open?'Свернуть':'Читать полностью';
+    });
+  });
+  var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(reduce||!('IntersectionObserver' in window)){
+    revs.forEach(function(r){r.classList.add('seen');}); return;
+  }
+  // Появление по очереди: наблюдаем за каждой карточкой отдельно, задержка
+  // задана в CSS через nth-child — так порядок не зависит от того, с какой
+  // стороны пользователь пришёл к блоку.
+  var io=new IntersectionObserver(function(en){
+    en.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('seen'); io.unobserve(e.target); } });
+  },{threshold:.22});
+  revs.forEach(function(r){io.observe(r);});
 })();</script>
 </body>
 </html>
