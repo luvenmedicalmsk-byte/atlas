@@ -1490,7 +1490,44 @@ mkScene('scMerge',4400,function(ctx,W,H,t,bp,raw){var mv=ez(cl((bp-0.35)/0.5));v
   // до блока — на 30-й секунде это давало почти три оборота за две секунды.
   // Накопление даёт одинаковый плавный старт независимо от момента открытия.
   var dt=mgLastT?Math.min(t-mgLastT,0.05):0; mgLastT=t; mgRot+=mv*dt*0.16;
-  var K=1.34,rot=mgRot;function proj(cxv,n){var a=n.a+rot;var x=(cxv-0.5)+Math.cos(a)*n.rr*K+Math.sin(t*0.5+n.ph)*0.008;var y=Math.sin(a)*n.rr*K*1.12+Math.cos(t*0.4+n.ph)*0.008;var cs=Math.cos(rot),sn=Math.sin(rot);var xr=x*cs-y*sn*0.42,yr=x*sn*0.42+y*cs;return [ (0.5+xr)*W, (0.5+yr)*H ];}var LP=mL.map(function(n){return proj(lcx,n);});var RP=mR.map(function(n){return proj(rcx,n);});ctx.lineWidth=1;function intl(A,c){for(var i=0;i<A.length;i++){var b1=A[(i+1)%A.length],b2=A[(i+5)%A.length];ctx.strokeStyle='rgba('+c[0]+','+c[1]+','+c[2]+',.14)';ctx.beginPath();ctx.moveTo(A[i][0],A[i][1]);ctx.lineTo(b1[0],b1[1]);ctx.moveTo(A[i][0],A[i][1]);ctx.lineTo(b2[0],b2[1]);ctx.stroke();}}intl(LP,[199,75,62]);intl(RP,[31,170,204]);var cf=cl((bp-0.55)/0.4);for(var i=0;i<mLk.length;i++){var ap=cl(cf*mLk.length-i);if(ap<=0)continue;var a=LP[mLk[i][0]],b=RP[mLk[i][1]];var g=ctx.createLinearGradient(a[0],a[1],b[0],b[1]);g.addColorStop(0,'rgba(199,75,62,'+(0.34*ap).toFixed(3)+')');g.addColorStop(1,'rgba(31,170,204,'+(0.34*ap).toFixed(3)+')');ctx.strokeStyle=g;ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(a[0],a[1]);ctx.lineTo(b[0],b[1]);ctx.stroke();}if(raw>0.82){for(var i=0;i<mImp.length;i++){var o=mImp[i];o.t+=o.sp;if(o.t>1){o.t=0;o.i=(Math.random()*mLk.length)|0;}var a=LP[mLk[o.i][0]],b=RP[mLk[o.i][1]];var x=a[0]+(b[0]-a[0])*o.t,y=a[1]+(b[1]-a[1])*o.t;ctx.fillStyle='rgba(235,225,255,.85)';ctx.beginPath();ctx.arc(x,y,1.7,0,6.2832);ctx.fill();}}var cr=ez(cl((bp-0.7)/0.3));if(cr>0){var _c=[236,220,180],_r=(20+cr*16)*(0.85+Math.sin(t*1.4)*0.15),_g=ctx.createRadialGradient(0.5*W,0.5*H,0,0.5*W,0.5*H,_r);_g.addColorStop(0,"rgba("+_c[0]+","+_c[1]+","+_c[2]+","+(0.30*cr).toFixed(3)+")");_g.addColorStop(0.55,"rgba("+_c[0]+","+_c[1]+","+_c[2]+","+(0.09*cr).toFixed(3)+")");_g.addColorStop(1,"rgba("+_c[0]+","+_c[1]+","+_c[2]+",0)");ctx.fillStyle=_g;ctx.beginPath();ctx.arc(0.5*W,0.5*H,_r,0,6.2832);ctx.fill();}for(var i=0;i<LP.length;i++)glowNode(ctx,LP[i][0],LP[i][1],[199,75,62],3.4,0.8);for(var i=0;i<RP.length;i++)glowNode(ctx,RP[i][0],RP[i][1],[31,170,204],3.4,0.8);if(raw>0.9&&!mPhraseOn){mPhraseOn=true;var el=document.getElementById('mergePhrase');if(el)el.classList.add('on');}});
+  var K=1.34,rot=mgRot;function proj(cxv,n){var a=n.a+rot;var x=(cxv-0.5)+Math.cos(a)*n.rr*K+Math.sin(t*0.5+n.ph)*0.008;var y=Math.sin(a)*n.rr*K*1.12+Math.cos(t*0.4+n.ph)*0.008;var cs=Math.cos(rot),sn=Math.sin(rot);var xr=x*cs-y*sn*0.42,yr=x*sn*0.42+y*cs;return [ (0.5+xr)*W, (0.5+yr)*H ];}var LP=mL.map(function(n){return proj(lcx,n);});var RP=mR.map(function(n){return proj(rcx,n);});ctx.lineWidth=1;function intl(A,c){for(var i=0;i<A.length;i++){var b1=A[(i+1)%A.length],b2=A[(i+5)%A.length];ctx.strokeStyle='rgba('+c[0]+','+c[1]+','+c[2]+',.14)';ctx.beginPath();ctx.moveTo(A[i][0],A[i][1]);ctx.lineTo(b1[0],b1[1]);ctx.moveTo(A[i][0],A[i][1]);ctx.lineTo(b2[0],b2[1]);ctx.stroke();}}intl(LP,[199,75,62]);intl(RP,[31,170,204]);var cf=cl((bp-0.55)/0.4);for(var i=0;i<mLk.length;i++){var ap=cl(cf*mLk.length-i);if(ap<=0)continue;var a=LP[mLk[i][0]],b=RP[mLk[i][1]];var g=ctx.createLinearGradient(a[0],a[1],b[0],b[1]);g.addColorStop(0,'rgba(199,75,62,'+(0.34*ap).toFixed(3)+')');g.addColorStop(1,'rgba(31,170,204,'+(0.34*ap).toFixed(3)+')');ctx.strokeStyle=g;ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(a[0],a[1]);ctx.lineTo(b[0],b[1]);ctx.stroke();}// ── ЦИРКУЛЯЦИЯ ЗНАНИЙ ──────────────────────────────────────────────────
+ // Раньше слияние происходило один раз и картина застывала. Теперь это
+ // непрерывный цикл: Архив передаёт накопленное знание, Atlas формирует
+ // новые связи и возвращает их обратно. Обмен, а не однократное событие.
+ //
+ // Цикл 9.6 секунды, четыре фазы по 2.4. Направление импульсов меняется
+ // вместе с фазой: слева направо — передача, справа налево — возврат.
+ if(raw>0.82){
+   var CYC=9.6, cph=(t%CYC)/CYC;            // 0..1 внутри цикла
+   var back=(cph>=0.5);                      // вторая половина — обратный ход
+   for(var i=0;i<mImp.length;i++){
+     var o=mImp[i]; o.t+=o.sp;
+     if(o.t>1){o.t=0;o.i=(Math.random()*mLk.length)|0;}
+     var a=LP[mLk[o.i][0]],b=RP[mLk[o.i][1]];
+     // При обратном ходе точка идёт от Atlas к Архиву по той же связи.
+     var tt = back ? (1-o.t) : o.t;
+     var x=a[0]+(b[0]-a[0])*tt, y=a[1]+(b[1]-a[1])*tt;
+     // Цвет по направлению: красный несёт знание, синий — новые связи.
+     var ic = back ? [130,205,235] : [235,175,165];
+     ctx.fillStyle='rgba('+ic[0]+','+ic[1]+','+ic[2]+',.85)';
+     ctx.beginPath();ctx.arc(x,y,1.7,0,6.2832);ctx.fill();
+   }
+   // Подпись фазы под схемой. Появляется и уходит плавно внутри своей
+   // четверти, поэтому переходы не выглядят переключением.
+   var MPH=['Архив передаёт знания','Atlas формирует связи',
+            'Связи возвращаются в Архив','Знание обновлено'];
+   var qi=Math.floor(cph*4), q=(cph*4)%1;
+   var qa=Math.min(q/0.16,(1-q)/0.22,1);
+   if(qa>0){
+     ctx.save(); ctx.globalCompositeOperation='source-over';
+     ctx.font='500 '+(W<420?10:11)+'px Inter,system-ui,sans-serif';
+     ctx.textAlign='center'; ctx.textBaseline='middle';
+     ctx.shadowColor='rgba(4,3,8,.95)'; ctx.shadowBlur=9;
+     ctx.fillStyle='rgba(212,175,90,'+(0.72*qa).toFixed(3)+')';
+     ctx.fillText(MPH[qi], 0.5*W, H*0.87);
+     ctx.restore();
+   }
+ }var cr=ez(cl((bp-0.7)/0.3));if(cr>0){var _c=[236,220,180],_r=(20+cr*16)*(0.85+Math.sin(t*1.4)*0.15),_g=ctx.createRadialGradient(0.5*W,0.5*H,0,0.5*W,0.5*H,_r);_g.addColorStop(0,"rgba("+_c[0]+","+_c[1]+","+_c[2]+","+(0.30*cr).toFixed(3)+")");_g.addColorStop(0.55,"rgba("+_c[0]+","+_c[1]+","+_c[2]+","+(0.09*cr).toFixed(3)+")");_g.addColorStop(1,"rgba("+_c[0]+","+_c[1]+","+_c[2]+",0)");ctx.fillStyle=_g;ctx.beginPath();ctx.arc(0.5*W,0.5*H,_r,0,6.2832);ctx.fill();}for(var i=0;i<LP.length;i++)glowNode(ctx,LP[i][0],LP[i][1],[199,75,62],3.4,0.8);for(var i=0;i<RP.length;i++)glowNode(ctx,RP[i][0],RP[i][1],[31,170,204],3.4,0.8);if(raw>0.9&&!mPhraseOn){mPhraseOn=true;var el=document.getElementById('mergePhrase');if(el)el.classList.add('on');}});
 var pal2=[[31,170,204],[67,192,138],[224,138,56],[155,106,224],[199,75,62],[212,175,90]];var lvN=[];for(var i=0;i<38;i++)lvN.push({x:Math.random(),y:Math.random(),vx:(Math.random()-.5)*.0005,vy:(Math.random()-.5)*.0005,ph:Math.random()*6.2832,c:pal2[(Math.random()*pal2.length)|0]});var lvFl=[],lvNext=0;mkScene('scLive',1,function(ctx,W,H,t){for(var i=0;i<lvN.length;i++){var n=lvN[i];n.x+=n.vx;n.y+=n.vy;if(n.x<0||n.x>1)n.vx*=-1;if(n.y<0||n.y>1)n.vy*=-1;}var P=lvN.map(function(n){return [n.x*W,n.y*H];});ctx.lineWidth=1;ctx.strokeStyle='rgba(120,150,180,.06)';ctx.beginPath();for(var i=0;i<lvN.length;i++){for(var j=i+1;j<i+4&&j<lvN.length;j++){var dx=P[i][0]-P[j][0],dy=P[i][1]-P[j][1];if(dx*dx+dy*dy<15000){ctx.moveTo(P[i][0],P[i][1]);ctx.lineTo(P[j][0],P[j][1]);}}}ctx.stroke();for(var i=0;i<lvN.length;i++){var n=lvN[i],pu=0.6+Math.sin(t*1.2+n.ph)*0.4;glowNode(ctx,P[i][0],P[i][1],n.c,2.6*pu,0.34);}if(t>lvNext){lvNext=t+0.6+Math.random()*0.9;var k=(Math.random()*lvN.length)|0;lvFl.push({x:P[k][0]/W,y:P[k][1]/H,c:lvN[k].c,tt:0});}for(var i=lvFl.length-1;i>=0;i--){var f=lvFl[i];f.tt+=0.02;if(f.tt>=1){lvFl.splice(i,1);continue;}var x=f.x*W,y=f.y*H,rr=f.tt*26,al=(1-f.tt)*0.5;ctx.strokeStyle='rgba('+f.c[0]+','+f.c[1]+','+f.c[2]+','+al.toFixed(3)+')';ctx.lineWidth=1.4;ctx.beginPath();ctx.arc(x,y,rr,0,6.2832);ctx.stroke();}});var li=document.getElementById('liveIdx');if(li){var seq=[67,68,67,69,68,70,69,68,67,69,71,70];var lk=0;setInterval(function(){lk=(lk+1)%seq.length;li.textContent=seq[lk];},1700);}})();</script>
 <script>(function(){var v=document.querySelector('.cmp-vid');if(!v)return;v.muted=true;v.setAttribute('muted','');function go(){try{var pr=v.play();if(pr&&pr.catch)pr.catch(function(){});}catch(e){}}go();if('IntersectionObserver' in window){var io=new IntersectionObserver(function(en){en.forEach(function(e){if(e.isIntersecting)go();});},{threshold:.05});io.observe(v);}['pointerdown','touchstart','scroll','wheel','keydown','click'].forEach(function(ev){window.addEventListener(ev,go,{passive:true});});document.addEventListener('visibilitychange',function(){if(!document.hidden)go();});})();</script>
 <script>(function(){var arc=document.getElementById("idxArc");if(!arc)return;var host=arc.closest(".block")||arc;function go(){arc.style.strokeDashoffset="177";}if("IntersectionObserver" in window){var io=new IntersectionObserver(function(en){en.forEach(function(e){if(e.isIntersecting){go();io.disconnect();}});},{threshold:.4});io.observe(host);}else go();})();</script>
