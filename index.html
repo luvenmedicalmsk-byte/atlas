@@ -1514,7 +1514,7 @@ a{color:inherit;text-decoration:none}
 
   var YATMO=['radial-gradient(60% 50% at 30% 30%, rgba(58,160,221,.12), transparent 60%)','radial-gradient(60% 50% at 70% 40%, rgba(120,120,150,.12), transparent 60%)','radial-gradient(60% 50% at 40% 60%, rgba(199,75,62,.14), transparent 60%)','radial-gradient(60% 50% at 66% 34%, rgba(155,106,224,.13), transparent 60%)','radial-gradient(60% 50% at 50% 50%, rgba(31,170,204,.14), transparent 62%)'];
 
-  var scrollP=0,travelT=0,pb=0,yearsReveal=0,curYear=-1,sceneHidden=false,past=0;
+  var scrollP=0,travelT=0,pb=0,yearsReveal=0,curYear=-1,sceneHidden=false,past=0,panelIdx=0;
   function ease(x){x=x<0?0:(x>1?1:x);return x*x*(3-2*x);}
   function compute(){
     var vh=window.innerHeight,sp=document.querySelector('.spacer');var total=sp.offsetHeight-vh;if(total<1)total=1;
@@ -1530,7 +1530,11 @@ a{color:inherit;text-decoration:none}
     chaos.style.opacity=(1-ease(Math.min(Math.max((scrollP-0.205)/0.03,0),1))).toFixed(3);
     if(brand)brand.style.opacity=(yearsReveal*(1-pb)*(1-past)).toFixed(3);
     // panels
-    var idx=Math.min(Math.max((scrollP-0.225)/0.65,0),1)*(HUB.length-1);
+    /* panelIdx объявлен в общем скоупе: он нужен и здесь, и в animate для
+   свечения узлов. Раньше был локальным var idx — в animate попадал
+   undefined, размер точки становился NaN, и вся сцена гасла. */
+ panelIdx=Math.min(Math.max((scrollP-0.225)/0.65,0),1)*(HUB.length-1);
+ var idx=panelIdx;
     for(var i=0;i<panelEls.length;i++){var op=1-Math.min(Math.abs(idx-i)*1.8,1);op*=yearsReveal*(1-ease(Math.min(pb/0.42,1)));var _o=(op<0?0:op);panelEls[i].style.opacity=_o.toFixed(3);
    /* --g управляет ростом карточки, длиной нити и ореолом. Берётся из той
       же величины, что прозрачность: карточка разворачивается ровно по мере
@@ -1579,12 +1583,14 @@ a{color:inherit;text-decoration:none}
       near — близость камеры к узлу, та же величина, что управляет
       карточкой. Свечение и размер растут вместе с ней, поэтому точка
       и карточка воспринимаются как одно целое. */
-   var near=1-Math.min(Math.abs(idx-i)*1.8,1); if(near<0)near=0;
+   var near=1-Math.min(Math.abs(panelIdx-i)*1.8,1); if(near<0)near=0;
    var base=yearsReveal*(1-pb);
    /* Пульсация только у активного узла — фоновые точки не мерцают. */
    var beat=1+Math.sin(nowT*1.9+i)*0.09*near;
-   hubMats[i].opacity=base*(0.5+0.5*near);
-   hubMats[i].size=9*(1+near*0.55)*beat;
+   var _op=base*(0.5+0.5*near); hubMats[i].opacity=isFinite(_op)?_op:base;
+   var _sz=9*(1+near*0.55)*beat;
+   /* Страховка: NaN в size гасит весь материал, а вместе с ним сцену. */
+   hubMats[i].size=isFinite(_sz)?_sz:9;
  })();}
     spineMat.opacity=yearsReveal*0.55*(1-pb);
     for(var i=0;i<HUB.length;i++){var h=HUB[i];var pulse2=1+Math.sin(t*1.4+i)*0.14;h.mesh.material.size=(h.now?11:8)*pulse2;}
