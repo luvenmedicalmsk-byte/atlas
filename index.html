@@ -1235,6 +1235,33 @@ var A={x:.5,y:.18,c:[31,170,204]},R={x:.5,y:.82,c:[199,75,62]},cx=.5,cy=.5,RX=0.
 var pal=[[67,192,138],[220,180,95],[58,160,221],[155,106,224]];
 var born=[];for(var i=0;i<8;i++){born.push({ang:i*(6.2832/8)-1.5708,c:pal[i%4],ph:i*0.8,d:0.5+(i%4)*0.05});}
 var E=[];for(var i=0;i<8;i++){E.push([i,(i+1)%8]);E.push([i,(i+2)%8]);}
+// ── ВНЕШНЕЕ КОЛЬЦО: риски из графа Atlas, по три на домен ────────────────
+// Цвета совпадают с легендой графа связей, чтобы кластеры узнавались.
+// Подписей нет намеренно: пятнадцать названий на этой ширине нечитаемы,
+// а цветовые группы по три читаются и без них.
+// Имя RKDOM, а не DOM: DOM уже занята в этом же скрипте под палитру фона.
+var RKDOM=[
+  {c:[249,115,22]},  // геополитика
+  {c:[56,189,248]},  // экономика
+  {c:[34,197,94]},   // климат
+  {c:[168,85,247]},  // технологии
+  {c:[239,68,68]}    // социум
+];
+var RK=[];
+for(var dI=0;dI<5;dI++){
+  for(var k=0;k<3;k++){
+    // Домены идут секторами по 72°, три точки внутри сектора с разбросом.
+    var base=dI*(6.2832/5)-1.5708;
+    RK.push({
+      ang: base + (k-1)*0.30 + (Math.random()-0.5)*0.06,
+      c: RKDOM[dI].c,
+      rad: 0.455 + (k===1?0.055:0) + Math.random()*0.03,
+      ph: dI*1.4 + k*0.9,
+      sz: k===1?2.1:1.6,          // средняя точка сектора крупнее
+      d: 0.62 + dI*0.035 + k*0.012 // появляются по доменам, волной
+    });
+  }
+}
 function mkP(n){var a=[];for(var i=0;i<n;i++)a.push({t:Math.random(),sp:.004+Math.random()*.006,off:(Math.random()-.5)*0.10});return a;}
 var Pb=mkP(42),Pr=mkP(42);
 var imp=[];for(var i=0;i<18;i++)imp.push({e:(Math.random()*E.length)|0,t:Math.random(),sp:.006+Math.random()*.01});
@@ -1252,6 +1279,19 @@ function frame(now){requestAnimationFrame(frame);var r=hero.getBoundingClientRec
  if(mR>0)line(rp,cp,R.c,0.26,mR);
  for(var i=0;i<8;i++){var am=cl((bp-born[i].d)/0.2);if(am>0)line(cp,bpos[i],[212,175,90],0.16,am);}
  for(var i=0;i<E.length;i++){var am3=cl((bp-0.55-((i%4)*0.03))/0.2);if(am3<=0)continue;var a=bpos[E[i][0]],b=bpos[E[i][1]];line(a,b,born[E[i][0]].c,0.14,am3);}
+ // Внешнее кольцо рисков: вращается медленнее ядра (0.018 против 0.03),
+ // поэтому картина всё время немного меняется, но без мельтешения.
+ for(var i=0;i<RK.length;i++){
+   var rn=RK[i], am4=cl((bp-rn.d)/0.22);
+   if(am4<=0) continue;
+   var an4=rn.ang+t*0.018;
+   var rx=(cx+Math.cos(an4)*RX*rn.rad/0.30)*W+Math.sin(t*0.4+rn.ph)*W*0.003;
+   var ry=(cy+Math.sin(an4)*RY*rn.rad/0.155)*H+oy+Math.cos(t*0.35+rn.ph)*H*0.003;
+   // Нить к ядру — очень слабая: риск связан с системой, но не давит на неё.
+   ctx.strokeStyle='rgba('+rn.c[0]+','+rn.c[1]+','+rn.c[2]+','+(0.055*am4).toFixed(3)+')';
+   ctx.lineWidth=0.8;ctx.beginPath();ctx.moveTo(cp[0],cp[1]);ctx.lineTo(rx,ry);ctx.stroke();
+   glow(rx,ry,rn.c,rn.sz,0.5*am4);
+ }
  var pf=cl((bp-0.18)/0.2);
  if(pf>0&&!reduce){for(var i=0;i<Pb.length;i++){var q=Pb[i];q.t+=q.sp;if(q.t>1)q.t=0;var x=ap[0]+(cp[0]-ap[0])*q.t+Math.sin(q.t*3.1416)*q.off*W,y=ap[1]+(cp[1]-ap[1])*q.t;ctx.fillStyle='rgba(120,200,235,'+(0.7*pf*(1-q.t*0.5)).toFixed(3)+')';ctx.beginPath();ctx.arc(x,y,1.4,0,6.2832);ctx.fill();}
  for(var i=0;i<Pr.length;i++){var q=Pr[i];q.t+=q.sp;if(q.t>1)q.t=0;var x=rp[0]+(cp[0]-rp[0])*q.t+Math.sin(q.t*3.1416)*q.off*W,y=rp[1]+(cp[1]-rp[1])*q.t;ctx.fillStyle='rgba(235,120,110,'+(0.7*pf*(1-q.t*0.5)).toFixed(3)+')';ctx.beginPath();ctx.arc(x,y,1.4,0,6.2832);ctx.fill();}}
