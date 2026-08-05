@@ -136,27 +136,31 @@ a{color:inherit;text-decoration:none}
 
 /* Карточка всплывает из темноты: сначала чернота, потом проступает объект. */
 .block.rv-card{transform:translateY(34px) scale(.985);filter:brightness(.35)}
-.block.rv-card.in{transform:none;filter:none;
+.block.rv-card.in{opacity:1;transform:none;filter:none;
   transition:opacity 1.1s ease,transform 1.1s cubic-bezier(.22,.7,.25,1),filter 1.3s ease}
 
 /* Документ разворачивается: раскрытие по вертикали от центра. */
 .block.rv-doc{transform:scaleY(.92);transform-origin:center top}
-.block.rv-doc.in{transform:none;
+.block.rv-doc.in{opacity:1;transform:none;
   transition:opacity 1s ease,transform 1.2s cubic-bezier(.25,.8,.3,1)}
 
 /* Тариф проявляется золотом: приходит через тёплый оттенок к обычному. */
 .block.rv-gold{transform:translateY(18px);filter:sepia(.55) brightness(.7)}
-.block.rv-gold.in{transform:none;filter:none;
+.block.rv-gold.in{opacity:1;transform:none;filter:none;
   transition:opacity 1.4s ease,transform 1.2s ease,filter 1.4s ease}
 
 /* Архив собирается из точек: размытие сходится в резкость. */
-.block.rv-dust{transform:translateY(14px);filter:blur(7px);opacity:0}
-.block.rv-dust.in{transform:none;filter:blur(0);
+/* opacity здесь НЕ задаётся: .block уже даёт 0, а .block.in — 1.
+   Дублирование opacity:0 в этом правиле перебивало .block.in по каскаду
+   (одинаковая специфичность, правило ниже), и блок 05 оставался невидим
+   даже после появления в кадре — между 04 и 06 была пустота. */
+.block.rv-dust{transform:translateY(14px);filter:blur(7px)}
+.block.rv-dust.in{transform:none;filter:blur(0);opacity:1;
   transition:opacity 1.2s ease,transform 1.2s ease,filter 1.3s cubic-bezier(.3,.8,.3,1)}
 
 /* Граф собирается: лёгкое схождение к центру. */
 .block.rv-graph{transform:scale(.965)}
-.block.rv-graph.in{transform:none;
+.block.rv-graph.in{opacity:1;transform:none;
   transition:opacity 1.2s ease,transform 1.4s cubic-bezier(.2,.75,.25,1)}
 
 @media (prefers-reduced-motion: reduce){
