@@ -333,7 +333,37 @@ a{color:inherit;text-decoration:none}
 .review .rv-name{font-family:var(--serif);font-weight:600;font-size:19px;color:var(--gold);margin-bottom:10px}
 .review p{font-size:14.5px;color:var(--text);line-height:1.62}
 .funnel{max-width:600px;margin:32px auto 0;display:flex;flex-direction:column;align-items:center}
-.tier{position:relative;border-radius:16px;text-align:center;background:rgba(11,10,16,.9);opacity:0;transform:translateY(24px) scale(.98);transition:transform .45s ease,box-shadow .45s ease,opacity .85s ease}
+.tier{position:relative;border-radius:16px;text-align:center;overflow:hidden;isolation:isolate;
+  /* Глубокий чёрный с прозрачностью 6%, а не матовое стекло: стекло стало
+     массовым приёмом и делает карточку похожей на сотни других.
+     Blur слабый — 6px: фон угадывается, но не размывается в кашу. */
+  background:rgba(6,5,10,.94);
+  backdrop-filter:blur(6px) saturate(1.1);-webkit-backdrop-filter:blur(6px) saturate(1.1);
+  opacity:0;transform:translateY(24px) scale(.98);
+  transition:transform .45s ease,box-shadow .45s ease,opacity .85s ease}
+/* Внутреннее свечение: тонкая золотая дымка у верхнего края, будто источник
+   света внутри карточки, а не подсветка снаружи. */
+.tier::before{content:'';position:absolute;inset:0;z-index:0;pointer-events:none;
+  background:radial-gradient(120% 62% at 50% -8%,rgba(212,175,90,.14),transparent 62%)}
+/* Течение света при наведении. Карточка НЕ увеличивается — вместо этого
+   по ней проходит косая световая полоса. Дороже читается движение внутри
+   объекта, чем движение самого объекта. */
+.tier::after{content:'';position:absolute;top:-60%;bottom:-60%;width:38%;left:-45%;
+  z-index:0;pointer-events:none;opacity:0;
+  background:linear-gradient(100deg,transparent,rgba(212,175,90,.10) 42%,rgba(233,214,160,.16) 50%,rgba(212,175,90,.10) 58%,transparent);
+  transform:rotate(9deg);
+  transition:opacity .5s ease}
+.tier:hover::after{opacity:1;animation:tierFlow 2.6s cubic-bezier(.35,.1,.25,1) infinite}
+@keyframes tierFlow{0%{left:-45%}100%{left:108%}}
+/* Рамка чуть ярче при наведении — свет как будто подсвечивает край изнутри. */
+.tier:hover{box-shadow:0 26px 64px -40px rgba(212,175,90,.42),
+  inset 0 0 40px -26px rgba(212,175,90,.5)}
+/* Содержимое поверх световых слоёв: при isolation:isolate псевдоэлементы
+   с отрицательным z-index ушли бы под фон карточки и не были бы видны. */
+.tier>*{position:relative;z-index:1}
+@media (prefers-reduced-motion: reduce){
+  .tier:hover::after{animation:none;opacity:.55;left:30%}
+}
 #tiers.in .tier{opacity:1;transform:none}
 #tiers.in .tier.t1{transition-delay:.1s}
 #tiers.in .tier.t2{transition-delay:.35s}
@@ -341,7 +371,7 @@ a{color:inherit;text-decoration:none}
 .tier.t1{width:min(300px,84%);padding:20px 22px;border:1px solid rgba(212,175,90,.14)}
 .tier.t2{width:min(410px,92%);padding:24px 24px;border:1px solid rgba(212,175,90,.24);box-shadow:0 22px 54px -36px rgba(212,175,90,.3)}
 .tier.t3{width:min(560px,100%);padding:36px 30px;border:1px solid rgba(212,175,90,.55);background:linear-gradient(160deg,rgba(212,175,90,.09),rgba(11,10,16,.94));box-shadow:0 34px 90px -40px rgba(212,175,90,.5),inset 0 0 44px -22px rgba(212,175,90,.4)}
-.tier.t3:hover{transform:translateY(-4px);box-shadow:0 46px 110px -40px rgba(212,175,90,.68),inset 0 0 44px -18px rgba(212,175,90,.5)}
+.tier.t3:hover{box-shadow:0 46px 110px -40px rgba(212,175,90,.68),inset 0 0 44px -14px rgba(212,175,90,.62)}
 .tier-name{font-family:var(--serif);font-weight:600;font-size:clamp(22px,4vw,32px);color:var(--white);line-height:1}
 .tier.t3 .tier-name{font-size:clamp(30px,5.4vw,46px);color:var(--gold)}
 .tier-meta{font-size:12.5px;color:var(--mute);margin:7px auto 0;line-height:1.45;max-width:40ch}
