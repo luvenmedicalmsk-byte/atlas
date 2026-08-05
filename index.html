@@ -1256,12 +1256,35 @@ var RKDOM=[
 // телефона названия сольются между собой и перекроют метки ядра.
 // Выбраны узлы с наибольшим весом в графе связей: по ним домен узнаётся.
 // Размер точки отражает вес: подписанные крупнее, у экономики два уровня.
-var RKN=[
-  [null,             'Конфликты',           'Угрозы'            ], // геополитика
-  ['Инфляция',       'Экономический спад',  null                ], // экономика
-  [null,             'Экстремальная погода','Водный стресс'     ], // климат
-  ['Дезинформация',  'Кибербезопасность',   null                ], // технологии
-  [null,             'Неравенство',         'Нестабильность'    ]  // социум
+// ── КАРТОЧКИ СОБЫТИЙ ────────────────────────────────────────────────────
+// Статичные подписи убраны: они описывали классы риска и не менялись.
+// Вместо них — поток конкретных событий с индексом, как в ленте Atlas.
+// Карточка живёт около трёх секунд и растворяется: система непрерывно
+// получает данные, а не показывает готовую схему.
+var EVC=[
+  {t:'Тайфун',            i:83, d:2},
+  {t:'Инфляция',          i:59, d:1},
+  {t:'Отключение сети',   i:64, d:3},
+  {t:'Наводнение',        i:78, d:2},
+  {t:'Лесной пожар',      i:71, d:2},
+  {t:'Санкции',           i:62, d:0},
+  {t:'Засуха',            i:57, d:2},
+  {t:'Кибератака',        i:69, d:3},
+  {t:'Конфликт',          i:74, d:0},
+  {t:'Сбой поставок',     i:53, d:1},
+  {t:'Протесты',          i:61, d:4},
+  {t:'Водный стресс',     i:66, d:2}
+];
+// Мысли движка: короткие строки внизу оси, каждая держится две секунды.
+// Это не подписи объектов, а ход рассуждения — то, чем система занята сейчас.
+var THOUGHT=[
+  'найден новый сигнал',
+  'сформирован процесс',
+  'вероятность каскада ↑',
+  'индекс вырос',
+  'подтверждение получено',
+  'связь установлена',
+  'кластер расширяется'
 ];
 var RK=[];
 for(var dI=0;dI<5;dI++){
@@ -1270,7 +1293,7 @@ for(var dI=0;dI<5;dI++){
     // Сектора сдвинуты на 8°, чтобы подписи не вставали ровно под метками
     // ядра - Индексы сверху, Каскады справа, Сигналы снизу, Процессы слева.
     var base=dI*(6.2832/5)-1.5708+0.14;
-    var nm=RKN[dI][k];
+    var nm=null;
     // Разброс внутри сектора расширен с 17° до 24°: подписи не слипаются.
     // Там, где в домене две подписи (геополитика, экономика), вторая
     // отодвинута по радиусу - тексты расходятся не только по углу.
@@ -1303,7 +1326,15 @@ var imp=[];for(var i=0;i<18;i++)imp.push({e:(Math.random()*E.length)|0,t:Math.ra
 var startT=0,started=false;
 if('IntersectionObserver' in window){var io=new IntersectionObserver(function(en){en.forEach(function(e){if(e.isIntersecting&&!started){started=true;startT=performance.now();}});},{threshold:.2});io.observe(hero);}else{started=true;startT=performance.now();}
 function glow(x,y,c,rr,al){var g=ctx.createRadialGradient(x,y,0,x,y,rr*3.2);g.addColorStop(0,'rgba('+c[0]+','+c[1]+','+c[2]+','+(0.5*al).toFixed(3)+')');g.addColorStop(.5,'rgba('+c[0]+','+c[1]+','+c[2]+','+(0.12*al).toFixed(3)+')');g.addColorStop(1,'rgba('+c[0]+','+c[1]+','+c[2]+',0)');ctx.fillStyle=g;ctx.beginPath();ctx.arc(x,y,rr*3.2,0,6.2832);ctx.fill();ctx.fillStyle='rgba('+c[0]+','+c[1]+','+c[2]+','+(0.95*al).toFixed(3)+')';ctx.beginPath();ctx.arc(x,y,rr*0.7,0,6.2832);ctx.fill();}
-function frame(now){requestAnimationFrame(frame);var r=hero.getBoundingClientRect();if(r.bottom<-160||r.top>window.innerHeight+160)return;var t=now*0.001;var bp=started?ez(cl((now-startT)/4400)):0;
+// Живые карточки на орбите: слоты, каждый переиспользуется по кругу.
+// Шесть слотов — больше на телефоне не читается, меньше не создаёт потока.
+var SLOT=[],SLOTN=6;
+for(var s=0;s<SLOTN;s++) SLOT.push({e:(s*2)%EVC.length, t0:-s*1.1, ang:s*(6.2832/SLOTN)});
+var thIdx=0, thT=0;
+function frame(now){requestAnimationFrame(frame);var r=hero.getBoundingClientRect();if(r.bottom<-160||r.top>window.innerHeight+160)return;var t=now*0.001;// Сцена растянута с 4.4 до 11 секунд: пять фаз рождения должны успеть
+ // прочитаться. При 4.4с на фазу приходилось меньше секунды — надпись
+ // исчезала раньше, чем взгляд её находил.
+ var bp=started?ez(cl((now-startT)/11000)):0;
  var par=((window.innerHeight*0.5)-(r.top+H*0.5))/window.innerHeight;var oy=(reduce?0:par*26);
  ctx.clearRect(0,0,W,H);ctx.globalCompositeOperation='lighter';
  var ap=[A.x*W,A.y*H+oy],rp=[R.x*W,R.y*H+oy],cp=[cx*W,cy*H+oy];
@@ -1335,40 +1366,98 @@ function frame(now){requestAnimationFrame(frame);var r=hero.getBoundingClientRec
    ctx.fillStyle='rgba('+rn.c[0]+','+rn.c[1]+','+rn.c[2]+','+(0.92*am4).toFixed(3)+')';
    ctx.fill();
    ctx.restore();
-   if(rn.nm){
-     // Подпись выносится НАРУЖУ по радиусу: между точкой и краем пусто,
-     // а внутри кольца идут связи ядра - там текст читался бы поверх линий.
-     // Подпись ставится СБОКУ от круга по горизонтали, а не по радиусу:
-     // в графе Atlas названия идут строго вправо или влево от узла, поэтому
-     // строки выстраиваются по общей линии и читаются как список.
-     var ux=Math.cos(an4);
-     var side = ux>=0 ? 1 : -1;
-     var lx=rx+side*(rn.sz+7), ly=ry;
-     ctx.save();
-     ctx.globalCompositeOperation='source-over';
-     ctx.font='500 '+(W<420?10:11)+'px Inter,system-ui,sans-serif';
-     var al = side>0 ? 'left' : 'right';
-     // Зажим по краям экрана. Без него длинные названия уходили за кадр:
-     // «Экономический спад» справа, «Кибербезопасность» и «Неравенство» слева.
-     // Считаем фактическую ширину и при упоре в край подтягиваем текст внутрь.
-     var tw=ctx.measureText(rn.nm).width, PAD=6;
-     var left = al==='right' ? lx-tw : (al==='left' ? lx : lx-tw/2);
-     if(left<PAD){ lx += PAD-left; }
-     else if(left+tw>W-PAD){ lx -= (left+tw)-(W-PAD); }
-     ctx.textAlign = al;
-     ctx.textBaseline='middle';
-     // ТЕКСТ СВЕТЛЫЙ, ЦВЕТ НЕСЁТ ТОЧКА. Цветные надписи на чёрном читались
-     // тускло: насыщенный синий и фиолетовый по яркости почти сливались с
-     // фоном. Теперь название белёсое, а домен определяется по цвету маркера
-     // рядом — контраст текста больше не зависит от палитры домена.
-     // Белый текст без цветного маркера: цвет уже несёт сам круг, а подпись
-     // стоит вплотную - связь очевидна без дополнительной метки.
-     ctx.shadowColor='rgba(4,3,8,.9)';ctx.shadowBlur=6;
-     ctx.fillStyle='rgba(238,244,252,'+(0.95*am4).toFixed(3)+')';
-     ctx.fillText(rn.nm,lx,ly);
+ }
+
+ // ── КАРТОЧКИ СОБЫТИЙ ───────────────────────────────────────────────────
+ // Появляются после того, как ядро собрано и связи протянуты: сначала
+ // система, потом поток данных через неё. Каждая живёт 3.4 секунды —
+ // хватает прочитать название и индекс, но картина не застывает.
+ if(bp>0.62 && !reduce){
+   var CF=cl((bp-0.62)/0.2);
+   ctx.save(); ctx.globalCompositeOperation='source-over';
+   for(var s=0;s<SLOT.length;s++){
+     var sl=SLOT[s], life=(t-sl.t0)/3.4;
+     if(life>=1){ sl.t0=t; sl.e=(sl.e+SLOTN)%EVC.length; sl.ang+=1.9; life=0; }
+     var ev=EVC[sl.e], col=RKDOM[ev.d].c;
+     // Появление и уход плавные: первые и последние 18% времени жизни.
+     var fade=Math.min(life/0.18,(1-life)/0.18,1); if(fade<=0) continue;
+     var al=fade*CF;
+     // Орбита шире кольца рисков, чтобы карточки не накрывали узлы.
+     var oa=sl.ang+t*0.085;
+     var ox=(cx+Math.cos(oa)*RX*1.72)*W, oyy=(cy+Math.sin(oa)*RY*1.72)*H+oy;
+     var fs=(W<420?9:10), pad=7;
+     ctx.font='600 '+fs+'px Inter,system-ui,sans-serif';
+     var tw=ctx.measureText(ev.t).width;
+     ctx.font='500 '+(fs-1)+'px Inter,system-ui,sans-serif';
+     var iw=ctx.measureText(String(ev.i)).width;
+     var bw=tw+iw+pad*3+6, bh=fs+13;
+     // Зажим по краям: карточка не должна уезжать за экран.
+     var bx=Math.min(Math.max(ox-bw/2,4),W-bw-4), by=oyy-bh/2;
+     // Подложка: тёмная, чтобы текст читался поверх связей.
+     ctx.fillStyle='rgba(9,8,14,'+(0.82*al).toFixed(3)+')';
+     ctx.strokeStyle='rgba('+col[0]+','+col[1]+','+col[2]+','+(0.42*al).toFixed(3)+')';
+     ctx.lineWidth=1;
+     if(ctx.roundRect){ ctx.beginPath(); ctx.roundRect(bx,by,bw,bh,7); ctx.fill(); ctx.stroke(); }
+     else { ctx.fillRect(bx,by,bw,bh); ctx.strokeRect(bx,by,bw,bh); }
+     // Точка домена слева — тот же цвет, что у узлов графа связей.
+     ctx.beginPath(); ctx.arc(bx+pad+1,by+bh/2,2.6,0,6.2832);
+     ctx.fillStyle='rgba('+col[0]+','+col[1]+','+col[2]+','+(0.95*al).toFixed(3)+')'; ctx.fill();
+     ctx.textBaseline='middle'; ctx.textAlign='left';
+     ctx.font='600 '+fs+'px Inter,system-ui,sans-serif';
+     ctx.fillStyle='rgba(233,240,250,'+(0.95*al).toFixed(3)+')';
+     ctx.fillText(ev.t, bx+pad+8, by+bh/2);
+     // Индекс справа цветом домена: число — главное, что несёт карточка.
+     ctx.font='500 '+(fs-1)+'px Inter,system-ui,sans-serif';
+     ctx.fillStyle='rgba('+col[0]+','+col[1]+','+col[2]+','+(0.9*al).toFixed(3)+')';
+     ctx.fillText(String(ev.i), bx+bw-pad-iw, by+bh/2);
+   }
+   ctx.restore();
+ }
+
+ // ── ФАЗЫ РОЖДЕНИЯ ──────────────────────────────────────────────────────
+ // Короткая надпись у центра объясняет, что происходит прямо сейчас.
+ // Без неё зритель видит красивую схему и не понимает, что она означает.
+ // Тексты сменяются по прогрессу анимации, а не по таймеру: если человек
+ // открыл экран позже, он увидит фазы с начала, а не с середины.
+ (function(){
+   var PH=[[0.06,'Миллионы сигналов'],
+           [0.30,'Появляются события'],
+           [0.50,'Atlas находит закономерности'],
+           [0.66,'Формируется процесс'],
+           [0.80,'Расходится каскад']];
+   var cur=-1;
+   for(var p=0;p<PH.length;p++) if(bp>=PH[p][0]) cur=p;
+   if(cur<0) return;
+   var st=PH[cur][0], en=(cur+1<PH.length)?PH[cur+1][0]:1.02;
+   var loc=(bp-st)/(en-st);
+   var al=Math.min(loc/0.12,(1-loc)/0.18,1);
+   if(al<=0) return;
+   ctx.save(); ctx.globalCompositeOperation='source-over';
+   ctx.font='500 '+(W<420?11:12.5)+'px Inter,system-ui,sans-serif';
+   ctx.textAlign='center'; ctx.textBaseline='middle';
+   ctx.shadowColor='rgba(4,3,8,.95)'; ctx.shadowBlur=10;
+   ctx.fillStyle='rgba(212,175,90,'+(0.82*al).toFixed(3)+')';
+   ctx.fillText(PH[cur][1], cp[0], cp[1]-RY*H*2.15);
+   ctx.restore();
+ })();
+
+ // ── МЫСЛИ ДВИЖКА ───────────────────────────────────────────────────────
+ // Строка под ядром: то, чем система занята сейчас. Меняется каждые
+ // 2.6 секунды. Появляется после того, как процесс сформирован.
+ if(bp>0.7){
+   if(t-thT>2.6){ thT=t; thIdx=(thIdx+1)%THOUGHT.length; }
+   var ta=Math.min((t-thT)/0.4,(2.6-(t-thT))/0.5,1);
+   if(ta>0){
+     ctx.save(); ctx.globalCompositeOperation='source-over';
+     ctx.font='500 '+(W<420?9.5:10.5)+'px Inter,system-ui,sans-serif';
+     ctx.textAlign='center'; ctx.textBaseline='middle';
+     ctx.shadowColor='rgba(4,3,8,.9)'; ctx.shadowBlur=8;
+     ctx.fillStyle='rgba(150,175,200,'+(0.62*ta*cl((bp-0.7)/0.15)).toFixed(3)+')';
+     ctx.fillText('→ '+THOUGHT[thIdx], cp[0], cp[1]+RY*H*2.15);
      ctx.restore();
    }
  }
+
  var pf=cl((bp-0.18)/0.2);
  if(pf>0&&!reduce){for(var i=0;i<Pb.length;i++){var q=Pb[i];q.t+=q.sp;if(q.t>1)q.t=0;var x=ap[0]+(cp[0]-ap[0])*q.t+Math.sin(q.t*3.1416)*q.off*W,y=ap[1]+(cp[1]-ap[1])*q.t;ctx.fillStyle='rgba(120,200,235,'+(0.7*pf*(1-q.t*0.5)).toFixed(3)+')';ctx.beginPath();ctx.arc(x,y,1.4,0,6.2832);ctx.fill();}
  for(var i=0;i<Pr.length;i++){var q=Pr[i];q.t+=q.sp;if(q.t>1)q.t=0;var x=rp[0]+(cp[0]-rp[0])*q.t+Math.sin(q.t*3.1416)*q.off*W,y=rp[1]+(cp[1]-rp[1])*q.t;ctx.fillStyle='rgba(235,120,110,'+(0.7*pf*(1-q.t*0.5)).toFixed(3)+')';ctx.beginPath();ctx.arc(x,y,1.4,0,6.2832);ctx.fill();}}
