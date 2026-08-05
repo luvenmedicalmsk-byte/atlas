@@ -64,7 +64,18 @@
   /* Стекло: два уровня. Плотное для панелей поверх контента, лёгкое —
      для карточек, где фон должен угадываться. */
   --glass-heavy:blur(22px) saturate(1.35);
-  --glass-light:blur(8px) saturate(1.12)}
+  --glass-light:blur(8px) saturate(1.12);
+  /* ═══ РИТМ ДВИЖЕНИЯ ══════════════════════════════════════════════════
+     Разнобой длительностей — 0.3 / 0.35 / 0.4 / 0.45 / 0.5 / 0.6 — глазом
+     не различается как замысел, но сбивает общий темп: элементы отвечают
+     чуть по-разному, и интерфейс кажется несобранным.
+
+     Четыре ступени. Каждая отвечает своей задаче, а не просто «быстрее
+     или медленнее». */
+  --t-tap:.22s;    /* отклик на касание: должен опережать мысль */
+  --t-state:.36s;  /* смена состояния: наведение, фокус */
+  --t-enter:.9s;   /* приход объекта в кадр */
+  --t-scene:1.4s   /* смена сцены, крупные переходы */}
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{background:var(--bg);color:var(--white);font-family:var(--sans);-webkit-font-smoothing:antialiased;overflow-x:hidden}
@@ -167,8 +178,37 @@ a{color:inherit;text-decoration:none}
 .hero .cue{margin-top:46px;width:1px;height:60px;background:linear-gradient(var(--gold-deep),transparent);animation:cue 2.2s var(--e-soft) infinite}
 @keyframes cue{0%,100%{opacity:.3;transform:scaleY(.6)}50%{opacity:1;transform:scaleY(1)}}
 
-.block{position:relative;padding:52px 0;opacity:0;transform:translateY(26px);transition:opacity .8s var(--e-out),transform .8s var(--e-out)}
+.block{position:relative;padding:52px 0;opacity:0;transform:translateY(26px);transition:opacity var(--t-enter) var(--e-out),transform var(--t-enter) var(--e-out)}
 .block.in{opacity:1;transform:none}
+/* ═══ ПОСЛЕДОВАТЕЛЬНОСТЬ ВНУТРИ БЛОКА ═══════════════════════════════════
+   Блок приходил целиком: заголовок, текст и карточка появлялись одним
+   движением. Так работает CSS по умолчанию, и это читается именно как
+   «сработала анимация», а не как приход содержимого.
+
+   Реальный порядок чтения — сверху вниз, и элементы должны приходить
+   в том же порядке. Разрыв 90мс: меньше сливается, больше рвётся
+   на отдельные события. */
+.block>.num,.block>h2,.block>h3,.block>.lead,.block>.def{
+  opacity:0;transform:translateY(13px);
+  transition:opacity var(--t-enter) var(--e-out),transform var(--t-enter) var(--e-out)}
+.block.in>.num{opacity:1;transform:none;transition-delay:.06s}
+.block.in>h2,.block.in>h3,.block.in>.def{opacity:1;transform:none;transition-delay:.15s}
+.block.in>.lead{opacity:1;transform:none;transition-delay:.24s}
+/* Содержимое приходит последним — после того, как заголовок объяснил,
+   на что смотреть. */
+.block>.card,.block>.layer,.block>.docbox,.block>.reviews,.block>.funnel,
+.block>.checks,.block>.contract,.block>.getlist,.block>.scwrap{
+  opacity:0;transform:translateY(17px);
+  transition:opacity var(--t-scene) var(--e-out),transform var(--t-scene) var(--e-out)}
+.block.in>.card,.block.in>.layer,.block.in>.docbox,.block.in>.reviews,
+.block.in>.funnel,.block.in>.checks,.block.in>.contract,.block.in>.getlist,
+.block.in>.scwrap{opacity:1;transform:none;transition-delay:.33s}
+@media (prefers-reduced-motion: reduce){
+  .block>.num,.block>h2,.block>h3,.block>.lead,.block>.def,
+  .block>.card,.block>.layer,.block>.docbox,.block>.reviews,.block>.funnel,
+  .block>.checks,.block>.contract,.block>.getlist,.block>.scwrap{
+    opacity:1;transform:none;transition:none}
+}
 /* ── ПОДПИСЬ ЭКРАНА ─────────────────────────────────────────────────────
    Каждый тип блока появляется по-своему: смысл содержимого задаёт характер
    движения. Один общий сдвиг вверх делал все экраны одинаковыми.
@@ -177,17 +217,17 @@ a{color:inherit;text-decoration:none}
 /* Карточка всплывает из темноты: сначала чернота, потом проступает объект. */
 .block.rv-card{transform:translateY(34px) scale(.985);filter:brightness(.35)}
 .block.rv-card.in{opacity:1;transform:none;filter:none;
-  transition:opacity 1.1s var(--e-out),transform 1.1s cubic-bezier(.22,.7,.25,1),filter 1.3s var(--e-out)}
+  transition:opacity var(--t-scene) var(--e-out),transform 1.1s cubic-bezier(.22,.7,.25,1),filter var(--t-scene) var(--e-out)}
 
 /* Документ разворачивается: раскрытие по вертикали от центра. */
 .block.rv-doc{transform:scaleY(.92);transform-origin:center top}
 .block.rv-doc.in{opacity:1;transform:none;
-  transition:opacity 1s var(--e-out),transform 1.2s cubic-bezier(.25,.8,.3,1)}
+  transition:opacity var(--t-enter) var(--e-out),transform 1.2s cubic-bezier(.25,.8,.3,1)}
 
 /* Тариф проявляется золотом: приходит через тёплый оттенок к обычному. */
 .block.rv-gold{transform:translateY(18px);filter:sepia(.55) brightness(.7)}
 .block.rv-gold.in{opacity:1;transform:none;filter:none;
-  transition:opacity 1.4s var(--e-out),transform 1.2s var(--e-out),filter 1.4s var(--e-out)}
+  transition:opacity var(--t-scene) var(--e-out),transform var(--t-scene) var(--e-out),filter var(--t-scene) var(--e-out)}
 
 /* Архив собирается из точек: размытие сходится в резкость. */
 /* opacity здесь НЕ задаётся: .block уже даёт 0, а .block.in — 1.
@@ -196,12 +236,12 @@ a{color:inherit;text-decoration:none}
    даже после появления в кадре — между 04 и 06 была пустота. */
 .block.rv-dust{transform:translateY(14px);filter:blur(7px)}
 .block.rv-dust.in{transform:none;filter:blur(0);opacity:1;
-  transition:opacity 1.2s var(--e-out),transform 1.2s var(--e-out),filter 1.3s cubic-bezier(.3,.8,.3,1)}
+  transition:opacity var(--t-scene) var(--e-out),transform var(--t-scene) var(--e-out),filter 1.3s cubic-bezier(.3,.8,.3,1)}
 
 /* Граф собирается: лёгкое схождение к центру. */
 .block.rv-graph{transform:scale(.965)}
 .block.rv-graph.in{opacity:1;transform:none;
-  transition:opacity 1.2s var(--e-out),transform 1.4s cubic-bezier(.2,.75,.25,1)}
+  transition:opacity var(--t-scene) var(--e-out),transform 1.4s cubic-bezier(.2,.75,.25,1)}
 
 @media (prefers-reduced-motion: reduce){
   .block.rv-card,.block.rv-doc,.block.rv-gold,.block.rv-dust,.block.rv-graph{
@@ -318,7 +358,7 @@ a{color:inherit;text-decoration:none}
 /* Пункт проявляется, когда точка до него дошла: задержка пропорциональна
    позиции в списке. */
 .checks li{opacity:0;transform:translateX(-6px);
-  transition:opacity .7s var(--e-out),transform .7s var(--e-out)}
+  transition:opacity var(--t-enter) var(--e-out),transform var(--t-enter) var(--e-out)}
 .contract.go .checks li{opacity:1;transform:none}
 .contract.go .checks li:nth-child(1){transition-delay:.35s}
 .contract.go .checks li:nth-child(2){transition-delay:1.35s}
@@ -374,9 +414,9 @@ a{color:inherit;text-decoration:none}
 .scene canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
 .scene-cap{margin-top:20px;text-align:center}
 .dlbl{position:absolute;transform:translateX(-50%);font-family:var(--label);font-size:8px;letter-spacing:.04em;text-transform:uppercase;white-space:nowrap;padding:4px 8px;border-radius:9px;background:rgba(255,255,255,.05);backdrop-filter:blur(9px);-webkit-backdrop-filter:blur(9px);border:1px solid rgba(255,255,255,.13);box-shadow:inset 0 1px 0 rgba(255,255,255,.1),0 6px 18px -10px rgba(0,0,0,.6)}
-#domCap{position:absolute;top:11%;left:0;right:0;text-align:center;font-family:var(--label);font-size:11px;letter-spacing:.04em;color:var(--text);opacity:0;transition:opacity .35s var(--e-soft);text-shadow:0 2px 14px rgba(4,3,8,.95);padding:0 20px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#domCap{position:absolute;top:11%;left:0;right:0;text-align:center;font-family:var(--label);font-size:11px;letter-spacing:.04em;color:var(--text);opacity:0;transition:opacity var(--t-state) var(--e-soft);text-shadow:0 2px 14px rgba(4,3,8,.95);padding:0 20px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 #domCap b{font-weight:600}
-.merge-phrase{position:absolute;left:0;right:0;bottom:5%;text-align:center;font-family:var(--serif);font-weight:600;font-size:clamp(22px,4.2vw,40px);color:var(--gold);opacity:0;transition:opacity 1.3s var(--e-out);text-shadow:0 2px 30px rgba(4,3,8,.85)}
+.merge-phrase{position:absolute;left:0;right:0;bottom:5%;text-align:center;font-family:var(--serif);font-weight:600;font-size:clamp(22px,4.2vw,40px);color:var(--gold);opacity:0;transition:opacity var(--t-scene) var(--e-out);text-shadow:0 2px 30px rgba(4,3,8,.85)}
 .merge-phrase.on{opacity:1}
 .docbox{max-width:620px;margin:24px auto 0;display:flex;flex-direction:column;align-items:center;text-align:center;border-radius:14px;padding:28px 28px;background-color:rgba(11,10,16,.94);border:1px solid rgba(31,170,204,.26);box-shadow:inset 0 0 34px -22px rgba(31,170,204,.5),var(--edge-top)}
 .doc-ico{width:40px;height:40px;color:var(--cyan);margin-bottom:16px}
@@ -392,7 +432,7 @@ a{color:inherit;text-decoration:none}
 .doc-btn:hover{background:rgba(31,170,204,.1);transform:translateY(-2px)}
 .doc-btn.ghost{color:var(--mute);border-color:rgba(255,255,255,.18)}
 .doc-btn.ghost:hover{background:rgba(255,255,255,.05);color:var(--text)}
-.doc-preview{width:100%;max-height:0;overflow:hidden;transition:max-height .6s var(--e-out),margin-top .4s var(--e-out);margin-top:0}
+
 /* Обложка документа: объём вместо плоского iframe. Лёгкий наклон и тень
    создают ощущение бумаги — читатель понимает, что перед ним документ,
    а не встроенный просмотрщик. */
@@ -403,7 +443,7 @@ a{color:inherit;text-decoration:none}
 .doc-cover .sheet{position:absolute;inset:0;border-radius:3px 7px 7px 3px;
   background:linear-gradient(158deg,#14131b 0%,#0c0b12 60%,#08070c 100%);
   border:1px solid rgba(212,175,90,.18);
-  transition:transform .8s cubic-bezier(.2,.7,.2,1),box-shadow .8s var(--e-out)}
+  transition:transform .8s cubic-bezier(.2,.7,.2,1),box-shadow var(--t-enter) var(--e-out)}
 /* Задние листы сдвинуты и повёрнуты: веер, а не стопка. */
 .doc-cover .s3{transform:translate(16px,10px) rotate(4.2deg);opacity:.55}
 .doc-cover .s2{transform:translate(8px,5px) rotate(2.1deg);opacity:.78}
@@ -446,7 +486,7 @@ a{color:inherit;text-decoration:none}
    тот же фон, та же типографика, те же золотые акценты. */
 #pdfFull{position:fixed;inset:0;z-index:120;
   background:radial-gradient(120% 80% at 50% 0%,#0e0d15 0%,#06050a 62%);
-  display:none;flex-direction:column;opacity:0;transition:opacity .4s var(--e-soft)}
+  display:none;flex-direction:column;opacity:0;transition:opacity var(--t-state) var(--e-soft)}
 /* Панель не должна перекрывать кнопку закрытия: у неё z-index ниже. */
 /* Заголовок занимает всю первую строку, масштаб переносится на вторую
    и прижимается влево. Раньше масштаб стоял справа в одной строке
@@ -464,7 +504,7 @@ a{color:inherit;text-decoration:none}
 #pdfFull .act{font-family:var(--label);font-size:10px;letter-spacing:.08em;
   text-transform:uppercase;font-weight:600;color:rgba(212,175,90,.85);text-decoration:none;
   border:1px solid rgba(212,175,90,.3);border-radius:30px;padding:8px 16px;
-  background:transparent;cursor:pointer;white-space:nowrap;transition:all .3s var(--e-soft)}
+  background:transparent;cursor:pointer;white-space:nowrap;transition:background var(--t-state) var(--e-soft),color var(--t-state) var(--e-soft),border-color var(--t-state) var(--e-soft)}
 #pdfFull .act:hover{background:rgba(212,175,90,.1);color:var(--gold)}
 /* Закрытие — отдельная круглая кнопка поверх сцены, а не элемент панели.
    В панели с переносом строк она уезжала на вторую строку и попасть по ней
@@ -475,7 +515,7 @@ a{color:inherit;text-decoration:none}
   backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
   color:rgba(226,232,240,.9);font-size:15px;line-height:1;cursor:pointer;
   display:flex;align-items:center;justify-content:center;
-  transition:background .3s var(--e-soft),border-color .3s var(--e-soft),transform .3s var(--e-soft)}
+  transition:background var(--t-state) var(--e-soft),border-color var(--t-state) var(--e-soft),transform var(--t-state) var(--e-soft)}
 #pdfFull .pf-x:hover{background:rgba(212,175,90,.14);border-color:rgba(212,175,90,.4);
   color:var(--gold)}
 #pdfFull .pf-x:active{transform:scale(.94)}
@@ -484,7 +524,7 @@ a{color:inherit;text-decoration:none}
   justify-content:center;padding:28px 16px 90px;-webkit-overflow-scrolling:touch}
 #pdfFull .page{position:relative;border-radius:3px;overflow:hidden;
   box-shadow:var(--sh-contact),0 30px 80px rgba(0,0,0,.7),0 0 0 1px rgba(212,175,90,.14);
-  transition:opacity .45s var(--e-soft),transform .45s cubic-bezier(.25,.8,.3,1)}
+  transition:opacity var(--t-state) var(--e-soft),transform .45s cubic-bezier(.25,.8,.3,1)}
 #pdfFull .page.turn{opacity:0;transform:translateX(var(--dir,18px)) scale(.985)}
 #pdfFull canvas{display:block;max-width:100%;height:auto}
 /* Нижняя панель: индикатор страницы и перелистывание. */
@@ -493,7 +533,7 @@ a{color:inherit;text-decoration:none}
   background:linear-gradient(transparent,rgba(6,5,10,.92) 42%)}
 #pdfFull .nb{width:38px;height:38px;border-radius:50%;border:1px solid rgba(212,175,90,.28);
   background:rgba(6,5,10,.7);color:rgba(212,175,90,.85);font-size:15px;cursor:pointer;
-  display:flex;align-items:center;justify-content:center;transition:all .3s var(--e-soft)}
+  display:flex;align-items:center;justify-content:center;transition:background var(--t-state) var(--e-soft),color var(--t-state) var(--e-soft),opacity var(--t-state) var(--e-soft)}
 #pdfFull .nb:hover:not(:disabled){background:rgba(212,175,90,.12);color:var(--gold)}
 #pdfFull .nb:disabled{opacity:.3;cursor:default}
 #pdfFull .pnum{font-family:var(--label);font-size:10px;letter-spacing:.16em;
@@ -502,14 +542,14 @@ a{color:inherit;text-decoration:none}
 /* Точки страниц: положение в документе видно без чтения цифр. */
 #pdfFull .dots{display:flex;gap:4px}
 #pdfFull .dots i{width:5px;height:5px;border-radius:50%;
-  background:rgba(212,175,90,.22);cursor:pointer;transition:all .4s var(--e-soft)}
+  background:rgba(212,175,90,.22);cursor:pointer;transition:background var(--t-state) var(--e-soft),transform var(--t-state) var(--e-out),box-shadow var(--t-state) var(--e-soft)}
 #pdfFull .dots i.cur{background:var(--gold);transform:scale(1.35);
   box-shadow:0 0 8px rgba(212,175,90,.6)}
 #pdfFull .ld{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
   font-family:var(--label);font-size:10px;letter-spacing:.16em;text-transform:uppercase;
   color:rgba(212,175,90,.5)}
 .doc-preview.open{max-height:640px;margin-top:20px}
-.doc-preview iframe{width:100%;height:600px;border:1px solid rgba(255,255,255,.1);border-radius:10px;background:#0b0a10}
+
 .mapbg{position:absolute;inset:-6% -8%;z-index:-1;pointer-events:none;opacity:.32;background-image:radial-gradient(rgba(140,180,205,.85) 1px,transparent 1.4px);background-size:13px 13px;-webkit-mask-image:radial-gradient(115% 78% at 50% 46%,#000 32%,transparent 76%);mask-image:radial-gradient(115% 78% at 50% 46%,#000 32%,transparent 76%);animation:mapdrift 26s var(--e-soft) infinite}
 @keyframes mapdrift{0%,100%{background-position:0 0}50%{background-position:14px 8px}}
 .dotline{position:relative;height:52px;margin:16px 0 8px}
@@ -530,17 +570,17 @@ a{color:inherit;text-decoration:none}
   transition:max-height .7s cubic-bezier(.25,.8,.3,1)}
 .review .rv-body::after{content:'';position:absolute;left:0;right:0;bottom:0;height:2.1em;
   background:linear-gradient(rgba(11,10,16,0),rgba(11,10,16,.96));
-  opacity:1;transition:opacity .5s var(--e-out);pointer-events:none}
+  opacity:1;transition:opacity var(--t-state) var(--e-out);pointer-events:none}
 .review.open .rv-body{max-height:60em}
 .review.open .rv-body::after{opacity:0}
 .rv-more{margin-top:12px;font-family:var(--label);font-size:10px;letter-spacing:.12em;
   text-transform:uppercase;color:rgba(212,175,90,.72);background:none;border:none;
-  padding:0;cursor:pointer;transition:color .3s var(--e-soft)}
+  padding:0;cursor:pointer;transition:color var(--t-state) var(--e-soft)}
 .rv-more:hover{color:var(--gold)}
 /* Появление по очереди и лёгкий подъём при входе в кадр. Без плавания
    и автоскролла: отзыв читают, а движущийся текст читать неудобно. */
 .review{opacity:0;transform:translateY(18px);
-  transition:opacity .9s var(--e-out),transform .9s cubic-bezier(.22,.7,.25,1),border-color .5s var(--e-out)}
+  transition:opacity var(--t-enter) var(--e-out),transform .9s cubic-bezier(.22,.7,.25,1),border-color var(--t-state) var(--e-out)}
 .review.seen{opacity:1;transform:none}
 .review.seen:nth-child(1){transition-delay:0s}
 .review.seen:nth-child(2){transition-delay:.18s}
@@ -558,7 +598,7 @@ a{color:inherit;text-decoration:none}
   background:rgba(6,5,10,.94);
   backdrop-filter:var(--glass-light);-webkit-backdrop-filter:var(--glass-light);
   opacity:0;transform:translateY(24px) scale(.98);
-  transition:transform .45s var(--e-soft),box-shadow .45s var(--e-soft),opacity .85s var(--e-soft)}
+  transition:transform var(--t-state) var(--e-soft),box-shadow var(--t-state) var(--e-soft),opacity var(--t-enter) var(--e-soft)}
 /* Внутреннее свечение: тонкая золотая дымка у верхнего края, будто источник
    света внутри карточки, а не подсветка снаружи. */
 .tier::before{content:'';position:absolute;inset:0;z-index:0;pointer-events:none;
@@ -570,7 +610,7 @@ a{color:inherit;text-decoration:none}
   z-index:0;pointer-events:none;opacity:0;
   background:linear-gradient(100deg,transparent,rgba(212,175,90,.10) 42%,rgba(233,214,160,.16) 50%,rgba(212,175,90,.10) 58%,transparent);
   transform:rotate(9deg);
-  transition:opacity .5s var(--e-out)}
+  transition:opacity var(--t-state) var(--e-out)}
 .tier:hover::after{opacity:1;animation:tierFlow 2.6s cubic-bezier(.35,.1,.25,1) infinite}
 @keyframes tierFlow{0%{left:-45%}100%{left:108%}}
 /* Рамка чуть ярче при наведении — свет как будто подсвечивает край изнутри. */
@@ -603,7 +643,7 @@ a{color:inherit;text-decoration:none}
 .lic-dots{display:flex;gap:4px}
 .lic-dots i{width:6px;height:6px;border-radius:50%;display:block;
   background:rgba(212,175,90,.92);box-shadow:0 0 7px rgba(212,175,90,.45);
-  transition:background .8s var(--e-out),box-shadow .8s var(--e-out),transform .8s var(--e-out)}
+  transition:background var(--t-enter) var(--e-out),box-shadow var(--t-enter) var(--e-out),transform var(--t-enter) var(--e-out)}
 /* Занятая лицензия: точка тускнеет и слегка сжимается — след остаётся,
    поэтому видно, сколько было изначально. */
 .lic-dots i.off{background:rgba(212,175,90,.16);box-shadow:none;transform:scale(.8)}
@@ -743,7 +783,7 @@ a{color:inherit;text-decoration:none}
 .compare .cmp-s{margin-top:8px;font-size:11px;color:var(--mute);font-family:var(--label);letter-spacing:.08em;text-transform:uppercase}
 .compare .cmp-vs{align-self:center;color:var(--gold-deep);font-size:24px}
 @media(max-width:520px){.compare{flex-direction:column}.compare .cmp-vs{transform:rotate(90deg)}}
-.dex{position:absolute;top:15%;transform:translateX(-50%);font-family:var(--label);font-size:10px;letter-spacing:.04em;color:var(--white);white-space:nowrap;opacity:0;transition:opacity .4s var(--e-soft);text-shadow:0 2px 12px rgba(4,3,8,.95)}
+.dex{position:absolute;top:15%;transform:translateX(-50%);font-family:var(--label);font-size:10px;letter-spacing:.04em;color:var(--white);white-space:nowrap;opacity:0;transition:opacity var(--t-state) var(--e-soft);text-shadow:0 2px 12px rgba(4,3,8,.95)}
 .live{position:relative;min-height:86vh;display:flex;align-items:flex-end;justify-content:center;text-align:center;overflow:hidden;padding-bottom:12vh}
 .live canvas{position:absolute;left:0;top:0;width:100%;height:100%;z-index:0}
 .live #liveMap{z-index:0;opacity:.62;top:0;height:72%}
@@ -753,7 +793,7 @@ a{color:inherit;text-decoration:none}
 .live .live-ticker b{color:var(--cyan);font-size:17px}
 #ecohalf .hero h1,#ecohalf .block h2,#ecohalf .lead,#ecohalf .index .big,#ecohalf .finalsc .fphrase,#ecohalf .cta,#ecohalf .ecoCenter .lbl,#ecohalf .layer h3{text-shadow:0 2px 34px rgba(4,3,8,.75)}
 #ecohalf .foot{background:transparent}
-#dimA{position:fixed;inset:0;z-index:1;background:#040308;opacity:0;pointer-events:none;transition:opacity .5s var(--e-out)}
+#dimA{position:fixed;inset:0;z-index:1;background:#040308;opacity:0;pointer-events:none;transition:opacity var(--t-state) var(--e-out)}
 #vswitch{position:fixed;right:18px;bottom:18px;z-index:85;display:flex;gap:2px;padding:3px;border-radius:22px;background:rgba(10,9,16,.72);border:1px solid rgba(255,255,255,.12);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);opacity:0;transition:opacity .5s;pointer-events:none}
 #vswitch button{font-family:var(--label);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--mute);background:transparent;border:none;padding:8px 12px;border-radius:20px;cursor:pointer;transition:color .3s,background .3s}
 #vswitch button.active{color:#06050A;background:var(--gold)}
@@ -761,14 +801,14 @@ a{color:inherit;text-decoration:none}
 #ecohalf .flow{background-color:rgba(11,10,16,.9)!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
 #ecohalf .fl,#ecohalf .pfl{display:none!important}
 .pausehold{pointer-events:none}
-#ecohalf .hero .eyebrow,#ecohalf .hero h1,#ecohalf .hero p{opacity:0;transform:translateY(22px);transition:opacity 1s var(--e-out),transform 1s var(--e-out)}
+#ecohalf .hero .eyebrow,#ecohalf .hero h1,#ecohalf .hero p{opacity:0;transform:translateY(22px);transition:opacity var(--t-enter) var(--e-out),transform var(--t-enter) var(--e-out)}
 #ecohalf .hero.in .eyebrow{opacity:1;transform:none}
 #ecohalf .hero.in h1{opacity:1;transform:none;transition-delay:.45s}
 #ecohalf .hero.in p{opacity:1;transform:none;transition-delay:.95s}
 @media(prefers-reduced-motion:reduce){#ecohalf .hero .eyebrow,#ecohalf .hero h1,#ecohalf .hero p{opacity:1;transform:none;transition:none}}
 #ecoHero{display:block;min-height:134vh;position:relative;overflow:hidden;padding:0}
-#ecoHero .birth-top{position:absolute;top:7%;left:0;right:0;text-align:center;z-index:2;padding:0 24px;opacity:0;transform:translateY(18px);transition:opacity 1.2s var(--e-out),transform 1.2s var(--e-out)}
-#ecoHero .birth-bot{position:absolute;bottom:7%;left:0;right:0;text-align:center;z-index:2;padding:0 24px;opacity:0;transform:translateY(18px);transition:opacity 1.2s var(--e-out),transform 1.2s var(--e-out)}
+#ecoHero .birth-top{position:absolute;top:7%;left:0;right:0;text-align:center;z-index:2;padding:0 24px;opacity:0;transform:translateY(18px);transition:opacity var(--t-scene) var(--e-out),transform var(--t-scene) var(--e-out)}
+#ecoHero .birth-bot{position:absolute;bottom:7%;left:0;right:0;text-align:center;z-index:2;padding:0 24px;opacity:0;transform:translateY(18px);transition:opacity var(--t-scene) var(--e-out),transform var(--t-scene) var(--e-out)}
 #ecoHero.in .birth-top{opacity:1;transform:none;transition-delay:.3s}
 #ecoHero.in .birth-bot{opacity:1;transform:none;transition-delay:1.3s}
 .bt-name{font-family:var(--serif);font-weight:600;font-size:clamp(26px,5vw,50px);line-height:1.05;text-shadow:0 2px 34px rgba(4,3,8,.85)}
@@ -776,7 +816,7 @@ a{color:inherit;text-decoration:none}
 .bt-name.rd2{color:#E5382E}
 .bt-sub{font-family:var(--label);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--mute);margin-top:8px}
 #ecoHero .core-labels{position:absolute;inset:0;z-index:2;pointer-events:none}
-#ecoHero .cl{position:absolute;transform:translate(-50%,-50%);font-family:var(--label);font-size:10px;letter-spacing:.16em;text-transform:uppercase;white-space:nowrap;opacity:0;transition:opacity 1s var(--e-out);text-shadow:0 2px 14px rgba(4,3,8,.95)}
+#ecoHero .cl{position:absolute;transform:translate(-50%,-50%);font-family:var(--label);font-size:10px;letter-spacing:.16em;text-transform:uppercase;white-space:nowrap;opacity:0;transition:opacity var(--t-enter) var(--e-out);text-shadow:0 2px 14px rgba(4,3,8,.95)}
 #ecoHero .cl-t{left:50%;top:37%;color:#D4AF5A}
 #ecoHero .cl-b{left:50%;top:63%;color:#43C08A}
 #ecoHero .cl-l{left:23%;top:50%;color:#3AA0DD}
@@ -793,7 +833,7 @@ a{color:inherit;text-decoration:none}
 #ecoHero .birth-title h1{font-family:var(--serif);font-weight:600;font-size:clamp(28px,5.4vw,54px);color:var(--white);line-height:1.05;margin-top:16px;text-shadow:0 2px 34px rgba(4,3,8,.85)}
 #ecoHero .birth-title p{max-width:560px;margin:0 auto;color:var(--text);font-size:15px;line-height:1.6;text-shadow:0 2px 30px rgba(4,3,8,.85)}
 .birth-labels{position:absolute;inset:0;z-index:2;pointer-events:none}
-.bl{position:absolute;transform:translate(-50%,-50%);white-space:nowrap;text-align:center;opacity:0;transition:opacity 1.1s var(--e-out);text-shadow:0 2px 22px rgba(4,3,8,.92)}
+.bl{position:absolute;transform:translate(-50%,-50%);white-space:nowrap;text-align:center;opacity:0;transition:opacity var(--t-scene) var(--e-out);text-shadow:0 2px 22px rgba(4,3,8,.92)}
 #ecoHero.in .bl{opacity:1}
 .bl.big{font-family:var(--serif);font-weight:600;font-size:clamp(18px,3.2vw,27px);transition-delay:.6s}
 .bl.blA{color:var(--cyan)}
@@ -801,7 +841,7 @@ a{color:inherit;text-decoration:none}
 .bl.sm{font-family:var(--label);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--text);transition-delay:1.4s}
 #ecohalf #ecoHero.in .birth-title.bottom p{transition-delay:1.9s}
 #ecohalf .bridge{min-height:96svh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:60px 28px;gap:8px}
-#ecohalf .bridge p{font-family:var(--serif);font-weight:500;font-size:clamp(25px,4.6vw,48px);line-height:1.15;max-width:15ch;margin:0 auto;opacity:0;transform:translateY(26px);transition:opacity 1.1s var(--e-out),transform 1.1s var(--e-out);text-shadow:0 2px 34px rgba(4,3,8,.8)}
+#ecohalf .bridge p{font-family:var(--serif);font-weight:500;font-size:clamp(25px,4.6vw,48px);line-height:1.15;max-width:15ch;margin:0 auto;opacity:0;transform:translateY(26px);transition:opacity var(--t-scene) var(--e-out),transform var(--t-scene) var(--e-out);text-shadow:0 2px 34px rgba(4,3,8,.8)}
 #ecohalf .bridge .l1{color:var(--text)}
 #ecohalf .bridge .l2{color:var(--gold)}
 #ecohalf .bridge.in .l1{opacity:1;transform:none}
