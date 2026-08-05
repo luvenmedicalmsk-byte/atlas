@@ -100,7 +100,32 @@ body{background:var(--bg);color:var(--white);font-family:var(--sans);-webkit-fon
 #brand{position:fixed;top:22px;left:26px;z-index:6;font-family:var(--label);font-weight:600;font-size:12px;letter-spacing:.3em;text-transform:uppercase;color:var(--cyan);opacity:0;transition:opacity .8s}
 
 #panels{position:fixed;z-index:4;pointer-events:none;top:0;bottom:0;right:0;width:min(410px,44vw);display:flex;align-items:center}
-.panel{position:absolute;right:4vw;width:100%;max-width:388px;opacity:0}
+/* ═══ КАРТОЧКА ВЫРАСТАЕТ ИЗ УЗЛА ═════════════════════════════════════
+   Раньше карточка просто проявлялась — читалась как элемент страницы,
+   наложенный поверх сцены. Теперь она разворачивается ОТ ЛЕВОГО КРАЯ,
+   со стороны узла: transform-origin у точки, а не в центре.
+
+   Масштаб и сдвиг задаются переменной --g, которую ставит скрипт из той
+   же величины, что и прозрачность — карточка растёт по мере подлёта
+   камеры, а не появляется скачком. */
+.panel{position:absolute;right:4vw;width:100%;max-width:388px;opacity:0;
+  transform-origin:left center;
+  transform:translateX(calc(-22px * (1 - var(--g,0)))) scale(calc(.9 + .1 * var(--g,0)))}
+/* Светящаяся нить от узла к карточке. Появляется раньше самой карточки:
+   сначала связь, потом содержимое. */
+.panel::before{content:'';position:absolute;left:-7vw;top:50%;height:1px;
+  width:calc(7vw * var(--g,0));
+  background:linear-gradient(90deg,transparent,var(--pfl,#D4AF5A));
+  opacity:calc(var(--g,0) * .55);pointer-events:none}
+/* Ореол вокруг карточки со стороны узла — свет от точки падает на
+   ближний край. */
+.panel .pcard{box-shadow:var(--sh-contact),0 30px 70px -40px rgba(0,0,0,.92),
+  inset 0 0 30px -20px var(--pfl,rgba(212,175,90,.5)),
+  calc(-1px * var(--g,0)) 0 calc(26px * var(--g,0)) calc(-8px) var(--pfl,#D4AF5A)}
+@media (prefers-reduced-motion: reduce){
+  .panel{transform:none}
+  .panel::before{display:none}
+}
 .pcard{position:relative;border-radius:16px;padding:28px 28px 24px;overflow:hidden;isolation:isolate;background-color:rgba(11,10,16,.95);background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='mp'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23mp)' opacity='0.5'/%3E%3C/svg%3E");background-blend-mode:overlay;border:1px solid var(--pfl,rgba(200,167,90,.34));box-shadow:var(--sh-contact),0 30px 70px -40px rgba(0,0,0,.92),inset 0 0 30px -20px var(--pfl,rgba(212,175,90,.3)),inset 0 1px 0 rgba(255,255,255,.05)}
 .pcard::after{display:none}
 .pcard>*{position:relative;z-index:1}
@@ -1506,7 +1531,11 @@ a{color:inherit;text-decoration:none}
     if(brand)brand.style.opacity=(yearsReveal*(1-pb)*(1-past)).toFixed(3);
     // panels
     var idx=Math.min(Math.max((scrollP-0.225)/0.65,0),1)*(HUB.length-1);
-    for(var i=0;i<panelEls.length;i++){var op=1-Math.min(Math.abs(idx-i)*1.8,1);op*=yearsReveal*(1-ease(Math.min(pb/0.42,1)));panelEls[i].style.opacity=(op<0?0:op).toFixed(3);}
+    for(var i=0;i<panelEls.length;i++){var op=1-Math.min(Math.abs(idx-i)*1.8,1);op*=yearsReveal*(1-ease(Math.min(pb/0.42,1)));var _o=(op<0?0:op);panelEls[i].style.opacity=_o.toFixed(3);
+   /* --g управляет ростом карточки, длиной нити и ореолом. Берётся из той
+      же величины, что прозрачность: карточка разворачивается ровно по мере
+      подлёта камеры к узлу и сворачивается, когда камера уходит. */
+   panelEls[i].style.setProperty('--g',(_o*_o).toFixed(3));}
     finalEl.style.opacity=(ease(Math.min(Math.max((pb-0.55)/0.45,0),1))*(1-past)).toFixed(3);
     if(finalA){var fa=ease(Math.min(Math.max((pb-0.55)/0.45,0),1));finalA.style.opacity=fa.toFixed(3);finalFine.style.opacity=fa.toFixed(3);}
     var yi=Math.round(idx);if(yi!==curYear&&yi>=0&&yi<YATMO.length&&yearsReveal>0.5){curYear=yi;atmo.style.background=YATMO[yi];}
@@ -1541,7 +1570,22 @@ a{color:inherit;text-decoration:none}
     // living light pulse
     pulseTarget*=0.86;pulse+=(pulseTarget-pulse)*0.25;fieldMat.uniforms.uPulse.value=pulse;flash.style.opacity=(pulse*0.05).toFixed(3);
     // hub / years reveal
-    for(var i=0;i<hubMats.length;i++){hubMats[i].opacity=yearsReveal*(1-pb);}
+    var nowT=performance.now()*0.001;
+ for(var i=0;i<hubMats.length;i++){(function(){
+   /* Узел, к которому подлетела камера, ЖИВЁТ: разгорается и пульсирует,
+      пока его карточка открыта. Раньше все узлы имели одинаковую яркость,
+      и связь «эта точка ↔ эта карточка» не читалась.
+
+      near — близость камеры к узлу, та же величина, что управляет
+      карточкой. Свечение и размер растут вместе с ней, поэтому точка
+      и карточка воспринимаются как одно целое. */
+   var near=1-Math.min(Math.abs(idx-i)*1.8,1); if(near<0)near=0;
+   var base=yearsReveal*(1-pb);
+   /* Пульсация только у активного узла — фоновые точки не мерцают. */
+   var beat=1+Math.sin(nowT*1.9+i)*0.09*near;
+   hubMats[i].opacity=base*(0.5+0.5*near);
+   hubMats[i].size=9*(1+near*0.55)*beat;
+ })();}
     spineMat.opacity=yearsReveal*0.55*(1-pb);
     for(var i=0;i<HUB.length;i++){var h=HUB[i];var pulse2=1+Math.sin(t*1.4+i)*0.14;h.mesh.material.size=(h.now?11:8)*pulse2;}
     // finale: connections glow, field dim, map appears
