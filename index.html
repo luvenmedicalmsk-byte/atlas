@@ -544,7 +544,7 @@ a{color:inherit;text-decoration:none}
     <div class="ev"><span class="d" style="--dc:var(--orange)"></span>Самый масштабный санкционный пакет против России в современной истории</div>
     <div class="ev"><span class="d" style="--dc:var(--purple)"></span>Взрывной рост генеративного ИИ: модели стали массовыми</div>
     <div class="ev"><span class="d" style="--dc:var(--society)"></span>Рост стоимости жизни во многих странах</div>
-    <div class="mile" style="--mc:var(--red)"><div class="mh">7 июня 2022</div><h4>Архив · база исследований</h4><p>Наблюдение становится системой. Сценарии, взаимосвязи и датированные гипотезы в одном месте.</p><div class="chips"><span class="chip">Сценарии</span><span class="chip">Прогнозы</span><span class="chip">Стратегии</span><span class="chip">Аналитика</span></div></div>
+    <div class="mile" style="--mc:var(--red)"><div class="mh">7 июня 2022</div><h4>Архив · база исследований</h4><p>Наблюдение становится системой. Сценарии, взаимосвязи и датированные гипотезы в одном месте.</p><div class="chips"><span class="chip">Сценарии</span><span class="chip">Прогнозы</span><span class="chip">Стратегии</span><span class="chip">Аналитика</span><span class="chip">Страны</span><span class="chip">Сообщество</span><span class="chip">Адаптация</span><span class="chip">Стратегические активы</span></div></div>
   </div></div>
   <div class="panel" data-i="3"><div class="pcard">
     <div class="yr">2024</div>
@@ -595,7 +595,7 @@ a{color:inherit;text-decoration:none}
   <section class="block nolink" style="--ac:var(--gold);--ag:rgba(212,175,90,.6)">
     <div class="mapbg"></div>
     <div class="num">Что такое Atlas</div>
-    <h2 class="def"><span class="cy">Atlas Intelligence</span> - это инженерная система, которая видит связи там, где остальные видят отдельные новости: собирает сигналы, выстраивает процессы, наблюдает 24/7 и возвращает человеку ясность картины.</h2>
+    <h2 class="def"><span class="cy">Atlas Intelligence</span> - это работающий инженерный ответ на системное утомление - фильтр, который отделяет сигнал от шума, формирует процессы, наблюдает 24/7 и защищает когнитивный ресурс человека.</h2>
   </section>
 
   <section class="block" style="--ac:var(--gold);--ag:rgba(212,175,90,.6)">
@@ -613,21 +613,6 @@ a{color:inherit;text-decoration:none}
       <li class="wide"><span class="gtick"><svg viewBox="0 0 24 24" fill="none" stroke="#D4AF5A" stroke-width="2.4"><path d="M4 12l5 5L20 6"/></svg></span>Страны с полными данными и в разработке</li>
     </ul>
     <div style="text-align:center"><a class="cta cd" role="button" onclick="var s=document.getElementById('tiers');if(s)s.scrollIntoView({behavior:'smooth',block:'start'});"><span class="cd-cap">Доступ открывается 6 августа, 15:00 МСК</span><b class="cd-time" id="cdTime">00 : 00 : 00</b></a></div>
-  </section>
-
-  <section class="block" style="--ac:var(--red);--ag:rgba(199,75,62,.6)">
-    <div class="num">Архив · с 2022 года</div>
-    <h2 class="def">Четыре года наблюдений, которые невозможно собрать задним числом.</h2>
-    <ul class="getlist" style="max-width:560px;grid-template-columns:1fr">
-      <li style="display:block"><b style="color:#D4AF5A;font-size:13px;letter-spacing:.04em">АНАЛИТИКА</b>
-        <div style="font-size:13px;color:#9fb0c4;line-height:1.6;margin-top:5px">Датированные гипотезы и сценарии. Видно, что было сказано заранее - и что из этого сбылось.</div></li>
-      <li style="display:block"><b style="color:#D4AF5A;font-size:13px;letter-spacing:.04em">СТРАНЫ</b>
-        <div style="font-size:13px;color:#9fb0c4;line-height:1.6;margin-top:5px">Профили с историей: как менялись риски, какие процессы шли годами, где накапливалось напряжение.</div></li>
-      <li style="display:block"><b style="color:#D4AF5A;font-size:13px;letter-spacing:.04em">СООБЩЕСТВО</b>
-        <div style="font-size:13px;color:#9fb0c4;line-height:1.6;margin-top:5px">Закрытый круг читателей, которые работают с рисками профессионально. Обсуждение без публичного шума.</div></li>
-      <li style="display:block"><b style="color:#D4AF5A;font-size:13px;letter-spacing:.04em">АДАПТАЦИЯ</b>
-        <div style="font-size:13px;color:#9fb0c4;line-height:1.6;margin-top:5px">Разборы, что делать при разных сценариях - для бизнеса и для частных решений.</div></li>
-    </ul>
   </section>
 
   <section class="block nolink" style="--ac:var(--cyan);--ag:rgba(31,170,204,.6)">
@@ -1163,9 +1148,14 @@ a{color:inherit;text-decoration:none}
   // ---------- spatial audio ----------
   var actx,master,enabled=false,actBus=null,pulseBus=null,actLevel=0,pulseTimer=0,tickFlip=false;
   function initAudio(){var AC=window.AudioContext||window.webkitAudioContext;if(!AC)return;actx=new AC();master=actx.createGain();master.gain.value=0;master.connect(actx.destination);
-    var lp=actx.createBiquadFilter();lp.type='lowpass';lp.frequency.value=360;lp.connect(master);
-    [55,82.4,110].forEach(function(f,i){var o=actx.createOscillator();o.type=i?'triangle':'sine';o.frequency.value=f;var g=actx.createGain();g.gain.value=0.03/(i+1);o.connect(g);g.connect(lp);o.start();
-      var l=actx.createOscillator();l.type='sine';l.frequency.value=0.05+i*0.02;var lg=actx.createGain();lg.gain.value=0.015;l.connect(lg);lg.connect(g.gain);l.start();});
+    // Фон был построен на 55 / 82.4 / 110 Гц через lowpass 360 - низкий глухой
+    // гул, который читается как тревога. Поднят на октаву и переведён в мажор:
+    // A2 110, C#3 138.59, E3 164.81 - открытое трезвучие вместо пустой квинты.
+    // Фильтр открыт до 900 Гц, чтобы звук дышал, а не давил.
+    var lp=actx.createBiquadFilter();lp.type='lowpass';lp.frequency.value=900;lp.connect(master);
+    [110,138.59,164.81,220].forEach(function(f,i){var o=actx.createOscillator();o.type=i?'sine':'triangle';o.frequency.value=f;var g=actx.createGain();g.gain.value=0.026/(i*0.7+1);o.connect(g);g.connect(lp);o.start();
+      // Медленное дыхание амплитуды: 0.04-0.1 Гц, период 10-25 секунд.
+      var l=actx.createOscillator();l.type='sine';l.frequency.value=0.04+i*0.021;var lg=actx.createGain();lg.gain.value=0.011;l.connect(lg);lg.connect(g.gain);l.start();});
     actBus=actx.createGain();actBus.gain.value=0;actBus.connect(master);
     pulseBus=actx.createGain();pulseBus.gain.value=0;pulseBus.connect(master);
   }
