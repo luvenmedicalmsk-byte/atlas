@@ -1734,52 +1734,7 @@ var pal2=[[31,170,204],[67,192,138],[224,138,56],[155,106,224],[199,75,62],[212,
 <script>(function(){var v=document.querySelector('.cmp-vid');if(!v)return;v.muted=true;v.setAttribute('muted','');function go(){try{var pr=v.play();if(pr&&pr.catch)pr.catch(function(){});}catch(e){}}go();if('IntersectionObserver' in window){var io=new IntersectionObserver(function(en){en.forEach(function(e){if(e.isIntersecting)go();});},{threshold:.05});io.observe(v);}['pointerdown','touchstart','scroll','wheel','keydown','click'].forEach(function(ev){window.addEventListener(ev,go,{passive:true});});document.addEventListener('visibilitychange',function(){if(!document.hidden)go();});})();</script>
 <script>(function(){var arc=document.getElementById("idxArc");if(!arc)return;var host=arc.closest(".block")||arc;function go(){arc.style.strokeDashoffset="177";}if("IntersectionObserver" in window){var io=new IntersectionObserver(function(en){en.forEach(function(e){if(e.isIntersecting){go();io.disconnect();}});},{threshold:.4});io.observe(host);}else go();})();</script>
 <script>(function(){var el=document.getElementById("cdTime");if(!el)return;var target=Date.UTC(2026,7,6,12,0,0);function z(n){return(n<10?"0":"")+n;}function tick(){var d=target-Date.now();if(d<=0){el.textContent="Доступ открыт";return;}var s=Math.floor(d/1000),days=Math.floor(s/86400),h=Math.floor(s%86400/3600),m=Math.floor(s%3600/60),ss=s%60;el.textContent=(days>0?days+"д ":"")+z(h)+" : "+z(m)+" : "+z(ss);}tick();setInterval(tick,1000);})();</script>
-<script>(function(){
-  // Документ открывается ПОВЕРХ страницы, а не разворачивается внутри блока:
-  // при развороте внутри пользователь не понимал, что произошло — контент
-  // просто уезжал вниз. Полноэкранный просмотрщик даёт явное состояние
-  // «я смотрю документ» и явный выход из него.
-  var dl=document.getElementById('docDl'); if(!dl) return;
-  var src=dl.getAttribute('href');
-  var full=document.getElementById('pdfFull'),
-      frm=document.getElementById('pfFrame'),
-      op=document.getElementById('pfOpen'),
-      pdl=document.getElementById('pfDl'),
-      x=document.getElementById('pfX'),
-      cover=document.getElementById('docCover'),
-      btn=document.getElementById('docToggle');
-  if(!full||!frm) return;
-  if(op) op.setAttribute('href',src);
-  if(pdl) pdl.setAttribute('href',src);
-  var openedBy=null;
-  function open(from){
-    openedBy=from||null;
-    // Источник подставляется при первом открытии: PDF весит около 200 КБ
-    // в base64, и грузить его до запроса незачем.
-    if(frm.getAttribute('src')==='about:blank') frm.setAttribute('src',src);
-    full.classList.add('on');
-    document.documentElement.style.overflow='hidden';
-    setTimeout(function(){ if(x) x.focus(); },60);
-  }
-  function close(){
-    full.classList.remove('on');
-    document.documentElement.style.overflow='';
-    if(openedBy&&openedBy.focus) openedBy.focus();
-  }
-  if(cover){
-    cover.addEventListener('click',function(){open(cover);});
-    // Обложка доступна с клавиатуры: это кнопка по смыслу, а не картинка.
-    cover.addEventListener('keydown',function(e){
-      if(e.key==='Enter'||e.key===' '){e.preventDefault();open(cover);}
-    });
-  }
-  if(btn) btn.addEventListener('click',function(){open(btn);});
-  if(x) x.addEventListener('click',close);
-  full.addEventListener('click',function(e){ if(e.target===full) close(); });
-  document.addEventListener('keydown',function(e){
-    if(e.key==='Escape'&&full.classList.contains('on')) close();
-  });
-})();</script>
+
 <script>(function(){
 var cv=document.getElementById('liveMap');if(!cv||typeof MAP==='undefined')return;
 var ctx=cv.getContext('2d'),host=cv.parentNode,DPR=Math.min(window.devicePixelRatio||1,2),W,H;
@@ -1810,6 +1765,61 @@ requestAnimationFrame(frame);})();</script>
   </div>
   <iframe id="pfFrame" title="Atlas Intelligence Platform Overview" src="about:blank"></iframe>
 </div>
+<script>(function(){
+  // Скрипт стоит ПОСЛЕ разметки оверлея. Раньше он шёл выше по документу,
+  // getElementById('pdfFull') возвращал null, функция выходила по return —
+  // и ни клик по обложке, ни кнопка не работали вовсе.
+  var dl=document.getElementById('docDl'); if(!dl) return;
+  var raw=dl.getAttribute('href');
+  var full=document.getElementById('pdfFull'),
+      frm=document.getElementById('pfFrame'),
+      op=document.getElementById('pfOpen'),
+      pdl=document.getElementById('pfDl'),
+      x=document.getElementById('pfX'),
+      cover=document.getElementById('docCover'),
+      btn=document.getElementById('docToggle');
+  if(!full||!frm) return;
+
+  // Safari на iOS ИГНОРИРУЕТ атрибут download у data: URI — файл не
+  // сохраняется. Blob-ссылка это ограничение снимает. Создаётся один раз
+  // и переиспользуется всеми тремя ссылками.
+  var url=raw;
+  try{
+    var b64=raw.split(',')[1];
+    var bin=atob(b64), len=bin.length, arr=new Uint8Array(len);
+    for(var q=0;q<len;q++) arr[q]=bin.charCodeAt(q);
+    url=URL.createObjectURL(new Blob([arr],{type:'application/pdf'}));
+    dl.setAttribute('href',url);
+  }catch(e){}
+  if(op) op.setAttribute('href',url);
+  if(pdl) pdl.setAttribute('href',url);
+
+  var openedBy=null;
+  function open(from){
+    openedBy=from||null;
+    if(frm.getAttribute('src')==='about:blank') frm.setAttribute('src',url);
+    full.classList.add('on');
+    document.documentElement.style.overflow='hidden';
+    setTimeout(function(){ if(x) x.focus(); },60);
+  }
+  function close(){
+    full.classList.remove('on');
+    document.documentElement.style.overflow='';
+    if(openedBy&&openedBy.focus) openedBy.focus();
+  }
+  if(cover){
+    cover.addEventListener('click',function(){open(cover);});
+    cover.addEventListener('keydown',function(e){
+      if(e.key==='Enter'||e.key===' '){e.preventDefault();open(cover);}
+    });
+  }
+  if(btn) btn.addEventListener('click',function(){open(btn);});
+  if(x) x.addEventListener('click',close);
+  full.addEventListener('click',function(e){ if(e.target===full) close(); });
+  document.addEventListener('keydown',function(e){
+    if(e.key==='Escape'&&full.classList.contains('on')) close();
+  });
+})();</script>
 <script>(function(){
   // Ход точки запускается один раз, когда блок попадает в кадр: если бы
   // анимация шла с загрузки страницы, к моменту прокрутки она уже
