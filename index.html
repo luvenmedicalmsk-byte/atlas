@@ -1142,22 +1142,64 @@ a{color:inherit;text-decoration:none}
     renderer.render(scene,camera);
   }
   compute();requestAnimationFrame(animate);
-  var raf;window.addEventListener('scroll',function(){if(raf)return;raf=requestAnimationFrame(function(){raf=0;compute();});},{passive:true});
+  var raf;window.addEventListener('scroll',function(){if(raf)return;raf=requestAnimationFrame(function(){raf=0;compute();
+    // Переключение звуковой сцены: 0 в первой половине, 1 во второй.
+    // Опора - положение блока #ecohalf относительно окна, а не проценты
+    // прокрутки: длина страницы меняется от устройства, а блок - якорь.
+    try{
+      var _eh=document.getElementById('ecohalf');
+      if(_eh){
+        var r=_eh.getBoundingClientRect(), h=window.innerHeight||1;
+        var t=Math.min(Math.max((h-r.top)/(h*0.85),0),1);
+        audioScene(t);
+      }
+    }catch(_e){}
+  });},{passive:true});
   window.addEventListener('resize',function(){W=window.innerWidth;H=window.innerHeight;renderer.setSize(W,H);camera.aspect=W/H;camera.updateProjectionMatrix();compute();});
 
   // ---------- spatial audio ----------
   var actx,master,enabled=false,actBus=null,pulseBus=null,actLevel=0,pulseTimer=0,tickFlip=false;
+  // Две звуковые сцены. Первая половина - наблюдение (сдержанный дрон),
+  // вторая - решение и покупка (светлее, выше, с движением).
+  // Одна и та же музыка на весь лендинг делала финальный экран таким же
+  // напряжённым, как ленту катастроф в начале.
+  var busA=null,busB=null,sceneMix=0;
   function initAudio(){var AC=window.AudioContext||window.webkitAudioContext;if(!AC)return;actx=new AC();master=actx.createGain();master.gain.value=0;master.connect(actx.destination);
     // Фон был построен на 55 / 82.4 / 110 Гц через lowpass 360 - низкий глухой
     // гул, который читается как тревога. Поднят на октаву и переведён в мажор:
     // A2 110, C#3 138.59, E3 164.81 - открытое трезвучие вместо пустой квинты.
     // Фильтр открыт до 900 Гц, чтобы звук дышал, а не давил.
-    var lp=actx.createBiquadFilter();lp.type='lowpass';lp.frequency.value=900;lp.connect(master);
+    busA=actx.createGain();busA.gain.value=1;busA.connect(master);
+    var lp=actx.createBiquadFilter();lp.type='lowpass';lp.frequency.value=900;lp.connect(busA);
     [110,138.59,164.81,220].forEach(function(f,i){var o=actx.createOscillator();o.type=i?'sine':'triangle';o.frequency.value=f;var g=actx.createGain();g.gain.value=0.026/(i*0.7+1);o.connect(g);g.connect(lp);o.start();
       // Медленное дыхание амплитуды: 0.04-0.1 Гц, период 10-25 секунд.
       var l=actx.createOscillator();l.type='sine';l.frequency.value=0.04+i*0.021;var lg=actx.createGain();lg.gain.value=0.011;l.connect(lg);lg.connect(g.gain);l.start();});
     actBus=actx.createGain();actBus.gain.value=0;actBus.connect(master);
     pulseBus=actx.createGain();pulseBus.gain.value=0;pulseBus.connect(master);
+
+    // ── СЦЕНА B: вторая половина страницы ───────────────────────────────
+    // Та же тональность (ля), но на октаву выше и с секстой F# - аккорд
+    // раскрывается вверх вместо того, чтобы держать основание.
+    // Фильтр 1600 Гц: воздух вместо гула.
+    busB=actx.createGain();busB.gain.value=0;busB.connect(master);
+    var lpB=actx.createBiquadFilter();lpB.type='lowpass';lpB.frequency.value=1600;lpB.connect(busB);
+    [220,277.18,329.63,369.99,440].forEach(function(f,i){
+      var o=actx.createOscillator();o.type='sine';o.frequency.value=f;
+      var g=actx.createGain();g.gain.value=0.019/(i*0.55+1);
+      o.connect(g);g.connect(lpB);o.start();
+      // Голоса дышат вразнобой - звук не стоит на месте, но и не пульсирует.
+      var l=actx.createOscillator();l.type='sine';l.frequency.value=0.031+i*0.017;
+      var lg=actx.createGain();lg.gain.value=0.009;l.connect(lg);lg.connect(g.gain);l.start();
+    });
+  }
+  // Кросс-фейд между сценами по положению на странице.
+  // Переход начинается там же, где заканчивается сцена наблюдения.
+  function audioScene(t){
+    if(!actx||!busA||!busB)return;
+    if(t===sceneMix)return; sceneMix=t;
+    var tc=actx.currentTime;
+    busA.gain.setTargetAtTime(1-t,tc,0.9);
+    busB.gain.setTargetAtTime(t,tc,0.9);
   }
   function pulseHit(){if(!enabled||!actx||!pulseBus)return;var t0=actx.currentTime;tickFlip=!tickFlip;
     var len=Math.floor(actx.sampleRate*0.03);var buf=actx.createBuffer(1,len,actx.sampleRate);var d=buf.getChannelData(0);
