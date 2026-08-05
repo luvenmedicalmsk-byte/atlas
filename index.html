@@ -408,7 +408,13 @@ a{color:inherit;text-decoration:none}
   background:radial-gradient(120% 80% at 50% 0%,#0e0d15 0%,#06050a 62%);
   display:none;flex-direction:column;opacity:0;transition:opacity .4s ease}
 /* Панель не должна перекрывать кнопку закрытия: у неё z-index ниже. */
-#pdfFull .bar{position:relative;z-index:4;padding-right:66px}
+/* Заголовок занимает всю первую строку, масштаб переносится на вторую
+   и прижимается влево. Раньше масштаб стоял справа в одной строке
+   с заголовком и попадал под круглую кнопку закрытия. */
+#pdfFull .bar{position:relative;z-index:4;padding-right:66px;
+  align-items:flex-start;row-gap:9px}
+#pdfFull .ttl{flex:0 0 100%}
+#pdfFull #pfZoom{margin-right:auto}
 #pdfFull.on{display:flex;opacity:1}
 #pdfFull .bar{display:flex;align-items:center;gap:8px;padding:12px 14px;flex-wrap:wrap;
   border-bottom:1px solid rgba(212,175,90,.12);background:rgba(6,5,10,.7);
