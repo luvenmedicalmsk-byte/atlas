@@ -340,8 +340,14 @@ body{background:var(--bg);color:var(--white);font-family:var(--sans);-webkit-fon
   50%{opacity:1;transform:scale(1)}
 }
 #chaos .wi-sep{color:rgba(203,213,225,.3)}
-#chaos .wi-h{font-size:clamp(19px,3.6vw,31px);line-height:1.28;
-  letter-spacing:-.006em;margin-bottom:18px}
+/* Слоган крупно, объяснение мельче: сначала возникает эмоция, потом
+   определение. Прежде сверху стояло определение, и первым, что видел
+   человек, была характеристика продукта, а не мысль. */
+#chaos .wi-h{font-size:clamp(27px,5.6vw,44px);line-height:1.14;
+  letter-spacing:-.018em;margin-bottom:11px;font-weight:600;color:#f0f4fa}
+#chaos .wi-s{font-size:clamp(13px,2.6vw,16px);line-height:1.5;
+  letter-spacing:-.002em;color:rgba(214,224,238,.66);margin-bottom:18px;
+  max-width:34ch}
 /* Счётчики: четыре показания в ряд, как на панели прибора. */
 
 
@@ -1208,7 +1214,7 @@ a{color:inherit;text-decoration:none}
 <div id="chaos">
   <div class="word wintro" data-b="0">
     <div class="wi-top"><span class="wi-dot"></span>Система активна<span class="wi-sep">·</span>реальное время</div>
-    <div class="wi-h">Глобальная аналитическая экосистема<br>мониторинга и оценки системных рисков</div>
+    <div class="wi-h">Будущее начинается с сигнала.</div><div class="wi-s">Глобальная аналитическая экосистема мониторинга и оценки системных рисков в режиме реального времени.</div>
     <div class="wi-tm">
       <div class="wi-tm-l">До закрытия набора</div>
       <div class="wi-tm-v" id="wiTimer">00:00:00</div>
