@@ -126,7 +126,7 @@ body{background:var(--bg);color:var(--white);font-family:var(--sans);-webkit-fon
   .panel{transform:none}
   .panel::before{display:none}
 }
-.pcard{position:relative;border-radius:16px;padding:28px 28px 24px;overflow:hidden;isolation:isolate;background-color:rgba(8,7,12,.985);background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='mp'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23mp)' opacity='0.5'/%3E%3C/svg%3E");background-blend-mode:overlay;border:1px solid var(--pfl,rgba(200,167,90,.34));box-shadow:var(--sh-contact),0 30px 70px -40px rgba(0,0,0,.92),inset 0 0 30px -20px var(--pfl,rgba(212,175,90,.3)),inset 0 1px 0 rgba(255,255,255,.05)}
+.pcard{position:relative;border-radius:16px;padding:28px 28px 24px;overflow:hidden;isolation:isolate;background-color:rgba(5,4,9,1);background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='mp'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23mp)' opacity='0.5'/%3E%3C/svg%3E");background-blend-mode:soft-light;border:1px solid var(--pfl,rgba(200,167,90,.34));box-shadow:var(--sh-contact),0 30px 70px -40px rgba(0,0,0,.92),inset 0 0 30px -20px var(--pfl,rgba(212,175,90,.3)),inset 0 1px 0 rgba(255,255,255,.05)}
 .pcard::after{display:none}
 .pcard>*{position:relative;z-index:1}
 .pcard .pfl{position:absolute;inset:-30%;z-index:0;filter:blur(50px);opacity:.5;pointer-events:none}
@@ -177,7 +177,7 @@ body{background:var(--bg);color:var(--white);font-family:var(--sans);-webkit-fon
 .mdash{display:grid;grid-template-columns:1fr 1fr;gap:1px;margin:2px 0 15px;
   background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.05);
   border-radius:9px;overflow:hidden}
-.mcell{background:rgba(6,5,10,.99);padding:9px 11px 8px;position:relative}
+.mcell{background:rgba(4,3,8,1);padding:9px 11px 8px;position:relative}
 /* Подпись показателя может не поместиться в одну строку при четырёх
    ячейках — уменьшенный кегль и перенос вместо обрезки. */
 .mlbl{white-space:normal;min-height:2.1em;display:flex;align-items:flex-end}
@@ -330,8 +330,18 @@ body{background:var(--bg);color:var(--white);font-family:var(--sans);-webkit-fon
    в нижней части кадра, и карточка над ним не перекрывает точку,
    к которой относится. Снизу она закрывала сам узел. */
   #panels{width:100%;right:0;left:0;bottom:auto;
-    top:calc(9vh + env(safe-area-inset-top));height:auto;
+    top:calc(7vh + env(safe-area-inset-top));height:auto;
     align-items:flex-start;padding-bottom:0}
+  /* Карточка выросла: четыре показателя, пять доменов и пояснение
+     не помещаются в экран. Ограничена по высоте и прокручивается
+     ВНУТРИ СЕБЯ — обрезать содержимое нельзя, а растягивать некуда. */
+  .panel{max-height:calc(100vh - 14vh - env(safe-area-inset-top) - env(safe-area-inset-bottom));
+    overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;
+    scrollbar-width:none}
+  .panel::-webkit-scrollbar{display:none}
+  /* События включаются ТОЛЬКО у открытой карточки: закрытые остаются
+     прозрачными для касаний, и полёт камеры свайпом не ломается. */
+  .panel.live{pointer-events:auto}
   /* Рост карточки сохраняется и на узком экране: центрирование и масштаб
    собраны в одном transform, иначе translateX(-50%) перебивал бы эффект.
    Точка роста — верхний край: карточка разворачивается вниз, от узла. */
