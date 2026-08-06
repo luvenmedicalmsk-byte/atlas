@@ -155,31 +155,6 @@ body{background:var(--bg);color:var(--white);font-family:var(--sans);-webkit-fon
   line-height:var(--lh-tight);letter-spacing:-.02em;margin-bottom:0;
   font-variant-numeric:tabular-nums}
 /* Метка над годом: узел графа и его номер в цепочке. */
-/* ═══ МИНИ-КАРТОЧКА СТАРТА ═══════════════════════════════════════════
-   Отдельный шаг между нижним полюсом оси и первым узлом хронологии:
-   сначала «здесь всё началось», потом мир вокруг этого момента.
-   Компактная — она не про данные, а про одну дату. */
-#startcard{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%) scale(.94);
-  z-index:5;width:min(340px,86vw);opacity:0;pointer-events:none;
-  transition:opacity var(--t-scene) var(--e-out),transform var(--t-scene) var(--e-out)}
-#startcard.on{opacity:1;transform:translate(-50%,-50%) scale(1)}
-#startcard .sc{position:relative;border-radius:14px;padding:22px 22px 20px;
-  background:rgba(6,5,10,.97);border:1px solid rgba(212,175,90,.34);
-  box-shadow:var(--sh-contact),0 30px 70px -40px rgba(0,0,0,.94),
-    inset 0 1px 0 rgba(212,175,90,.12),0 0 44px -22px rgba(212,175,90,.6);
-  text-align:left}
-#startcard .lbl{font-family:var(--label);font-size:8.5px;letter-spacing:.2em;
-  text-transform:uppercase;color:rgba(212,175,90,.78);margin-bottom:12px;
-  display:flex;align-items:center;gap:7px}
-#startcard .lbl::before{content:'';width:5px;height:5px;border-radius:50%;
-  background:var(--gold);box-shadow:0 0 8px var(--gold);flex:0 0 auto}
-#startcard h4{font-family:var(--serif);font-size:21px;color:#ecdfbe;font-weight:600;
-  line-height:1.15;margin-bottom:9px}
-#startcard .hnd{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11.5px;
-  color:var(--gold);opacity:.85;text-decoration:none;display:inline-block;margin-bottom:10px;
-  border-bottom:1px solid transparent;pointer-events:auto}
-#startcard .hnd:hover{opacity:1;border-bottom-color:var(--gold)}
-#startcard p{font-size:12.5px;color:#c3cbd8;line-height:1.55;margin:0}
 .pcard .yr-lbl{font-family:var(--label);font-size:8.5px;letter-spacing:.2em;
   text-transform:uppercase;color:rgba(212,175,90,.78);margin-bottom:7px;
   display:flex;align-items:center;gap:7px}
@@ -1112,18 +1087,9 @@ a{color:inherit;text-decoration:none}
   <div class="cue"><span>Вход</span><span class="bar"></span></div>
 </div>
 
-<div id="startcard">
-  <div class="sc">
-    <div class="lbl">6 августа 2018 · старт</div>
-    <h4>Запуск аналитического блога</h4>
-    <a class="hnd" href="https://t.me/_secret_truth" target="_blank" rel="noopener">@_secret_truth</a>
-    <p>Ещё до периода глобальной турбулентности 2020-х. С этого дня начинается всё, что вы увидите дальше.</p>
-  </div>
-</div>
-
 <div id="panels">
   <div class="panel" data-i="0"><div class="pcard">
-    <div class="yr-lbl">Узел 1 из 5 · Хронология</div><div class="yr">2018</div><div class="yr-rule"></div>
+    <div class="yr-lbl">Узел 1 из 5 · Хронология</div><div class="yr">2018</div><div class="yr-rule"></div><div class="ev-head">Что делали мы</div><div class="mile" style="--mc:var(--gold)"><div class="mh">6 августа · старт</div><h4>Запуск аналитического блога</h4><a class="mile-h" href="https://t.me/_secret_truth" target="_blank" rel="noopener">@_secret_truth</a><p>Ещё до периода глобальной турбулентности 2020-х.</p></div>
   </div></div><div class="ev-head">Показатели периода</div><div class="mdash"><div class="mcell"><div class="mlbl">Мировой ВВП</div><div class="mval up">+3.6%</div><svg class="spark" viewBox="0 0 150 26" preserveAspectRatio="none" style="--sc:#4ec98a"><path class="area" d="M0.0,24.0 L21.4,18.3 L42.9,12.6 L64.3,9.7 L85.7,6.9 L107.1,4.0 L128.6,4.0 L150.0,6.9 L150.0,26 L0,26 Z"/><path d="M0.0,24.0 L21.4,18.3 L42.9,12.6 L64.3,9.7 L85.7,6.9 L107.1,4.0 L128.6,4.0 L150.0,6.9" stroke="#4ec98a" style="--len:152"/></svg><div class="mdelta">ровный рост четвёртый год</div></div><div class="mcell"><div class="mlbl">Индекс риска</div><div class="mval ">38</div><svg class="spark" viewBox="0 0 150 26" preserveAspectRatio="none" style="--sc:#6f88ab"><path class="area" d="M0.0,19.0 L21.4,14.0 L42.9,24.0 L64.3,9.0 L85.7,4.0 L107.1,9.0 L128.6,4.0 L150.0,4.0 L150.0,26 L0,26 Z"/><path d="M0.0,19.0 L21.4,14.0 L42.9,24.0 L64.3,9.0 L85.7,4.0 L107.1,9.0 L128.6,4.0 L150.0,4.0" stroke="#6f88ab" style="--len:159"/></svg><div class="mdelta">фон, без всплесков</div></div><div class="mcell"><div class="mlbl">Торговля</div><div class="mval wr">−0.4%</div><svg class="spark" viewBox="0 0 150 26" preserveAspectRatio="none" style="--sc:#e0a33c"><path class="area" d="M0.0,4.0 L21.4,6.2 L42.9,10.1 L64.3,14.0 L85.7,17.9 L107.1,20.7 L128.6,22.3 L150.0,24.0 L150.0,26 L0,26 Z"/><path d="M0.0,4.0 L21.4,6.2 L42.9,10.1 L64.3,14.0 L85.7,17.9 L107.1,20.7 L128.6,22.3 L150.0,24.0" stroke="#e0a33c" style="--len:151"/></svg><div class="mdelta">первые пошлины</div></div><div class="mcell"><div class="mlbl">Киберриски</div><div class="mval wr">+21%</div><svg class="spark" viewBox="0 0 150 26" preserveAspectRatio="none" style="--sc:#e0a33c"><path class="area" d="M0.0,24.0 L21.4,20.2 L42.9,15.4 L64.3,11.6 L85.7,8.8 L107.1,5.9 L128.6,5.0 L150.0,4.0 L150.0,26 L0,26 Z"/><path d="M0.0,24.0 L21.4,20.2 L42.9,15.4 L64.3,11.6 L85.7,8.8 L107.1,5.9 L128.6,5.0 L150.0,4.0" stroke="#e0a33c" style="--len:152"/></svg><div class="mdelta">рост числа инцидентов</div></div></div><div class="ev-head">Оценка по доменам</div><div class="dsc"><div class="drow"><div class="dnm">Климат</div><div class="dbar" style="--dc:#22c55e"><i style="--v:68"></i></div><div class="dvl">68</div></div><div class="drow"><div class="dnm">Геополитика</div><div class="dbar" style="--dc:#f97316"><i style="--v:71"></i></div><div class="dvl">71</div></div><div class="drow"><div class="dnm">Экономика</div><div class="dbar" style="--dc:#38bdf8"><i style="--v:62"></i></div><div class="dvl">62</div></div><div class="drow"><div class="dnm">Технологии</div><div class="dbar" style="--dc:#a855f7"><i style="--v:56"></i></div><div class="dvl">56</div></div><div class="drow"><div class="dnm">Социум</div><div class="dbar" style="--dc:#ef4444"><i style="--v:54"></i></div><div class="dvl">54</div></div><div class="dsum"><span class="l">Интегральный системный индекс</span><span class="v">62<small>/100</small></span></div></div><div class="ev-head">Почему этот год важен</div><div class="dwhy">Точка перехода от относительно стабильного мира 2010-х к эпохе накопления системных рисков. Одновременно усилились климатические экстремумы, торговое противостояние США и Китая, технологическое разделение мира, ослабление глобализации и рост поляризации.</div>
     
   <div class="panel" data-i="1"><div class="pcard">
@@ -1548,7 +1514,6 @@ a{color:inherit;text-decoration:none}
   var chaos=document.getElementById('chaos'),finalEl=document.getElementById('final'),atmo=document.getElementById('atmo'),flash=document.getElementById('flash'),brand=document.getElementById('brand');
   var words=[].slice.call(document.querySelectorAll('#chaos .word'));
   var panelEls=[].slice.call(document.querySelectorAll('.panel'));
- var startCard=document.getElementById('startcard');
   var finalA=finalEl.querySelector('a'),finalFine=finalEl.querySelector('.fine');
 
   if(typeof THREE==='undefined'){var _f=document.getElementById('fallback');
@@ -1728,15 +1693,6 @@ scene.add(gNodes);
     travelT=Math.min(Math.max((scrollP-0.02)/0.84,0),1);
     pb=ease(Math.min(Math.max((scrollP-0.83)/0.17,0),1));
     yearsReveal=ease(Math.min(Math.max((scrollP-0.205)/0.05,0),1));
-   /* Мини-карточка старта живёт в окне между нижним полюсом оси и первым
-      узлом хронологии: 0.150-0.215 по прокрутке. Первая панель года
-      появляется с 0.225, поэтому они не пересекаются — сначала «здесь всё
-      началось», потом мир вокруг этой даты. */
-   if(startCard){
-     var _sc=Math.min(Math.max((scrollP-0.150)/0.028,0),1)
-            *(1-Math.min(Math.max((scrollP-0.196)/0.019,0),1));
-     if(_sc>0.5) startCard.classList.add('on'); else startCard.classList.remove('on');
-   }
     // chaos words
     var bands=[[0.0,0.032],[0.032,0.064],[0.064,0.096],[0.096,0.13],[0.13,0.17],[0.17,0.215]];
     for(var i=0;i<words.length;i++){var a=bands[i][0],b=bands[i][1],mid=(a+b)/2,half=(b-a)/2;var o=1-Math.min(Math.abs(scrollP-mid)/half,1);words[i].style.opacity=(scrollP<0.235?o:0).toFixed(3);}
