@@ -137,12 +137,42 @@ body{background:var(--bg);color:var(--white);font-family:var(--sans);-webkit-fon
 .pcard .pfl i:nth-child(2),.mile .pfl i:nth-child(2){right:-6%;bottom:-8%;animation:pfb 17s var(--e-soft) infinite}
 @keyframes pfa{0%,100%{transform:translate(-6%,4%) scale(1)}50%{transform:translate(38%,-16%) scale(1.42)}}
 @keyframes pfb{0%,100%{transform:translate(6%,-4%) scale(1.1)}50%{transform:translate(-32%,26%) scale(1.55)}}
-.mile{position:relative;overflow:hidden;isolation:isolate}
+/* Веха — отдельный сектор панели: то, что делали мы, отделено от того,
+   что происходило в мире. Левая полоса цветом узла привязывает сектор
+   к своему году. */
+.mile{position:relative;overflow:hidden;isolation:isolate;
+  border-left:2px solid var(--mc,#D4AF5A);padding-left:14px;
+  background:linear-gradient(90deg,rgba(255,255,255,.022),transparent 42%)}
 .mile>*{position:relative;z-index:1}
 .pcard .pfl,.mile .pfl{display:none!important}
 @keyframes holo{0%{background-position:120% 0}100%{background-position:-40% 0}}
 .pcard>*{position:relative;z-index:1}
-.pcard .yr{font-family:var(--serif);font-size:46px;font-weight:600;color:var(--gold);line-height:1.5;margin-bottom:16px}
+.pcard /* ═══ КАРТОЧКА КАК ПАНЕЛЬ АНАЛИТИЧЕСКОЙ СТАНЦИИ ══════════════════════
+   Год выглядел как заголовок статьи. В аналитической станции это
+   ПОКАЗАНИЕ: над ним техническая метка, под ним — линия отсчёта.
+   Интерлиньяж 1.5 у 46px давал огромную дыру — приведён к --lh-tight. */
+.yr{font-family:var(--serif);font-size:46px;font-weight:600;color:var(--gold);
+  line-height:var(--lh-tight);letter-spacing:-.02em;margin-bottom:0;
+  font-variant-numeric:tabular-nums}
+/* Метка над годом: узел графа и его номер в цепочке. */
+.pcard .yr-lbl{font-family:var(--label);font-size:8px;letter-spacing:.24em;
+  text-transform:uppercase;color:rgba(212,175,90,.5);margin-bottom:7px;
+  display:flex;align-items:center;gap:7px}
+.pcard .yr-lbl::before{content:'';width:5px;height:5px;border-radius:50%;
+  background:var(--pfl,#D4AF5A);box-shadow:0 0 8px var(--pfl,#D4AF5A);flex:0 0 auto}
+/* Линия отсчёта под показанием: отделяет значение от данных. */
+.pcard .yr-rule{height:1px;margin:14px 0 15px;
+  background:linear-gradient(90deg,var(--pfl,#D4AF5A),rgba(255,255,255,.05) 62%,transparent)}
+/* Заголовок группы данных. */
+.pcard .ev-head{font-family:var(--label);font-size:8px;letter-spacing:.24em;
+  text-transform:uppercase;color:rgba(203,213,225,.34);margin-bottom:9px}
+/* Строки данных: моноширинный отступ слева, как в приборной ленте. */
+.ev{padding:4px 0 4px 2px}
+/* Контурное свечение панели по периметру — станция под напряжением. */
+.pcard::after{content:'';position:absolute;inset:0;border-radius:16px;
+  pointer-events:none;z-index:2;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.04),
+             inset 0 0 22px -14px var(--pfl,#D4AF5A)}
 .ev{display:flex;gap:8px;align-items:flex-start;font-size:13px;color:var(--text);line-height:1.5;padding:3px 0}
 .ev .d{flex:0 0 auto;width:7px;height:7px;border-radius:50%;margin-top:8px;background:var(--dc,#888);box-shadow:0 0 7px 0 var(--dc,#888)}
 .mile{margin-top:16px;padding:16px;border-radius:11px;border:1px solid var(--mc,rgba(200,167,90,.3));background:rgba(255,255,255,.02)}
@@ -944,14 +974,14 @@ a{color:inherit;text-decoration:none}
 
 <div id="panels">
   <div class="panel" data-i="0"><div class="pcard">
-    <div class="yr">2018</div>
+    <div class="yr-lbl">Узел 1 из 5 · Хронология</div><div class="yr">2018</div><div class="yr-rule"></div><div class="ev-head">Что происходило</div>
     <div class="ev"><span class="d" style="--dc:var(--blue)"></span>Первые серьёзные признаки замедления мировой экономики</div>
     <div class="ev"><span class="d" style="--dc:var(--blue)"></span>Начало торговой войны США и Китая</div>
     <div class="ev"><span class="d" style="--dc:var(--green)"></span>Активное обсуждение энергетического перехода</div>
-    <div class="mile" style="--mc:var(--gold)"><div class="mh">6 августа · старт</div><h4>Запуск аналитического блога</h4><p>Ещё до периода глобальной турбулентности 2020-х.</p></div>
+    <div class="ev-head" style="margin-top:17px">Что делали мы</div><div class="mile" style="--mc:var(--gold)"><div class="mh">6 августа · старт</div><h4>Запуск аналитического блога</h4><p>Ещё до периода глобальной турбулентности 2020-х.</p></div>
   </div></div>
   <div class="panel" data-i="1"><div class="pcard">
-    <div class="yr">2020</div>
+    <div class="yr-lbl">Узел 2 из 5 · Хронология</div><div class="yr">2020</div><div class="yr-rule"></div><div class="ev-head">Что происходило</div>
     <div class="ev"><span class="d" style="--dc:var(--orange)"></span>Глобальные локдауны COVID-19 и закрытие границ</div>
     <div class="ev"><span class="d" style="--dc:var(--blue)"></span>Самая глубокая мировая рецессия со времён Второй мировой</div>
     <div class="ev"><span class="d" style="--dc:var(--blue)"></span>Начало масштабных сбоев глобальных цепочек поставок</div>
@@ -959,7 +989,7 @@ a{color:inherit;text-decoration:none}
     <div class="ev"><span class="d" style="--dc:var(--society)"></span>Ухудшение психического благополучия из-за ограничений и неопределённости</div>
   </div></div>
   <div class="panel" data-i="2"><div class="pcard">
-    <div class="yr">2022</div>
+    <div class="yr-lbl">Узел 3 из 5 · Хронология</div><div class="yr">2022</div><div class="yr-rule"></div><div class="ev-head">Что происходило</div>
     <div class="ev"><span class="d" style="--dc:var(--orange)"></span>Начало полномасштабного конфликта России и Украины</div>
     <div class="ev"><span class="d" style="--dc:var(--blue)"></span>Энергетический кризис в Европе</div>
     <div class="ev"><span class="d" style="--dc:var(--blue)"></span>Глобальный всплеск инфляции</div>
@@ -967,22 +997,22 @@ a{color:inherit;text-decoration:none}
     <div class="ev"><span class="d" style="--dc:var(--orange)"></span>Самый масштабный санкционный пакет против России в современной истории</div>
     <div class="ev"><span class="d" style="--dc:var(--purple)"></span>Взрывной рост генеративного ИИ: модели стали массовыми</div>
     <div class="ev"><span class="d" style="--dc:var(--society)"></span>Рост стоимости жизни во многих странах</div>
-    <div class="mile" style="--mc:var(--red)"><div class="mh">7 июня 2022</div><h4>Архив · база исследований</h4><p>Наблюдение становится системой. Сценарии, взаимосвязи и датированные гипотезы в одном месте.</p><div class="chips"><span class="chip">Сценарии</span><span class="chip">Прогнозы</span><span class="chip">Стратегии</span><span class="chip">Аналитика</span><span class="chip">Страны</span><span class="chip">Сообщество</span><span class="chip">Адаптация</span><span class="chip">Стратегические активы</span></div></div>
+    <div class="ev-head" style="margin-top:17px">Что делали мы</div><div class="mile" style="--mc:var(--red)"><div class="mh">7 июня 2022</div><h4>Архив · база исследований</h4><p>Наблюдение становится системой. Сценарии, взаимосвязи и датированные гипотезы в одном месте.</p><div class="chips"><span class="chip">Сценарии</span><span class="chip">Прогнозы</span><span class="chip">Стратегии</span><span class="chip">Аналитика</span><span class="chip">Страны</span><span class="chip">Сообщество</span><span class="chip">Адаптация</span><span class="chip">Стратегические активы</span></div></div>
   </div></div>
   <div class="panel" data-i="3"><div class="pcard">
-    <div class="yr">2024</div>
+    <div class="yr-lbl">Узел 4 из 5 · Хронология</div><div class="yr">2024</div><div class="yr-rule"></div><div class="ev-head">Что происходило</div>
     <div class="ev"><span class="d" style="--dc:var(--blue)"></span>Усиление геополитической фрагментации мировой экономики</div>
     <div class="ev"><span class="d" style="--dc:var(--orange)"></span>Нарастание напряжённости конфликтов в Украине и на Ближнем Востоке и их влияние на безопасность и экономику</div>
     <div class="ev"><span class="d" style="--dc:var(--purple)"></span>Массовое внедрение ИИ в бизнес и государственный сектор</div>
     <div class="ev"><span class="d" style="--dc:var(--green)"></span>Рост числа климатических катастроф</div>
   </div></div>
   <div class="panel" data-i="4"><div class="pcard">
-    <div class="yr">2026</div>
+    <div class="yr-lbl">Узел 5 из 5 · Хронология</div><div class="yr">2026</div><div class="yr-rule"></div><div class="ev-head">Что происходило</div>
     <div class="ev"><span class="d" style="--dc:var(--blue)"></span>Мировая экономика остаётся в условиях высокой неопределённости</div>
     <div class="ev"><span class="d" style="--dc:var(--green)"></span>Сильные волны жары, засухи и лесные пожары в Европе, Северной Америке и других регионах</div>
     <div class="ev"><span class="d" style="--dc:var(--orange)"></span>Любая нестабильность в Ормузском проливе немедленно отражается на нефтяном рынке</div>
     <div class="ev"><span class="d" style="--dc:var(--purple)"></span>Продолжаются инвестиции в атомную энергетику, СПГ и возобновляемые источники</div>
-    <div class="mile" style="--mc:var(--cyan)"><div class="mh">7 июня 2026</div><h4>Atlas Intelligence · выход в автоматический режим</h4><p>Ручной анализ превращается в детерминированную платформу сигналов. Не лента, а аналитический аппарат.</p><div class="chips"><span class="chip">5 доменов</span><span class="chip">37 движков</span><span class="chip">Композитный индекс</span><span class="chip">Радар сигналов</span><span class="chip">Каскад процессов</span><span class="chip">Аналитические гипотезы</span><span class="chip">Сценарии</span><span class="chip">Страны в разработке</span></div></div>
+    <div class="ev-head" style="margin-top:17px">Что делали мы</div><div class="mile" style="--mc:var(--cyan)"><div class="mh">7 июня 2026</div><h4>Atlas Intelligence · выход в автоматический режим</h4><p>Ручной анализ превращается в детерминированную платформу сигналов. Не лента, а аналитический аппарат.</p><div class="chips"><span class="chip">5 доменов</span><span class="chip">37 движков</span><span class="chip">Композитный индекс</span><span class="chip">Радар сигналов</span><span class="chip">Каскад процессов</span><span class="chip">Аналитические гипотезы</span><span class="chip">Сценарии</span><span class="chip">Страны в разработке</span></div></div>
   </div></div>
 </div>
 
