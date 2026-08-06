@@ -126,7 +126,7 @@ body{background:var(--bg);color:var(--white);font-family:var(--sans);-webkit-fon
   .panel{transform:none}
   .panel::before{display:none}
 }
-.pcard{position:relative;border-radius:16px;padding:28px 28px 24px;overflow:hidden;isolation:isolate;background-color:rgba(11,10,16,.95);background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='mp'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23mp)' opacity='0.5'/%3E%3C/svg%3E");background-blend-mode:overlay;border:1px solid var(--pfl,rgba(200,167,90,.34));box-shadow:var(--sh-contact),0 30px 70px -40px rgba(0,0,0,.92),inset 0 0 30px -20px var(--pfl,rgba(212,175,90,.3)),inset 0 1px 0 rgba(255,255,255,.05)}
+.pcard{position:relative;border-radius:16px;padding:28px 28px 24px;overflow:hidden;isolation:isolate;background-color:rgba(8,7,12,.985);background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='mp'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23mp)' opacity='0.5'/%3E%3C/svg%3E");background-blend-mode:overlay;border:1px solid var(--pfl,rgba(200,167,90,.34));box-shadow:var(--sh-contact),0 30px 70px -40px rgba(0,0,0,.92),inset 0 0 30px -20px var(--pfl,rgba(212,175,90,.3)),inset 0 1px 0 rgba(255,255,255,.05)}
 .pcard::after{display:none}
 .pcard>*{position:relative;z-index:1}
 .pcard .pfl{position:absolute;inset:-30%;z-index:0;filter:blur(50px);opacity:.5;pointer-events:none}
@@ -155,8 +155,8 @@ body{background:var(--bg);color:var(--white);font-family:var(--sans);-webkit-fon
   line-height:var(--lh-tight);letter-spacing:-.02em;margin-bottom:0;
   font-variant-numeric:tabular-nums}
 /* Метка над годом: узел графа и его номер в цепочке. */
-.pcard .yr-lbl{font-family:var(--label);font-size:8px;letter-spacing:.24em;
-  text-transform:uppercase;color:rgba(212,175,90,.5);margin-bottom:7px;
+.pcard .yr-lbl{font-family:var(--label);font-size:8.5px;letter-spacing:.2em;
+  text-transform:uppercase;color:rgba(212,175,90,.78);margin-bottom:7px;
   display:flex;align-items:center;gap:7px}
 .pcard .yr-lbl::before{content:'';width:5px;height:5px;border-radius:50%;
   background:var(--pfl,#D4AF5A);box-shadow:0 0 8px var(--pfl,#D4AF5A);flex:0 0 auto}
@@ -173,14 +173,15 @@ body{background:var(--bg);color:var(--white);font-family:var(--sans);-webkit-fon
 .mdash{display:grid;grid-template-columns:1fr 1fr;gap:1px;margin:2px 0 15px;
   background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.05);
   border-radius:9px;overflow:hidden}
-.mcell{background:rgba(9,8,14,.92);padding:9px 11px 8px;position:relative}
+.mcell{background:rgba(6,5,10,.99);padding:9px 11px 8px;position:relative}
 /* Подпись показателя может не поместиться в одну строку при четырёх
    ячейках — уменьшенный кегль и перенос вместо обрезки. */
 .mlbl{white-space:normal;min-height:2.1em;display:flex;align-items:flex-end}
 .mcell.wide{grid-column:1 / -1}
-.mlbl{font-family:var(--label);font-size:7.5px;letter-spacing:.2em;
-  text-transform:uppercase;color:rgba(203,213,225,.36);margin-bottom:5px;
-  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+/* Подписи были 36% прозрачности — на плотном фоне это уже нечитаемо.
+   Подняты до 62% и увеличены на полпункта. */
+.mlbl{font-family:var(--label);font-size:8px;letter-spacing:.18em;
+  text-transform:uppercase;color:rgba(214,224,238,.62);margin-bottom:5px}
 .mval{font-family:var(--serif);font-size:18px;font-weight:600;line-height:1;
   color:#e9f0fa;font-variant-numeric:tabular-nums;
   /* Число появляется снизу вверх, как перекатывается разряд на приборе. */
@@ -189,8 +190,8 @@ body{background:var(--bg);color:var(--white);font-family:var(--sans);-webkit-fon
 .mval.up{color:#4ec98a}
 .mval.dn{color:#e0574f}
 .mval.wr{color:#e0a33c}
-.mdelta{font-family:var(--label);font-size:8px;letter-spacing:.06em;
-  color:rgba(203,213,225,.42);margin-top:3px;
+.mdelta{font-family:var(--label);font-size:8.5px;letter-spacing:.05em;
+  color:rgba(214,224,238,.66);margin-top:4px;
   opacity:0;transition:opacity var(--t-scene) var(--e-out)}
 /* Спарклайн: линия дорисовывается слева направо, а не появляется целиком. */
 .spark{display:block;width:100%;height:22px;margin-top:6px;overflow:visible}
@@ -220,8 +221,8 @@ body{background:var(--bg);color:var(--white);font-family:var(--sans);-webkit-fon
   .spark path{stroke-dashoffset:0;transition:none}
   .spark .area{opacity:.1}
 }
-.pcard .ev-head{font-family:var(--label);font-size:8px;letter-spacing:.24em;
-  text-transform:uppercase;color:rgba(203,213,225,.34);margin-bottom:9px}
+.pcard .ev-head{font-family:var(--label);font-size:8.5px;letter-spacing:.2em;
+  text-transform:uppercase;color:rgba(214,224,238,.58);margin-bottom:9px}
 /* Строки данных: моноширинный отступ слева, как в приборной ленте. */
 .ev{padding:4px 0 4px 2px}
 /* Контурное свечение панели по периметру — станция под напряжением. */
@@ -229,12 +230,12 @@ body{background:var(--bg);color:var(--white);font-family:var(--sans);-webkit-fon
   pointer-events:none;z-index:2;
   box-shadow:inset 0 0 0 1px rgba(255,255,255,.04),
              inset 0 0 22px -14px var(--pfl,#D4AF5A)}
-.ev{display:flex;gap:8px;align-items:flex-start;font-size:13px;color:var(--text);line-height:1.5;padding:3px 0}
+.ev{display:flex;gap:8px;align-items:flex-start;font-size:13px;color:#e2e8f2;line-height:1.5;padding:3px 0}
 .ev .d{flex:0 0 auto;width:7px;height:7px;border-radius:50%;margin-top:8px;background:var(--dc,#888);box-shadow:0 0 7px 0 var(--dc,#888)}
 .mile{margin-top:16px;padding:16px;border-radius:11px;border:1px solid var(--mc,rgba(200,167,90,.3));background:rgba(255,255,255,.02)}
 .mile .mh{font-family:var(--label);font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--mc,var(--gold));font-weight:600;margin-bottom:8px}
 .mile h4{font-family:var(--serif);font-size:20px;color:var(--white);font-weight:600;line-height:1.1;margin-bottom:8px}
-.mile p{font-size:12px;color:var(--mute);line-height:1.5}
+.mile p{font-size:12.5px;color:#c3cbd8;line-height:1.55}
 /* Имя канала — идентификатор, а не проза: моноширинный набор и цвет узла.
    Отдельной строкой между заголовком и пояснением, чтобы читалось как
    реквизит вехи. */
