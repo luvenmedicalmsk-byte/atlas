@@ -2839,5 +2839,27 @@ requestAnimationFrame(frame);})();</script>
   }
   tick();
 })();</script>
+<!-- Cloudflare Web Analytics.
+     Без cookies и без сбора персональных данных: согласие пользователя
+     по GDPR не требуется, баннер не нужен.
+
+     ТОКЕН НАДО ПОДСТАВИТЬ. Где взять:
+     dash.cloudflare.com → Analytics & Logs → Web Analytics
+     → Add a site → домен atlas.secrett-archive.com
+     → Cloudflare выдаст сниппет, оттуда взять значение token
+     и заменить им ЗАМЕНИТЬ_ТОКЕН ниже.
+
+     Пока стоит заглушка, скрипт не грузится: условие ниже
+     проверяет, что токен подставлен, и без него ничего не делает.
+     Так пустой запрос не уходит и в консоли нет ошибки. -->
+<script>(function(){
+  var TOKEN = 'ЗАМЕНИТЬ_ТОКЕН';
+  if (TOKEN.indexOf('ЗАМЕНИТЬ') === 0) return;
+  var s = document.createElement('script');
+  s.defer = true;
+  s.src = 'https://static.cloudflareinsights.com/beacon.min.js';
+  s.setAttribute('data-cf-beacon', '{"token":"' + TOKEN + '"}');
+  document.head.appendChild(s);
+})();</script>
 </body>
 </html>
