@@ -88,7 +88,7 @@ body{background:var(--bg);color:var(--white);font-family:var(--sans);-webkit-fon
 #vig{position:fixed;inset:0;z-index:1;pointer-events:none;background:radial-gradient(122% 92% at 50% 50%,transparent 40%,rgba(4,3,8,.72) 100%)}
 
 #chaos{position:fixed;inset:0;z-index:5;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:28px;pointer-events:none}
-#chaos .word{position:absolute;left:0;right:0;top:26vh;font-family:var(--sans);font-weight:600;font-size:clamp(34px,7.4vw,78px);color:var(--white);opacity:0;line-height:1.15;letter-spacing:-.01em;padding:0 20px;text-align:center;text-shadow:0 2px 30px rgba(4,3,8,.92),0 0 54px rgba(4,3,8,.6)}
+#chaos .word{position:absolute;left:0;right:0;top:46vh;font-family:var(--sans);font-weight:600;font-size:clamp(34px,7.4vw,78px);color:var(--white);opacity:0;line-height:1.15;letter-spacing:-.01em;padding:0 20px;text-align:center;text-shadow:0 2px 30px rgba(4,3,8,.92),0 0 54px rgba(4,3,8,.6)}
 #chaos .word.nm{font-size:clamp(32px,6.8vw,68px);line-height:1.05}
 #chaos .word.cyw{font-family:var(--serif);color:var(--cyan);font-weight:600;white-space:nowrap}
 #chaos .word.rdw{font-family:var(--serif);color:#E5382E;font-weight:600}
@@ -319,8 +319,13 @@ body{background:var(--bg);color:var(--white);font-family:var(--sans);-webkit-fon
    Формулировка задаёт рамку всему дальнейшему, поэтому подана не как
    фраза, а как показания системы: статус, определение, счётчики.
    Читатель с первого экрана видит работающий инструмент. */
+/* Вступление закреплено вверху экрана и держится всю хронологию:
+   это рамка происходящего, а не первый кадр, который сменяется
+   следующим. Остальные слова цепочки идут ниже, на своём месте. */
 #chaos .word.wintro{max-width:min(560px,90vw);text-align:left;
-  font-family:var(--sans);color:#dfe7f2}
+  font-family:var(--sans);color:#dfe7f2;
+  top:calc(7vh + env(safe-area-inset-top));left:50%;right:auto;
+  transform:translateX(-50%);padding:0 16px}
 /* Статусная строка: пульсирующая точка и режим работы. */
 #chaos .wi-top{display:flex;align-items:center;gap:8px;
   font-family:var(--label);font-size:9px;letter-spacing:.2em;
@@ -370,33 +375,6 @@ body{background:var(--bg);color:var(--white);font-family:var(--sans);-webkit-fon
 /* Полная экосистема выделена: её всего три. */
 #chaos .wi-lr.acc b{color:var(--gold)}
 #chaos .wi-lr.acc{background:rgba(10,8,14,.96)}
-/* ═══ ЗАКРЕПЛЁННАЯ ШАПКА ═════════════════════════════════════════════
-   Таймер и лицензии держатся вверху всю сцену, до последнего узла:
-   ограничение по времени должно быть перед глазами, пока человек
-   листает хронологию, а не мелькнуть на первом экране. */
-#topbar{position:fixed;left:50%;transform:translateX(-50%);
-  top:calc(14px + env(safe-area-inset-top));z-index:8;
-  width:min(560px,92vw);pointer-events:none;
-  opacity:0;transition:opacity var(--t-scene) var(--e-out)}
-#topbar.on{opacity:1}
-#topbar .tb-in{max-width:none;text-align:left}
-/* Компактнее, чем на первом экране: шапка соседствует с карточками
-   и не должна с ними спорить. */
-#topbar .wi-top{margin-bottom:9px;font-size:8.5px}
-#topbar .wi-h{display:none}
-#topbar .wi-tm{padding:9px 13px;margin-bottom:7px;
-  background:rgba(6,5,11,.97)}
-#topbar .wi-tm-v{font-size:clamp(21px,5vw,26px)}
-#topbar .wi-lic{background:rgba(255,255,255,.06)}
-#topbar .wi-lr{padding:7px 12px;grid-template-columns:28px 1fr;gap:9px;
-  background:rgba(6,5,11,.97)}
-#topbar .wi-lr b{font-size:16px}
-#topbar .wi-lr span{font-size:7.5px;letter-spacing:.11em;line-height:1.45}
-#topbar .wi-lr span i{font-size:7px}
-@media(max-width:760px){
-  #topbar{width:94vw;top:calc(10px + env(safe-area-inset-top))}
-  #topbar .wi-lr span br{display:none}
-}
 
 /* ═══ КОМПАКТНЫЙ РЕЖИМ ПАНЕЛИ ════════════════════════════════════════
    Панель с вехой И четырьмя блоками данных не помещается в экран.
@@ -446,7 +424,7 @@ body{background:var(--bg);color:var(--white);font-family:var(--sans);-webkit-fon
 #final a:hover{background:var(--gold);transform:translateY(-2px)}
 #final .fine{margin-top:20px;font-family:var(--label);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--mute-2);opacity:0}
 
-#snd{position:fixed;bottom:calc(20px + env(safe-area-inset-bottom));right:22px;left:auto;z-index:7;font-family:var(--label);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--mute-2);cursor:pointer;pointer-events:auto;user-select:none;display:flex;align-items:center;gap:8px;transition:color .3s}
+#snd{position:fixed;bottom:20px;left:22px;z-index:7;font-family:var(--label);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--mute-2);cursor:pointer;pointer-events:auto;user-select:none;display:flex;align-items:center;gap:8px;transition:color .3s}
 #snd:hover{color:var(--text)}
 #snd .ic{width:8px;height:8px;border-radius:50%;background:var(--mute-2);box-shadow:none;transition:background .3s,box-shadow .3s}
 #snd.on .ic{background:var(--cyan);box-shadow:0 0 8px 1px rgba(31,170,204,.7);animation:none}
@@ -476,9 +454,9 @@ body{background:var(--bg);color:var(--white);font-family:var(--sans);-webkit-fon
     height:calc(7vh * var(--g,0));
     background:linear-gradient(var(--pfl,#D4AF5A),transparent)}
   .pcard{padding:20px 20px 16px}.pcard .yr{font-size:32px;margin-bottom:12px}.ev{font-size:12px;padding:2px 0}
-  /* На узком экране звук тоже внизу справа: наверху теперь закреплена
-     шапка с таймером. */
-  #snd{top:auto;bottom:calc(16px + env(safe-area-inset-bottom));right:18px;left:auto}
+  /* Звук в правый НИЖНИЙ угол: сверху он спорил с закреплённой шапкой,
+     а внизу справа не пересекается ни с чем и остаётся под большим пальцем. */
+  #snd{top:auto;bottom:calc(18px + env(safe-area-inset-bottom));right:20px;left:auto}
 }
 @media(prefers-reduced-motion:reduce){#chaos .cue .bar,.pcard::after{animation:none}}
 </style>
@@ -1134,11 +1112,10 @@ a{color:inherit;text-decoration:none}
    Слой 1 — атмосфера: холодное свечение сверху от точки Atlas и тёплое
    снизу от Архива. Два источника задают вертикальную ось цветом, а не
    только линией. */
-#ecoHero::before{content:'';position:absolute;inset:0;z-index:0;pointer-events:none;
-  background:
-    radial-gradient(58% 34% at 50% 14%,rgba(31,170,204,.13),transparent 68%),
-    radial-gradient(52% 30% at 50% 88%,rgba(199,75,62,.11),transparent 66%),
-    radial-gradient(80% 52% at 50% 50%,rgba(212,175,90,.05),transparent 72%)}
+/* Цветные подложки убраны. Пятно за заголовком читалось как заливка
+   под текстом, а не как свет сцены: оно не двигалось вместе с графом
+   и выдавало себя статичностью. Осталась только виньетка, которая
+   собирает кадр, но ничего не подсвечивает. */
 /* Слой 2 — виньетка: края уходят в темноту, кадр собирается к центру.
    Это кинематографический приём: объектив всегда темнее по краям. */
 #ecoHero::after{content:'';position:absolute;inset:0;z-index:3;pointer-events:none;
@@ -1159,6 +1136,22 @@ a{color:inherit;text-decoration:none}
 #ecoHero.in .birth-bot .bt-sub{opacity:1;transform:none;transition-delay:1.7s}
 #ecoHero.in .birth-top{opacity:1;transform:none;transition-delay:.3s}
 #ecoHero.in .birth-bot{opacity:1;transform:none;transition-delay:1.3s}
+/* Волна расходится от заголовка один раз, при его появлении: кольцо
+   разворачивается и гаснет за 1.6 секунды. Это не подсветка, а событие,
+   поэтому и живёт как событие. */
+.birth-top{position:relative}
+.birth-top::before{content:'';position:absolute;left:50%;top:52%;
+  width:34px;height:34px;margin:-17px 0 0 -17px;border-radius:50%;
+  border:1px solid rgba(31,170,204,.55);opacity:0;pointer-events:none}
+#ecoHero.in .birth-top::before{animation:hWave 1.6s cubic-bezier(.2,.7,.25,1) .45s forwards}
+@keyframes hWave{
+  0%{transform:scale(.4);opacity:0}
+  14%{opacity:.7}
+  100%{transform:scale(13);opacity:0}
+}
+@media (prefers-reduced-motion: reduce){
+  #ecoHero.in .birth-top::before{animation:none}
+}
 .bt-name{font-family:var(--serif);font-weight:600;font-size:clamp(28px,5.4vw,54px);
   line-height:var(--lh-tight);letter-spacing:-.012em;
   /* Тень не «подложка под текст», а свечение самой надписи: буква светится
@@ -1213,16 +1206,7 @@ a{color:inherit;text-decoration:none}
 <div class="grain"></div>
 
 <div id="chaos">
-  
-  <div class="word" data-b="0">Тысячи событий</div>
-  <div class="word" data-b="1">Сигналы</div>
-  <div class="word" data-b="2">Процессы</div>
-  <div class="word" data-b="3">Годы наблюдений</div>
-  <div class="word nm rdw" data-b="4">Архив системных<br>рисков</div>
-  <div class="cue"><span>Вход</span><span class="bar"></span></div>
-</div>
-
-<div id="topbar"><div class="tb-in">
+  <div class="word wintro" data-b="0">
     <div class="wi-top"><span class="wi-dot"></span>Система активна<span class="wi-sep">·</span>реальное время</div>
     <div class="wi-h">Глобальная аналитическая экосистема<br>мониторинга и оценки системных рисков</div>
     <div class="wi-tm">
@@ -1235,7 +1219,14 @@ a{color:inherit;text-decoration:none}
       <div class="wi-lr"><b>8</b><span>лицензий Atlas Intelligence на 6 месяцев</span></div>
       <div class="wi-lr acc"><b>3</b><span>лицензии на полную экосистему<br><i>Архив системных рисков и Atlas Intelligence</i></span></div>
     </div>
-  </div></div>
+  </div>
+  <div class="word" data-b="1">Тысячи событий</div>
+  <div class="word" data-b="2">Сигналы</div>
+  <div class="word" data-b="3">Процессы</div>
+  <div class="word" data-b="4">Годы наблюдений</div>
+  <div class="word nm rdw" data-b="5">Архив системных<br>рисков</div>
+  <div class="cue"><span>Вход</span><span class="bar"></span></div>
+</div>
 
 <div id="panels">
   <div class="panel cmp" data-i="0"><div class="pcard">
@@ -1660,7 +1651,6 @@ a{color:inherit;text-decoration:none}
   var chaos=document.getElementById('chaos'),finalEl=document.getElementById('final'),atmo=document.getElementById('atmo'),flash=document.getElementById('flash'),brand=document.getElementById('brand');
   var words=[].slice.call(document.querySelectorAll('#chaos .word'));
   var panelEls=[].slice.call(document.querySelectorAll('.panel'));
- var topBar=document.getElementById('topbar');
   var finalA=finalEl.querySelector('a'),finalFine=finalEl.querySelector('.fine');
 
   if(typeof THREE==='undefined'){var _f=document.getElementById('fallback');
@@ -1738,6 +1728,11 @@ a{color:inherit;text-decoration:none}
     Обновляются ТОЛЬКО активные вспышки, а не весь буфер из 1600 точек:
     полный пересчёт каждый кадр посадил бы телефон. */
  var FL=[], FLN=small?7:14, gcBase=gc.slice(0);
+ /* Всплеск активности при появлении заголовка: часть вспышек сдвигается
+    на текущий момент, и по сети проходит волна срабатываний. Не подсветка
+    сверху, а реакция самих узлов. */
+ var burstAt=-99;
+ window.__atlasBurst=function(){ burstAt=performance.now()*0.001; };
  for(var q=0;q<FLN;q++) FL.push({i:(Math.random()*GN)|0, t:Math.random()*-6});
  function pulseNet(tt){
    for(var q=0;q<FL.length;q++){
@@ -1745,6 +1740,9 @@ a{color:inherit;text-decoration:none}
      /* Жизнь вспышки 2.6с, затем узел берётся новый. Пауза до 5с,
         чтобы вспышки не выстраивались в ритм. */
      if(age>2.6){ f.i=(Math.random()*GN)|0; f.t=tt+Math.random()*5; continue; }
+     /* В момент всплеска половина вспышек перезапускается сразу,
+        без обычной паузы: сеть отвечает на появление заголовка. */
+     if(f.t>tt && tt-burstAt<0.25 && q%2===0){ f.t=tt+q*0.06; }
      if(age<0) continue;
      var k=age<0.35 ? age/0.35 : 1-(age-0.35)/2.25;
      if(k<0) k=0;
@@ -1855,20 +1853,19 @@ scene.add(gNodes);
         проявлялись только после прокрутки и тут же гасли.
         Теперь блок полностью виден от начала до 60% своей полосы
         и только потом уходит. */
-     o=scrollP<=b*0.6 ? 1 : 1-Math.min((scrollP-b*0.6)/(b*0.4),1);
+     /* Держится до конца хронологии и уходит вместе с последним узлом.
+        Раньше блок жил только свою полосу и исчезал на четвёртом
+        проценте прокрутки. */
+     o = scrollP<0.86 ? 1 : 1-Math.min((scrollP-0.86)/0.05,1);
    } else {
      o=1-Math.min(Math.abs(scrollP-mid)/half,1);
    }
-   words[i].style.opacity=(scrollP<0.32?o:0).toFixed(3);
+   words[i].style.opacity=((i===0||scrollP<0.32)?o:0).toFixed(3);
  }
-    chaos.style.opacity=(1-ease(Math.min(Math.max((scrollP-0.29)/0.03,0),1))).toFixed(3);
-   /* Шапка появляется, когда уходит вводная цепочка, и держится до конца
-      хронологии. Порог 0.86 — последний узел приходится на 0.87, дальше
-      сцена сворачивается и шапка больше не нужна. */
-   if(topBar){
-     var _tb = scrollP>0.055 && scrollP<0.86;
-     if(_tb) topBar.classList.add('on'); else topBar.classList.remove('on');
-   }
+    /* Контейнер больше не гасится целиком: внутри него закреплённое
+   вступление, которое должно жить дольше остальных слов. Прозрачностью
+   теперь управляет каждое слово отдельно. */
+ chaos.style.opacity='1';
     if(brand)brand.style.opacity=(yearsReveal*(1-pb)*(1-past)).toFixed(3);
     // panels
     /* panelIdx объявлен в общем скоупе: он нужен и здесь, и в animate для
@@ -2041,7 +2038,12 @@ scene.add(gNodes);
   if(window.gsap&&!reduce){gsap.from('#chaos .cue',{opacity:0,y:16,duration:1,delay:.4,ease:'power2.out'});}
 })();
 </script>
-<script>(function(){var pc=["#D4AF5A","#3AA0DD","#C74B3E","#9B6AE0","#1FAACC"];[].slice.call(document.querySelectorAll("#panels .panel")).forEach(function(pn,i){var card=pn.querySelector(".pcard");if(card){card.style.setProperty("--pfl",pc[i]||"#D4AF5A");if(!card.querySelector(".pfl")){var f=document.createElement("span");f.className="pfl";f.innerHTML="<i></i><i></i>";card.insertBefore(f,card.firstChild);}}var ml=pn.querySelector(".mile");if(ml&&!ml.querySelector(".pfl")){var g=document.createElement("span");g.className="pfl";g.innerHTML="<i></i><i></i>";ml.insertBefore(g,ml.firstChild);}});var reveal=document.querySelectorAll('#ecohalf .bridge, #ecohalf .hero');if(reveal.length){if('IntersectionObserver' in window){var hio=new IntersectionObserver(function(en){en.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');hio.unobserve(e.target);}});},{threshold:.35});[].slice.call(reveal).forEach(function(el){hio.observe(el);});}else{[].slice.call(reveal).forEach(function(el){el.classList.add('in');});}}})();</script>
+<script>(function(){var pc=["#D4AF5A","#3AA0DD","#C74B3E","#9B6AE0","#1FAACC"];[].slice.call(document.querySelectorAll("#panels .panel")).forEach(function(pn,i){var card=pn.querySelector(".pcard");if(card){card.style.setProperty("--pfl",pc[i]||"#D4AF5A");if(!card.querySelector(".pfl")){var f=document.createElement("span");f.className="pfl";f.innerHTML="<i></i><i></i>";card.insertBefore(f,card.firstChild);}}var ml=pn.querySelector(".mile");if(ml&&!ml.querySelector(".pfl")){var g=document.createElement("span");g.className="pfl";g.innerHTML="<i></i><i></i>";ml.insertBefore(g,ml.firstChild);}});var reveal=document.querySelectorAll('#ecohalf .bridge, #ecohalf .hero');if(reveal.length){if('IntersectionObserver' in window){var hio=new IntersectionObserver(function(en){en.forEach(function(e){if(e.isIntersecting){
+   e.target.classList.add('in');
+   /* Сеть отвечает на появление заголовка в тот же момент, что и волна:
+      два события читаются как одно, если совпадают по времени. */
+   if(e.target.id==='ecoHero'&&window.__atlasBurst) window.__atlasBurst();
+   hio.unobserve(e.target);}});},{threshold:.35});[].slice.call(reveal).forEach(function(el){hio.observe(el);});}else{[].slice.call(reveal).forEach(function(el){el.classList.add('in');});}}})();</script>
 <script>(function(){var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;var cv=document.getElementById('ecobg');if(!cv)return;var ctx=cv.getContext('2d');var W,H,DPR=Math.min(window.devicePixelRatio||1,2);function fit(){W=window.innerWidth;H=window.innerHeight;cv.width=W*DPR;cv.height=H*DPR;ctx.setTransform(DPR,0,0,DPR,0,0);}fit();window.addEventListener('resize',fit);var DOM=[[212,175,90],[58,160,221],[224,138,56],[67,192,138],[155,106,224],[199,75,62],[31,170,204]];var N=window.innerWidth<640?150:300,nodes=[],blobs=[];for(var i=0;i<N;i++){nodes.push({x:Math.random(),y:Math.random(),vx:(Math.random()-.5)*0.00007,vy:(Math.random()-.5)*0.00007,ph:Math.random()*6.28,acc:Math.random()<0.18?DOM[(Math.random()*DOM.length)|0]:null});}for(var i=0;i<5;i++){blobs.push({x:Math.random(),y:Math.random(),r:0.24+Math.random()*0.26,c:DOM[(Math.random()*DOM.length)|0],ph:Math.random()*6.28,sp:0.00003+Math.random()*0.00004});}var op=0,top=1e9;function pos(){var el=document.getElementById('ecohalf');top=el?el.offsetTop:1e9;}pos();window.addEventListener('resize',pos);function computeOp(){op=Math.min(Math.max((window.scrollY-(top-H*1.6))/(H*1.2),0),1);}window.addEventListener('scroll',computeOp,{passive:true});computeOp();var t=0,calmS=0;function frame(now){requestAnimationFrame(frame);computeOp();cv.style.opacity=op.toFixed(3);if(op<0.02)return;t=now*0.001;calmS+=((window.ecoCalm||0)-calmS)*0.08;var calm=calmS;ctx.clearRect(0,0,W,H);ctx.globalCompositeOperation='lighter';for(var i=0;i<blobs.length;i++){var b=blobs[i];b.x+=Math.sin(t*0.1+b.ph)*b.sp;b.y+=Math.cos(t*0.08+b.ph)*b.sp;var bx=b.x*W,by=b.y*H,br=b.r*Math.min(W,H);var g=ctx.createRadialGradient(bx,by,0,bx,by,br);g.addColorStop(0,'rgba('+b.c[0]+','+b.c[1]+','+b.c[2]+','+(0.05*(1-calm*0.6)).toFixed(3)+')');g.addColorStop(1,'rgba('+b.c[0]+','+b.c[1]+','+b.c[2]+',0)');ctx.fillStyle=g;ctx.beginPath();ctx.arc(bx,by,br,0,6.2832);ctx.fill();}for(var i=0;i<N;i++){var n=nodes[i];if(!reduce){n.x+=n.vx*(1-calm*0.92);n.y+=n.vy*(1-calm*0.92);if(n.x<0||n.x>1)n.vx*=-1;if(n.y<0||n.y>1)n.vy*=-1;}}ctx.lineWidth=1;ctx.strokeStyle='rgba(120,150,180,'+(0.05*(1-calm*0.85)).toFixed(3)+')';ctx.beginPath();for(var i=0;i<N;i++){var a=nodes[i];for(var j=i+1;j<i+6&&j<N;j++){var b2=nodes[j];var dx=(a.x-b2.x)*W,dy=(a.y-b2.y)*H;if(dx*dx+dy*dy<9000){ctx.moveTo(a.x*W,a.y*H);ctx.lineTo(b2.x*W,b2.y*H);}}}ctx.stroke();for(var i=0;i<N;i++){var n=nodes[i];var pu=0.6+Math.sin(t*0.8+n.ph)*0.4;var x=n.x*W,y=n.y*H;if(n.acc){ctx.fillStyle='rgba('+n.acc[0]+','+n.acc[1]+','+n.acc[2]+','+(0.5*pu*(1-calm*0.72)).toFixed(2)+')';ctx.beginPath();ctx.arc(x,y,1.8,0,6.2832);ctx.fill();}else{ctx.fillStyle='rgba(150,175,200,'+(0.32*pu*(1-calm*0.72)).toFixed(2)+')';ctx.beginPath();ctx.arc(x,y,1.2,0,6.2832);ctx.fill();}}ctx.globalCompositeOperation='source-over';}requestAnimationFrame(frame);})();</script>
 <script>(function(){var dimA=document.getElementById('dimA'),eco=document.getElementById('ecohalf');var sel='#ecohalf .block, #ecohalf .hero';function inSecond(){var vh=window.innerHeight,top=eco?eco.offsetTop:1e9;return Math.min(Math.max((window.scrollY-(top-vh*1.4))/vh,0),1);}function update(){var f=inSecond();var cy=window.innerHeight*0.5,best=1e9,els=document.querySelectorAll(sel);for(var i=0;i<els.length;i++){var r=els[i].getBoundingClientRect();if(r.bottom<0||r.top>window.innerHeight)continue;var c=(r.top+r.bottom)/2,d=Math.abs(c-cy);if(d<best)best=d;}var intensity=best>1e8?0:(1-Math.min(best/(window.innerHeight*0.55),1));var calm=f*intensity;window.ecoCalm=calm;if(dimA)dimA.style.opacity=(calm*0.66).toFixed(3);}window.addEventListener('scroll',update,{passive:true});window.addEventListener('resize',update);update();})();</script>
 <script>(function(){
