@@ -338,10 +338,9 @@ body{background:var(--bg);color:var(--white);font-family:var(--sans);-webkit-fon
 /* Смысловой блок опущен к центру. Статусная строка остаётся вверху:
    она относится ко всей сцене, а не к содержимому. Расстояния внутри
    блока не менялись, сдвинулась только группа целиком. */
-/* Отступ 24vh уводил композицию ниже центра: блок высокий, и его
-   середина оказывалась примерно на 60% экрана. 13vh ставит центр
-   блока около середины кадра. */
-#chaos .wi-body{margin-top:13vh}
+/* Композиция поднята: описание переехало в карточку и добавило блоку
+   высоты, поэтому прежний отступ снова увёл его вниз. */
+#chaos .wi-body{margin-top:6vh}
 /* Статусная строка: пульсирующая точка и режим работы. */
 #chaos .wi-top{display:flex;align-items:center;gap:8px;
   font-family:var(--label);font-size:9px;letter-spacing:.2em;
@@ -361,9 +360,17 @@ body{background:var(--bg);color:var(--white);font-family:var(--sans);-webkit-fon
    человек, была характеристика продукта, а не мысль. */
 #chaos .wi-h{font-size:clamp(25px,5.2vw,40px);line-height:1.12;
   letter-spacing:-.018em;margin-bottom:9px;font-weight:600;color:#f0f4fa}
-#chaos .wi-s{font-size:clamp(12.5px,2.5vw,15px);line-height:1.45;
-  letter-spacing:-.002em;color:rgba(214,224,238,.66);margin-bottom:14px;
-  max-width:34ch}
+/* Описание в такой же стеклянной карточке, что таймер и лицензии:
+   три блока одной формы читаются как один набор, а не как текст
+   и две панели рядом с ним. */
+#chaos .wi-s{font-size:clamp(12.5px,2.5vw,15px);line-height:1.5;
+  letter-spacing:-.002em;color:rgba(214,224,238,.72);margin-bottom:12px;
+  padding:12px 14px;border-radius:10px;
+  background:rgba(10,9,16,.42);
+  backdrop-filter:blur(16px) saturate(1.4);
+  -webkit-backdrop-filter:blur(16px) saturate(1.4);
+  border:1px solid rgba(255,255,255,.09);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.05)}
 /* Счётчики: четыре показания в ряд, как на панели прибора. */
 
 
