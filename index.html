@@ -423,6 +423,25 @@ body{background:var(--bg);color:var(--white);font-family:var(--sans);-webkit-fon
 /* Полная экосистема выделена: её всего три. */
 #chaos .wi-lr.acc b{color:var(--gold)}
 #chaos .wi-lr.acc{background:rgba(11,9,7,1)}
+/* Полоса остатка: заполненная часть показывает, сколько лицензий ещё
+   свободно. Тонкая линия в 2px вместо блочной шкалы — она сообщает
+   дефицит, но не кричит о нём.
+
+   Ширина растёт от нуля при появлении карточки: статичная полоса
+   читается как элемент оформления, растущая — как измерение. */
+#chaos .wi-bar{display:block;height:2px;border-radius:2px;margin-top:7px;
+  background:rgba(255,255,255,.08);overflow:hidden}
+#chaos .wi-bar i{display:block;height:100%;border-radius:2px;width:0;
+  background:linear-gradient(90deg,rgba(31,170,204,.55),rgba(31,170,204,.95));
+  box-shadow:0 0 8px -2px rgba(31,170,204,.8);
+  transition:width 1.5s var(--e-out) .35s}
+/* Полная экосистема золотом: три из пяти, и это должно быть виднее. */
+#chaos .wi-bar.acc i{background:linear-gradient(90deg,rgba(212,175,90,.55),rgba(212,175,90,.95));
+  box-shadow:0 0 8px -2px rgba(212,175,90,.85)}
+#chaos.lit .wi-bar i{width:calc(var(--left) / var(--tot) * 100%)}
+@media (prefers-reduced-motion: reduce){
+  #chaos .wi-bar i{transition:none;width:calc(var(--left) / var(--tot) * 100%)}
+}
 
 /* ═══ КОМПАКТНЫЙ РЕЖИМ ПАНЕЛИ ════════════════════════════════════════
    Панель с вехой И четырьмя блоками данных не помещается в экран.
@@ -1288,9 +1307,9 @@ a{color:inherit;text-decoration:none}
       <div class="wi-tm-d">до 07 августа · 15:00 МСК</div>
     </div>
     <div class="wi-lic">
-      <div class="wi-lr"><b>8</b><span>лицензий <em class="pa">Atlas Intelligence</em> на 2 месяца</span></div>
-      <div class="wi-lr"><b>8</b><span>лицензий <em class="pa">Atlas Intelligence</em> на 6 месяцев</span></div>
-      <div class="wi-lr acc"><b>3</b><span>лицензии на полную экосистему<br><i><em class="pr">Архив системных рисков</em> и <em class="pa">Atlas Intelligence</em></i></span></div>
+      <div class="wi-lr"><b>8</b><span>лицензий <em class="pa">Atlas Intelligence</em> на 2 месяца<span class="wi-bar" style="--left:8;--tot:10"><i></i></span></span></div>
+      <div class="wi-lr"><b>8</b><span>лицензий <em class="pa">Atlas Intelligence</em> на 6 месяцев<span class="wi-bar" style="--left:8;--tot:10"><i></i></span></span></div>
+      <div class="wi-lr acc"><b>3</b><span>лицензии на полную экосистему<br><i><em class="pr">Архив системных рисков</em> и <em class="pa">Atlas Intelligence</em></i><span class="wi-bar acc" style="--left:3;--tot:5"><i></i></span></span></div>
       </div>
     </div>
   </div>
@@ -1732,6 +1751,9 @@ a{color:inherit;text-decoration:none}
   var words=[].slice.call(document.querySelectorAll('#chaos .word'));
   var panelEls=[].slice.call(document.querySelectorAll('.panel'));
   var cueEl=document.querySelector('#chaos .cue');
+  /* Полосы остатка растут один раз, вскоре после загрузки: рост должен
+     совпасть с моментом, когда человек уже видит блок. */
+  setTimeout(function(){ if(chaos) chaos.classList.add('lit'); }, 700);
   var finalA=finalEl.querySelector('a'),finalFine=finalEl.querySelector('.fine');
 
   if(typeof THREE==='undefined'){var _f=document.getElementById('fallback');
