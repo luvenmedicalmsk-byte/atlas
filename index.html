@@ -1484,9 +1484,16 @@ a{color:inherit;text-decoration:none}
   var panelEls=[].slice.call(document.querySelectorAll('.panel'));
   var finalA=finalEl.querySelector('a'),finalFine=finalEl.querySelector('.fine');
 
-  if(typeof THREE==='undefined'){document.getElementById('fallback').style.display='flex';return;}
+  if(typeof THREE==='undefined'){var _f=document.getElementById('fallback');
+   /* Диагностика вместо догадок: заглушка называет конкретную причину.
+      Без неё «нужен WebGL» показывалось и при исправном WebGL — когда
+      не приходила сама библиотека. */
+   var _p=_f&&_f.querySelector('p'); if(_p) _p.textContent='Библиотека сцены не загрузилась (three.js). Проверьте подключение к сети или откройте страницу позже.';
+   if(_f)_f.style.display='flex';return;}
   var host=document.getElementById('scene'),renderer;
-  try{renderer=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(e){document.getElementById('fallback').style.display='flex';return;}
+  try{renderer=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(e){var _f2=document.getElementById('fallback');
+   var _p2=_f2&&_f2.querySelector('p'); if(_p2) _p2.textContent='Браузер не выдал контекст WebGL: '+((e&&e.message)||'причина неизвестна')+'. Попробуйте закрыть лишние вкладки и обновить страницу.';
+   if(_f2)_f2.style.display='flex';return;}
   var W=window.innerWidth,H=window.innerHeight,DPR=Math.min(window.devicePixelRatio||1,2),small=W<640;
   renderer.setPixelRatio(DPR);renderer.setSize(W,H);renderer.setClearColor(0x040308,0);host.appendChild(renderer.domElement);
   var scene=new THREE.Scene();
