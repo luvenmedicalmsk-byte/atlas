@@ -126,7 +126,12 @@ body{background:var(--bg);color:var(--white);font-family:var(--sans);-webkit-fon
   .panel{transform:none}
   .panel::before{display:none}
 }
-.pcard{position:relative;border-radius:16px;padding:28px 28px 24px;overflow:hidden;isolation:isolate;background-color:rgba(8,7,12,.985);background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='mp'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23mp)' opacity='0.5'/%3E%3C/svg%3E");background-blend-mode:overlay;border:1px solid var(--pfl,rgba(200,167,90,.34));box-shadow:var(--sh-contact),0 30px 70px -40px rgba(0,0,0,.92),inset 0 0 30px -20px var(--pfl,rgba(212,175,90,.3)),inset 0 1px 0 rgba(255,255,255,.05)}
+.pcard{position:relative;border-radius:16px;padding:28px 28px 24px;overflow:hidden;isolation:isolate;background-color:rgba(6,5,11,1);background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='mp'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23mp)' opacity='0.5'/%3E%3C/svg%3E");
+  /* overlay ОСВЕТЛЯЕТ подложку: сквозь него проходили яркие точки сцены,
+     и карточка читалась по-разному в зависимости от того, на каком
+     участке графа она оказалась. soft-light сохраняет фактуру шума,
+     но не поднимает яркость фона. */
+  background-blend-mode:soft-light;border:1px solid var(--pfl,rgba(200,167,90,.34));box-shadow:var(--sh-contact),0 30px 70px -40px rgba(0,0,0,.92),inset 0 0 30px -20px var(--pfl,rgba(212,175,90,.3)),inset 0 1px 0 rgba(255,255,255,.05)}
 .pcard::after{display:none}
 .pcard>*{position:relative;z-index:1}
 .pcard .pfl{position:absolute;inset:-30%;z-index:0;filter:blur(50px);opacity:.5;pointer-events:none}
@@ -177,7 +182,7 @@ body{background:var(--bg);color:var(--white);font-family:var(--sans);-webkit-fon
 .mdash{display:grid;grid-template-columns:1fr 1fr;gap:1px;margin:2px 0 15px;
   background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.05);
   border-radius:9px;overflow:hidden}
-.mcell{background:rgba(6,5,10,.99);padding:9px 11px 8px;position:relative}
+.mcell{background:rgba(4,3,9,1);padding:9px 11px 8px;position:relative}
 /* Подпись показателя может не поместиться в одну строку при четырёх
    ячейках — уменьшенный кегль и перенос вместо обрезки. */
 .mlbl{white-space:normal;min-height:2.1em;display:flex;align-items:flex-end}
