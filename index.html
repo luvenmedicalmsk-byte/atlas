@@ -81,7 +81,9 @@ html{scroll-behavior:smooth}
 body{background:var(--bg);color:var(--white);font-family:var(--sans);-webkit-font-smoothing:antialiased;overflow-x:hidden}
 .grain{position:fixed;inset:0;z-index:80;pointer-events:none;opacity:.05;mix-blend-mode:overlay;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
 .eyebrow{font-family:var(--label);font-weight:600;font-size:11px;letter-spacing:.4em;text-transform:uppercase;color:var(--gold)}
-#scene{position:fixed;inset:0;z-index:0}
+/* 100dvh, а не inset:0: на iOS адресная строка меняет высоту окна,
+   и при inset:0 внизу оставалась чёрная полоса. */
+#scene{position:fixed;left:0;top:0;width:100%;height:100vh;height:100dvh;z-index:0}
 #scene canvas{display:block;width:100%;height:100%}
 #flash{position:fixed;inset:0;z-index:1;pointer-events:none;background:#8fd8ec;opacity:0;mix-blend-mode:screen}
 #atmo{position:fixed;inset:0;z-index:1;pointer-events:none;transition:background 1.6s var(--e-out);mix-blend-mode:screen;opacity:.5}
@@ -327,7 +329,7 @@ body{background:var(--bg);color:var(--white);font-family:var(--sans);-webkit-fon
    следующим. Остальные слова цепочки идут ниже, на своём месте. */
 #chaos .word.wintro{max-width:min(560px,90vw);text-align:left;
   font-family:var(--sans);color:#dfe7f2;
-  top:calc(19vh + env(safe-area-inset-top));left:50%;right:auto;
+  top:calc(8vh + env(safe-area-inset-top));left:50%;right:auto;
   transform:translateX(-50%);padding:0 16px}
 /* Статусная строка: пульсирующая точка и режим работы. */
 #chaos .wi-top{display:flex;align-items:center;gap:8px;
@@ -346,10 +348,10 @@ body{background:var(--bg);color:var(--white);font-family:var(--sans);-webkit-fon
 /* Слоган крупно, объяснение мельче: сначала возникает эмоция, потом
    определение. Прежде сверху стояло определение, и первым, что видел
    человек, была характеристика продукта, а не мысль. */
-#chaos .wi-h{font-size:clamp(27px,5.6vw,44px);line-height:1.14;
-  letter-spacing:-.018em;margin-bottom:11px;font-weight:600;color:#f0f4fa}
-#chaos .wi-s{font-size:clamp(13px,2.6vw,16px);line-height:1.5;
-  letter-spacing:-.002em;color:rgba(214,224,238,.66);margin-bottom:18px;
+#chaos .wi-h{font-size:clamp(25px,5.2vw,40px);line-height:1.12;
+  letter-spacing:-.018em;margin-bottom:9px;font-weight:600;color:#f0f4fa}
+#chaos .wi-s{font-size:clamp(12.5px,2.5vw,15px);line-height:1.45;
+  letter-spacing:-.002em;color:rgba(214,224,238,.66);margin-bottom:14px;
   max-width:34ch}
 /* Счётчики: четыре показания в ряд, как на панели прибора. */
 
@@ -362,8 +364,8 @@ body{background:var(--bg);color:var(--white);font-family:var(--sans);-webkit-fon
 /* Прозрачное стекло: сквозь панель видно сцену, но текст остаётся
    читаемым за счёт размытия и насыщенности. Плотная заливка выглядела
    вырезанным прямоугольником поверх графа. */
-#chaos .wi-tm{display:flex;align-items:baseline;gap:11px;flex-wrap:wrap;
-  padding:13px 15px;border-radius:10px;
+#chaos .wi-tm{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;
+  padding:10px 14px;border-radius:10px;
   background:rgba(10,9,16,.42);
   backdrop-filter:blur(16px) saturate(1.4);
   -webkit-backdrop-filter:blur(16px) saturate(1.4);
@@ -381,12 +383,12 @@ body{background:var(--bg);color:var(--white);font-family:var(--sans);-webkit-fon
   border:1px solid rgba(255,255,255,.09);border-radius:9px;overflow:hidden;
   backdrop-filter:blur(16px) saturate(1.4);
   -webkit-backdrop-filter:blur(16px) saturate(1.4)}
-#chaos .wi-lr{display:grid;grid-template-columns:34px 1fr;align-items:center;
-  gap:11px;background:rgba(10,9,16,.42);padding:10px 13px}
-#chaos .wi-lr b{font-family:var(--sans);font-size:21px;font-weight:600;
+#chaos .wi-lr{display:grid;grid-template-columns:28px 1fr;align-items:center;
+  gap:10px;background:rgba(10,9,16,.42);padding:7px 12px}
+#chaos .wi-lr b{font-family:var(--sans);font-size:18px;font-weight:600;
   line-height:1;color:#e9f0fa;font-variant-numeric:tabular-nums;text-align:right}
-#chaos .wi-lr span{font-family:var(--label);font-size:8px;letter-spacing:.13em;
-  text-transform:uppercase;color:rgba(214,224,238,.58);line-height:1.5}
+#chaos .wi-lr span{font-family:var(--label);font-size:7.5px;letter-spacing:.1em;
+  text-transform:uppercase;color:rgba(214,224,238,.6);line-height:1.45}
 #chaos .wi-lr span i{font-style:normal;color:rgba(214,224,238,.36);
   font-size:7.5px;letter-spacing:.1em}
 /* Названия продуктов цветом своего домена: Atlas голубой, Архив красный.
@@ -1928,6 +1930,7 @@ scene.add(gNodes);
   var clock=0,tmpP=new THREE.Vector3(),tmpL=new THREE.Vector3();
   function animate(now){
     requestAnimationFrame(animate);
+    if(window._fitScene) window._fitScene();
     if(sceneHidden)return;
     var t=now*0.001,dt=Math.min(t-clock,0.05);clock=t;
     if(enabled&&actLevel>0.12){pulseTimer-=dt;if(pulseTimer<=0){pulseHit();pulseTimer=1.0;}}
@@ -1997,6 +2000,15 @@ scene.add(gNodes);
     }catch(_e){}
   });},{passive:true});
   window.addEventListener('resize',function(){W=window.innerWidth;H=window.innerHeight;renderer.setSize(W,H);camera.aspect=W/H;camera.updateProjectionMatrix();compute();});
+  /* Safari не всегда шлёт resize при скрытии адресной строки: высота окна
+     меняется, а событие не приходит, и внизу остаётся чёрная полоса.
+     Размер сверяется каждый кадр, пересчёт только при расхождении. */
+  window._fitScene=function(){
+    var w=window.innerWidth, h=(window.visualViewport&&window.visualViewport.height)||window.innerHeight;
+    if(Math.abs(w-W)<1&&Math.abs(h-H)<1) return;
+    W=w;H=h;renderer.setSize(W,H);camera.aspect=W/H;camera.updateProjectionMatrix();
+  };
+  if(window.visualViewport) window.visualViewport.addEventListener('resize',window._fitScene);
 
   // ---------- spatial audio ----------
   var actx,master,enabled=false,actBus=null,pulseBus=null,actLevel=0,pulseTimer=0,tickFlip=false;
