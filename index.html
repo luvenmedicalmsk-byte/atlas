@@ -363,14 +363,16 @@ body{background:var(--bg);color:var(--white);font-family:var(--sans);-webkit-fon
 /* Описание в такой же стеклянной карточке, что таймер и лицензии:
    три блока одной формы читаются как один набор, а не как текст
    и две панели рядом с ним. */
+/* Карточки первого экрана приведены к виду карточек годов: плотный
+   фон, скруглённая рамка, внутреннее свечение по контуру. Стекло
+   пропускало сцену, и текст читался поверх движущихся точек. */
 #chaos .wi-s{font-size:clamp(12.5px,2.5vw,15px);line-height:1.5;
-  letter-spacing:-.002em;color:rgba(214,224,238,.72);margin-bottom:12px;
-  padding:12px 14px;border-radius:10px;
-  background:rgba(10,9,16,.42);
-  backdrop-filter:blur(16px) saturate(1.4);
-  -webkit-backdrop-filter:blur(16px) saturate(1.4);
+  letter-spacing:-.002em;color:#c3cbd8;margin-bottom:12px;
+  padding:14px 16px;border-radius:14px;
+  background:rgba(6,5,11,1);
   border:1px solid rgba(255,255,255,.09);
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.05)}
+  box-shadow:var(--sh-contact),0 26px 60px -40px rgba(0,0,0,.92),
+    inset 0 1px 0 rgba(255,255,255,.05)}
 /* Счётчики: четыре показания в ряд, как на панели прибора. */
 
 
@@ -384,11 +386,11 @@ body{background:var(--bg);color:var(--white);font-family:var(--sans);-webkit-fon
    вырезанным прямоугольником поверх графа. */
 #chaos .wi-tm{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;
   padding:10px 14px;border-radius:10px;
-  background:rgba(10,9,16,.42);
-  backdrop-filter:blur(16px) saturate(1.4);
-  -webkit-backdrop-filter:blur(16px) saturate(1.4);
-  border:1px solid rgba(212,175,90,.24);
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.06);margin-bottom:12px}
+  background:rgba(6,5,11,1);
+  border:1px solid rgba(212,175,90,.3);
+  box-shadow:var(--sh-contact),0 26px 60px -40px rgba(0,0,0,.92),
+    inset 0 0 26px -18px rgba(212,175,90,.5),
+    inset 0 1px 0 rgba(212,175,90,.12);margin-bottom:12px;border-radius:14px}
 #chaos .wi-tm-l{font-family:var(--label);font-size:8.5px;letter-spacing:.18em;
   text-transform:uppercase;color:rgba(212,175,90,.72);width:100%;
   display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
@@ -399,12 +401,11 @@ body{background:var(--bg);color:var(--white);font-family:var(--sans);-webkit-fon
 #chaos .wi-tm-d{font-family:var(--label);font-size:8.5px;letter-spacing:.14em;
   text-transform:uppercase;color:rgba(212,175,90,.6)}
 /* Лицензии: число слева, что именно за ним справа. */
-#chaos .wi-lic{display:grid;gap:1px;background:rgba(255,255,255,.09);
-  border:1px solid rgba(255,255,255,.09);border-radius:9px;overflow:hidden;
-  backdrop-filter:blur(16px) saturate(1.4);
-  -webkit-backdrop-filter:blur(16px) saturate(1.4)}
+#chaos .wi-lic{display:grid;gap:1px;background:rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.09);border-radius:14px;overflow:hidden;
+  box-shadow:var(--sh-contact),0 26px 60px -40px rgba(0,0,0,.92)}
 #chaos .wi-lr{display:grid;grid-template-columns:28px 1fr;align-items:center;
-  gap:10px;background:rgba(10,9,16,.42);padding:7px 12px}
+  gap:10px;background:rgba(6,5,11,1);padding:8px 13px}
 #chaos .wi-lr b{font-family:var(--sans);font-size:18px;font-weight:600;
   line-height:1;color:#e9f0fa;font-variant-numeric:tabular-nums;text-align:right}
 #chaos .wi-lr span{font-family:var(--label);font-size:7.5px;letter-spacing:.1em;
@@ -421,7 +422,7 @@ body{background:var(--bg);color:var(--white);font-family:var(--sans);-webkit-fon
 #chaos .wi-lr em.pr{color:rgba(224,87,79,.92)}
 /* Полная экосистема выделена: её всего три. */
 #chaos .wi-lr.acc b{color:var(--gold)}
-#chaos .wi-lr.acc{background:rgba(16,13,9,.5)}
+#chaos .wi-lr.acc{background:rgba(11,9,7,1)}
 
 /* ═══ КОМПАКТНЫЙ РЕЖИМ ПАНЕЛИ ════════════════════════════════════════
    Панель с вехой И четырьмя блоками данных не помещается в экран.
@@ -1947,7 +1948,13 @@ scene.add(gNodes);
       только за её пределами. Момент появления и ухода не изменился —
       край окна остался прежним. */
    var _d=Math.abs(idx-i);
-   var op=_d<=0.28 ? 1 : 1-Math.min((_d-0.28)*2.6,1);
+   /* Плато сужено с 0.28 до 0.18, затухание ускорено с 2.6 до 4.5.
+      Прежние значения давали ноль только на 0.66 от узла, а расстояние
+      между узлами равно 1.0 — на середине пути были видны СРАЗУ ДВЕ
+      карточки, и они шли сплошным потоком без пауз.
+      Теперь карточка гаснет к 0.40, и между 0.40 и 0.60 экран пуст:
+      камера летит, ничего не показывая. */
+   var op=_d<=0.18 ? 1 : 1-Math.min((_d-0.18)*4.5,1);
    op*=yearsReveal*(1-ease(Math.min(pb/0.42,1)));var _o=(op<0?0:op);panelEls[i].style.opacity=_o.toFixed(3);
    /* --g управляет ростом карточки, длиной нити и ореолом. Берётся из той
       же величины, что прозрачность: карточка разворачивается ровно по мере
