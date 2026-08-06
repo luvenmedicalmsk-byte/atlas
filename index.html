@@ -741,6 +741,16 @@ a{color:inherit;text-decoration:none}
 .finalsc .fphrase{max-width:600px;margin:24px auto 0;font-family:var(--sans);font-weight:400;font-size:clamp(15px,2.2vw,18px);line-height:1.6;color:var(--white)}
 .finalsc .fphrase b{color:var(--gold);font-weight:600}
 .foot{position:relative;z-index:2;text-align:center;padding:36px 28px 54px;border-top:1px solid rgba(200,167,90,.12);margin-top:24px}
+/* Ссылки на документы: тот же мелкий капс, что у подписи выше,
+   но приглушены сильнее. Это обязательная часть подвала, а не
+   продолжение представления автора. */
+.foot .docs{display:flex;flex-wrap:wrap;justify-content:center;gap:6px 18px;
+  margin-top:14px}
+.foot .docs a{font-family:var(--label);font-size:9px;letter-spacing:.14em;
+  text-transform:uppercase;color:rgba(214,224,238,.38);text-decoration:none;
+  border-bottom:1px solid transparent;
+  transition:color var(--t-state) var(--e-soft),border-color var(--t-state) var(--e-soft)}
+.foot .docs a:hover{color:rgba(214,224,238,.72);border-bottom-color:rgba(214,224,238,.3)}
 .foot .mark{font-family:var(--label);font-weight:600;font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:var(--cyan)}
 .foot .by{margin-top:8px;font-family:var(--label);font-size:8px;letter-spacing:.12em;color:rgba(214,212,206,.72)}
 
@@ -838,6 +848,9 @@ a{color:inherit;text-decoration:none}
 /* Заголовок занимает всю первую строку, масштаб переносится на вторую
    и прижимается влево. Раньше масштаб стоял справа в одной строке
    с заголовком и попадал под круглую кнопку закрытия. */
+/* Кнопка масштаба уводится на вторую строку и прижимается влево:
+   в одной строке с заголовком она вставала под круглую кнопку закрытия
+   и перехватывала касания, из-за чего крестик плохо нажимался. */
 #pdfFull .bar{position:relative;z-index:4;padding-right:66px;
   align-items:flex-start;row-gap:8px}
 #pdfFull .ttl{flex:0 0 100%}
@@ -1268,7 +1281,7 @@ a{color:inherit;text-decoration:none}
 <div id="chaos">
   <div class="word wintro" data-b="0">
     <div class="wi-top"><span class="wi-dot"></span>Система активна<span class="wi-sep">·</span>24/7<span class="wi-sep">·</span><span id="snd"><span class="ic"></span><span>Звук</span></span></div>
-    <div class="wi-body"><div class="wi-h">Будущее начинается с сигнала.</div><div class="wi-s">Глобальная аналитическая экосистема мониторинга и оценки системных рисков в режиме реального времени.</div>
+    <div class="wi-body"><div class="wi-h">Будущее начинается с сигнала</div><div class="wi-s">Глобальная аналитическая экосистема мониторинга и оценки системных рисков в режиме реального времени</div>
     <div class="wi-tm">
       <div class="wi-tm-l">Специальные условия<span class="wi-tm-x">действуют ещё</span></div>
       <div class="wi-tm-v" id="wiTimer">00:00:00</div>
@@ -1659,6 +1672,11 @@ a{color:inherit;text-decoration:none}
 <footer class="foot">
   <div class="mark">Архив · Атлас сигналов</div>
   <div class="by">Мия Гекди · футуролог · стратег-аналитик · @_secret_truth</div>
+  <div class="docs">
+    <a href="https://secrett-archive.com/offer.html" target="_blank" rel="noopener">Публичная оферта</a>
+    <a href="https://secrett-archive.com/privacy.html" target="_blank" rel="noopener">Политика конфиденциальности</a>
+    <a href="https://secrett-archive.com/refund.html" target="_blank" rel="noopener">Политика возвратов</a>
+  </div>
 </footer>
 
 </div>
