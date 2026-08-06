@@ -335,14 +335,17 @@ body{background:var(--bg);color:var(--white);font-family:var(--sans);-webkit-fon
    следующим. Остальные слова цепочки идут ниже, на своём месте. */
 #chaos .word.wintro{max-width:min(560px,90vw);text-align:left;
   font-family:var(--sans);color:#dfe7f2;
-  top:calc(8vh + env(safe-area-inset-top));left:50%;right:auto;
+  top:calc(5vh + env(safe-area-inset-top));left:50%;right:auto;
   transform:translateX(-50%);padding:0 16px}
 /* Смысловой блок опущен к центру. Статусная строка остаётся вверху:
    она относится ко всей сцене, а не к содержимому. Расстояния внутри
    блока не менялись, сдвинулась только группа целиком. */
 /* Композиция поднята: описание переехало в карточку и добавило блоку
    высоты, поэтому прежний отступ снова увёл его вниз. */
-#chaos .wi-body{margin-top:6vh}
+/* Кнопка добавила блоку высоты, и композиция снова доехала до подсказки
+   «Вход» внизу. Отступ сокращён с 6vh до 2vh, весь блок поднят с 8vh
+   до 5vh: суммарно освободилось около 7% высоты экрана. */
+#chaos .wi-body{margin-top:2vh}
 /* Статусная строка: пульсирующая точка и режим работы. */
 #chaos .wi-top{display:flex;align-items:center;gap:8px;
   font-family:var(--label);font-size:9px;letter-spacing:.2em;
@@ -408,17 +411,42 @@ body{background:var(--bg);color:var(--white);font-family:var(--sans);-webkit-fon
 
    События касания включены явно: у контейнера #chaos стоит
    pointer-events:none, чтобы сцена принимала свайпы сквозь текст. */
-#chaos .wi-cta{display:block;text-align:center;margin:0 0 12px;padding:13px 18px;
-  border-radius:14px;cursor:pointer;pointer-events:auto;user-select:none;
-  font-family:var(--label);font-size:10px;letter-spacing:.18em;
-  text-transform:uppercase;font-weight:600;color:#0d0b06;text-decoration:none;
-  background:linear-gradient(160deg,rgba(226,192,110,.96),rgba(184,151,58,.94));
-  box-shadow:var(--sh-contact),0 18px 44px -26px rgba(212,175,90,.7),
-    inset 0 1px 0 rgba(255,255,255,.28);
-  transition:transform var(--t-state) var(--e-soft),box-shadow var(--t-state) var(--e-soft)}
-#chaos .wi-cta:hover{transform:translateY(-1px);
-  box-shadow:var(--sh-contact),0 22px 52px -24px rgba(212,175,90,.85),
-    inset 0 1px 0 rgba(255,255,255,.34)}
+/* Кнопка в контуре, а не заливкой: три соседние карточки стеклянные,
+   и сплошное золото рядом с ними выглядело чужеродно.
+
+   По каёмке идёт перелив — светлое пятно обходит периметр за 4.5с.
+   Сделано через маску: градиент рисуется на фоне, а mask вырезает
+   из него только рамку в 1px. Заливка при этом остаётся прозрачной,
+   и сквозь кнопку видно сцену, как сквозь соседние панели. */
+#chaos .wi-cta{position:relative;display:block;text-align:center;margin:0 0 12px;
+  padding:13px 18px;border-radius:14px;cursor:pointer;pointer-events:auto;
+  user-select:none;font-family:var(--label);font-size:10px;letter-spacing:.18em;
+  text-transform:uppercase;font-weight:600;color:#e8c766;text-decoration:none;
+  background:rgba(9,8,15,.3);
+  backdrop-filter:blur(11px) saturate(1.45);
+  -webkit-backdrop-filter:blur(11px) saturate(1.45);
+  box-shadow:var(--sh-contact),0 18px 44px -30px rgba(212,175,90,.5);
+  transition:transform var(--t-state) var(--e-soft),color var(--t-state) var(--e-soft)}
+#chaos .wi-cta::before{content:'';position:absolute;inset:0;border-radius:14px;
+  padding:1px;pointer-events:none;
+  background:conic-gradient(from var(--ang,0deg),
+    rgba(212,175,90,.28) 0deg,rgba(212,175,90,.28) 300deg,
+    rgba(255,236,180,1) 340deg,rgba(212,175,90,.28) 360deg);
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+  mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+  -webkit-mask-composite:xor;mask-composite:exclude;
+  animation:ctaEdge 4.5s linear infinite}
+@property --ang{syntax:'<angle>';initial-value:0deg;inherits:false}
+@keyframes ctaEdge{to{--ang:360deg}}
+/* Запасной вариант там, где @property не поддержан: каёмка ровная,
+   без перелива, но кнопка выглядит так же. */
+@supports not (background:conic-gradient(from 0deg,red,blue)){
+  #chaos .wi-cta::before{background:rgba(212,175,90,.45);animation:none}
+}
+#chaos .wi-cta:hover{transform:translateY(-1px);color:#f4dd9a}
+@media (prefers-reduced-motion: reduce){
+  #chaos .wi-cta::before{animation:none;background:rgba(212,175,90,.45)}
+}
 #chaos .wi-cta:active{transform:translateY(0) scale(.99)}
 #chaos .wi-tm-v{font-family:var(--sans);font-size:clamp(26px,6vw,34px);
   font-weight:600;line-height:1;color:var(--gold);font-variant-numeric:tabular-nums;
