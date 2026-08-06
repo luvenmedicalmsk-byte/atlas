@@ -1813,6 +1813,57 @@ a{color:inherit;text-decoration:none}
   /* Полосы остатка растут один раз, вскоре после загрузки: рост должен
      совпасть с моментом, когда человек уже видит блок. */
   setTimeout(function(){ if(chaos) chaos.classList.add('lit'); }, 700);
+  /* Числа лицензий набираются от нуля, а не появляются готовыми: счёт
+     читается как снятие показания, готовое число — как надпись.
+     Идёт вместе с ростом полос, поэтому цифра и заполнение приходят
+     к финальному значению одновременно.
+
+     Кривая замедляется к концу: последние единицы должны быть видны,
+     иначе счёт смазывается в мельтешение. */
+  function _countUp(el, to, ms){
+    if(!el) return;
+    var t0=null;
+    function step(ts){
+      if(t0===null) t0=ts;
+      var p=Math.min((ts-t0)/ms,1);
+      var e=1-Math.pow(1-p,3);
+      el.textContent=String(Math.round(to*e));
+      if(p<1) requestAnimationFrame(step);
+      else el.textContent=String(to);
+    }
+    requestAnimationFrame(step);
+  }
+  function _runLicCount(){
+    /* Блок первого экрана: <b>7</b> внутри строки лицензии. */
+    [].slice.call(document.querySelectorAll('#chaos .wi-lr b')).forEach(function(b,i){
+      var to=parseInt(b.textContent,10); if(!isFinite(to)) return;
+      b.textContent='0';
+      setTimeout(function(){ _countUp(b,to,1500); }, 120*i);
+    });
+    /* Блок тарифов: «7 из 10 лицензий» — считается только первое число. */
+    [].slice.call(document.querySelectorAll('.lic-txt')).forEach(function(t,i){
+      var m=String(t.textContent).match(/^(\d+)(\s+из\s+\d+.*)$/);
+      if(!m) return;
+      var to=parseInt(m[1],10), tail=m[2];
+      var sp=document.createElement('span'); sp.textContent='0';
+      t.textContent=''; t.appendChild(sp); t.appendChild(document.createTextNode(tail));
+      setTimeout(function(){ _countUp(sp,to,1500); }, 120*i);
+    });
+  }
+  /* Тарифы ниже по странице: счёт запускается, когда блок в кадре,
+     иначе он отработает вхолостую до того, как человек долистает. */
+  (function(){
+    var done=false;
+    function go(){ if(done) return; done=true; _runLicCount(); }
+    var tiers=document.getElementById('tiers');
+    if(tiers && 'IntersectionObserver' in window){
+      var io=new IntersectionObserver(function(en){
+        en.forEach(function(e){ if(e.isIntersecting){ go(); io.disconnect(); } });
+      },{threshold:.25});
+      io.observe(tiers);
+    }
+    setTimeout(go, 900);
+  })();
   var finalA=finalEl.querySelector('a'),finalFine=finalEl.querySelector('.fine');
 
   if(typeof THREE==='undefined'){var _f=document.getElementById('fallback');
