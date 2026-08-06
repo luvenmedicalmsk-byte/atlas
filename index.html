@@ -338,7 +338,10 @@ body{background:var(--bg);color:var(--white);font-family:var(--sans);-webkit-fon
 /* Смысловой блок опущен к центру. Статусная строка остаётся вверху:
    она относится ко всей сцене, а не к содержимому. Расстояния внутри
    блока не менялись, сдвинулась только группа целиком. */
-#chaos .wi-body{margin-top:calc(24vh - 60px)}
+/* Отступ 24vh уводил композицию ниже центра: блок высокий, и его
+   середина оказывалась примерно на 60% экрана. 13vh ставит центр
+   блока около середины кадра. */
+#chaos .wi-body{margin-top:13vh}
 /* Статусная строка: пульсирующая точка и режим работы. */
 #chaos .wi-top{display:flex;align-items:center;gap:8px;
   font-family:var(--label);font-size:9px;letter-spacing:.2em;
@@ -1157,14 +1160,18 @@ a{color:inherit;text-decoration:none}
    собирает кадр, но ничего не подсвечивает. */
 /* Слой 2 — виньетка: края уходят в темноту, кадр собирается к центру.
    Это кинематографический приём: объектив всегда темнее по краям. */
-/* Виньетка убрана. Она была absolute внутри #ecoHero, а у него
-   min-height 134vh: сама сцена fixed и всегда на весь экран, а
-   затемнение заканчивалось вместе с блоком. На границе появлялся
-   резкий прямоугольный край, и граф в нижней части выглядел ярче,
-   чем в верхней.
+/* Свечение сцены возвращено, но теперь FIXED, а не absolute внутри
+   #ecoHero. Прямоугольный край брался именно оттуда: блок имеет
+   min-height 134vh и уезжает при прокрутке, а сцена зафиксирована,
+   поэтому подсветка обрывалась ровной линией на границе блока.
 
-   Собирать кадр затемнением по краям здесь и не нужно: граф должен
-   уходить в фон без границы, а не лежать в рамке. */
+   Затемняющая виньетка не возвращена: она и создавала ощущение
+   подложки под графом. */
+#atmoGlow{position:fixed;left:0;top:0;width:100%;height:100vh;height:100dvh;
+  z-index:1;pointer-events:none;
+  background:
+    radial-gradient(58% 32% at 50% 16%,rgba(31,170,204,.14),transparent 66%),
+    radial-gradient(52% 28% at 50% 86%,rgba(199,75,62,.10),transparent 64%)}
 /* Подписи полюсов поверх виньетки. */
 #ecoHero .birth-top,#ecoHero .birth-bot{z-index:4}
 #ecoHero .birth-top{position:absolute;top:7%;left:0;right:0;text-align:center;z-index:2;padding:0 24px;opacity:0;transform:translateY(18px);transition:opacity var(--t-scene) var(--e-out),transform var(--t-scene) var(--e-out)}
@@ -1307,6 +1314,7 @@ a{color:inherit;text-decoration:none}
 <main><div class="spacer"></div></main>
 <div class="pausehold" style="height:150vh"></div>
 <canvas id="ecobg"></canvas>
+<div id="atmoGlow"></div>
 <div id="dimA"></div>
 <div id="ecohalf">
 
