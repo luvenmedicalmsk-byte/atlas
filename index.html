@@ -179,6 +179,11 @@ body{background:var(--bg);color:var(--white);font-family:var(--sans);-webkit-fon
 .mile .mh{font-family:var(--label);font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--mc,var(--gold));font-weight:600;margin-bottom:8px}
 .mile h4{font-family:var(--serif);font-size:20px;color:var(--white);font-weight:600;line-height:1.1;margin-bottom:8px}
 .mile p{font-size:12px;color:var(--mute);line-height:1.5}
+/* Имя канала — идентификатор, а не проза: моноширинный набор и цвет узла.
+   Отдельной строкой между заголовком и пояснением, чтобы читалось как
+   реквизит вехи. */
+.mile-h{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px;
+  letter-spacing:.04em;color:var(--mc,#D4AF5A);opacity:.82;margin:-4px 0 8px}
 .mile .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
 .mile .chip{font-family:var(--label);font-size:8px;letter-spacing:.08em;text-transform:uppercase;color:var(--mc,var(--gold));border:1px solid var(--mc,rgba(200,167,90,.3));border-radius:16px;padding:4px 8px}
 
@@ -978,7 +983,7 @@ a{color:inherit;text-decoration:none}
     <div class="ev"><span class="d" style="--dc:var(--blue)"></span>Первые серьёзные признаки замедления мировой экономики</div>
     <div class="ev"><span class="d" style="--dc:var(--blue)"></span>Начало торговой войны США и Китая</div>
     <div class="ev"><span class="d" style="--dc:var(--green)"></span>Активное обсуждение энергетического перехода</div>
-    <div class="ev-head" style="margin-top:17px">Что делали мы</div><div class="mile" style="--mc:var(--gold)"><div class="mh">6 августа · старт</div><h4>Запуск аналитического блога</h4><p>Ещё до периода глобальной турбулентности 2020-х.</p></div>
+    <div class="ev-head" style="margin-top:17px">Что делали мы</div><div class="mile" style="--mc:var(--gold)"><div class="mh">6 августа · старт</div><h4>Запуск аналитического блога</h4><div class="mile-h">@_seceet_truth</div><p>Ещё до периода глобальной турбулентности 2020-х.</p></div>
   </div></div>
   <div class="panel" data-i="1"><div class="pcard">
     <div class="yr-lbl">Узел 2 из 5 · Хронология</div><div class="yr">2020</div><div class="yr-rule"></div><div class="ev-head">Что происходило</div>
