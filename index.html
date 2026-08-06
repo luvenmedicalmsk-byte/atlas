@@ -164,7 +164,55 @@ body{background:var(--bg);color:var(--white);font-family:var(--sans);-webkit-fon
 .pcard .yr-rule{height:1px;margin:14px 0 15px;
   background:linear-gradient(90deg,var(--pfl,#D4AF5A),rgba(255,255,255,.05) 62%,transparent)}
 /* Заголовок группы данных. */
-.pcard .ev-head{font-family:var(--label);font-size:8px;letter-spacing:.24em;
+/* ═══ МИНИ-ДАШБОРД ГОДА ═══════════════════════════════════════════════
+   Показатели вместо перечисления событий: число, направление, спарклайн.
+   Читается за секунду, чего список из трёх строк не даёт.
+
+   Сетка на две колонки: больше не помещается на 388px, меньше не создаёт
+   ощущения приборной панели. */
+.mdash{display:grid;grid-template-columns:1fr 1fr;gap:1px;margin:2px 0 15px;
+  background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.05);
+  border-radius:9px;overflow:hidden}
+.mcell{background:rgba(9,8,14,.92);padding:11px 12px 9px;position:relative}
+.mcell.wide{grid-column:1 / -1}
+.mlbl{font-family:var(--label);font-size:7.5px;letter-spacing:.2em;
+  text-transform:uppercase;color:rgba(203,213,225,.36);margin-bottom:5px;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mval{font-family:var(--serif);font-size:20px;font-weight:600;line-height:1;
+  color:#e9f0fa;font-variant-numeric:tabular-nums;
+  /* Число появляется снизу вверх, как перекатывается разряд на приборе. */
+  opacity:0;transform:translateY(7px);
+  transition:opacity var(--t-enter) var(--e-out),transform var(--t-enter) var(--e-out)}
+.mval.up{color:#4ec98a}
+.mval.dn{color:#e0574f}
+.mval.wr{color:#e0a33c}
+.mdelta{font-family:var(--label);font-size:8px;letter-spacing:.06em;
+  color:rgba(203,213,225,.42);margin-top:3px;
+  opacity:0;transition:opacity var(--t-scene) var(--e-out)}
+/* Спарклайн: линия дорисовывается слева направо, а не появляется целиком. */
+.spark{display:block;width:100%;height:26px;margin-top:7px;overflow:visible}
+.spark path{fill:none;stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round;
+  stroke-dasharray:var(--len,200);stroke-dashoffset:var(--len,200);
+  transition:stroke-dashoffset 1.6s var(--e-out)}
+.spark .area{fill:var(--sc,#D4AF5A);opacity:0;stroke:none;
+  transition:opacity var(--t-scene) var(--e-out)}
+/* Открытая панель: значения приходят по очереди, графики дорисовываются. */
+.panel.live .mval{opacity:1;transform:none}
+.panel.live .mdelta{opacity:1;transition-delay:.5s}
+.panel.live .spark path{stroke-dashoffset:0}
+.panel.live .spark .area{opacity:.1;transition-delay:.4s}
+.panel.live .mcell:nth-child(1) .mval{transition-delay:.1s}
+.panel.live .mcell:nth-child(2) .mval{transition-delay:.22s}
+.panel.live .mcell:nth-child(3) .mval{transition-delay:.34s}
+.panel.live .mcell:nth-child(1) .spark path{transition-delay:.2s}
+.panel.live .mcell:nth-child(2) .spark path{transition-delay:.32s}
+.panel.live .mcell:nth-child(3) .spark path{transition-delay:.44s}
+@media (prefers-reduced-motion: reduce){
+  .mval,.mdelta{opacity:1;transform:none;transition:none}
+  .spark path{stroke-dashoffset:0;transition:none}
+  .spark .area{opacity:.1}
+}
+.pcard .ev-head{.pcard .ev-head{font-family:var(--label);font-size:8px;letter-spacing:.24em;
   text-transform:uppercase;color:rgba(203,213,225,.34);margin-bottom:9px}
 /* Строки данных: моноширинный отступ слева, как в приборной ленте. */
 .ev{padding:4px 0 4px 2px}
@@ -986,14 +1034,14 @@ a{color:inherit;text-decoration:none}
 
 <div id="panels">
   <div class="panel" data-i="0"><div class="pcard">
-    <div class="yr-lbl">Узел 1 из 5 · Хронология</div><div class="yr">2018</div><div class="yr-rule"></div><div class="ev-head">Что происходило</div>
+    <div class="yr-lbl">Узел 1 из 5 · Хронология</div><div class="yr">2018</div><div class="yr-rule"></div><div class="ev-head">Показатели периода</div><div class="mdash"><div class="mcell"><div class="mlbl">Мировой ВВП</div><div class="mval up">+3.6%</div><svg class="spark" viewBox="0 0 150 26" preserveAspectRatio="none" style="--sc:#4ec98a"><path class="area" d="M0.0,24.0 L21.4,18.3 L42.9,12.6 L64.3,9.7 L85.7,6.9 L107.1,4.0 L128.6,4.0 L150.0,6.9 L150.0,26 L0,26 Z"/><path d="M0.0,24.0 L21.4,18.3 L42.9,12.6 L64.3,9.7 L85.7,6.9 L107.1,4.0 L128.6,4.0 L150.0,6.9" stroke="#4ec98a" style="--len:152"/></svg><div class="mdelta">ровный рост четвёртый год</div></div><div class="mcell"><div class="mlbl">Индекс риска</div><div class="mval ">38</div><svg class="spark" viewBox="0 0 150 26" preserveAspectRatio="none" style="--sc:#6f88ab"><path class="area" d="M0.0,19.0 L21.4,14.0 L42.9,24.0 L64.3,9.0 L85.7,4.0 L107.1,9.0 L128.6,4.0 L150.0,4.0 L150.0,26 L0,26 Z"/><path d="M0.0,19.0 L21.4,14.0 L42.9,24.0 L64.3,9.0 L85.7,4.0 L107.1,9.0 L128.6,4.0 L150.0,4.0" stroke="#6f88ab" style="--len:159"/></svg><div class="mdelta">фон, без всплесков</div></div></div><div class="ev-head">Что происходило</div>
     <div class="ev"><span class="d" style="--dc:var(--blue)"></span>Первые серьёзные признаки замедления мировой экономики</div>
     <div class="ev"><span class="d" style="--dc:var(--blue)"></span>Начало торговой войны США и Китая</div>
     <div class="ev"><span class="d" style="--dc:var(--green)"></span>Активное обсуждение энергетического перехода</div>
     <div class="ev-head" style="margin-top:17px">Что делали мы</div><div class="mile" style="--mc:var(--gold)"><div class="mh">6 августа · старт</div><h4>Запуск аналитического блога</h4><a class="mile-h" href="https://t.me/_secret_truth" target="_blank" rel="noopener">@_secret_truth</a><p>Ещё до периода глобальной турбулентности 2020-х.</p></div>
   </div></div>
   <div class="panel" data-i="1"><div class="pcard">
-    <div class="yr-lbl">Узел 2 из 5 · Хронология</div><div class="yr">2020</div><div class="yr-rule"></div><div class="ev-head">Что происходило</div>
+    <div class="yr-lbl">Узел 2 из 5 · Хронология</div><div class="yr">2020</div><div class="yr-rule"></div><div class="ev-head">Показатели периода</div><div class="mdash"><div class="mcell"><div class="mlbl">Мировой ВВП</div><div class="mval dn">−3.1%</div><svg class="spark" viewBox="0 0 150 26" preserveAspectRatio="none" style="--sc:#e0574f"><path class="area" d="M0.0,4.0 L21.4,4.4 L42.9,6.7 L64.3,21.1 L85.7,24.0 L107.1,19.2 L128.6,15.5 L150.0,17.5 L150.0,26 L0,26 Z"/><path d="M0.0,4.0 L21.4,4.4 L42.9,6.7 L64.3,21.1 L85.7,24.0 L107.1,19.2 L128.6,15.5 L150.0,17.5" stroke="#e0574f" style="--len:156"/></svg><div class="mdelta">обвал за два квартала</div></div><div class="mcell"><div class="mlbl">Логистика</div><div class="mval dn">−34%</div><svg class="spark" viewBox="0 0 150 26" preserveAspectRatio="none" style="--sc:#e0574f"><path class="area" d="M0.0,4.0 L21.4,5.7 L42.9,15.7 L64.3,21.5 L85.7,24.0 L107.1,20.2 L128.6,18.2 L150.0,18.2 L150.0,26 L0,26 Z"/><path d="M0.0,4.0 L21.4,5.7 L42.9,15.7 L64.3,21.5 L85.7,24.0 L107.1,20.2 L128.6,18.2 L150.0,18.2" stroke="#e0574f" style="--len:154"/></svg><div class="mdelta">цепочки поставок встали</div></div></div><div class="ev-head">Что происходило</div>
     <div class="ev"><span class="d" style="--dc:var(--orange)"></span>Глобальные локдауны COVID-19 и закрытие границ</div>
     <div class="ev"><span class="d" style="--dc:var(--blue)"></span>Самая глубокая мировая рецессия со времён Второй мировой</div>
     <div class="ev"><span class="d" style="--dc:var(--blue)"></span>Начало масштабных сбоев глобальных цепочек поставок</div>
@@ -1001,7 +1049,7 @@ a{color:inherit;text-decoration:none}
     <div class="ev"><span class="d" style="--dc:var(--society)"></span>Ухудшение психического благополучия из-за ограничений и неопределённости</div>
   </div></div>
   <div class="panel" data-i="2"><div class="pcard">
-    <div class="yr-lbl">Узел 3 из 5 · Хронология</div><div class="yr">2022</div><div class="yr-rule"></div><div class="ev-head">Что происходило</div>
+    <div class="yr-lbl">Узел 3 из 5 · Хронология</div><div class="yr">2022</div><div class="yr-rule"></div><div class="ev-head">Показатели периода</div><div class="mdash"><div class="mcell"><div class="mlbl">Инфляция</div><div class="mval wr">8.7%</div><svg class="spark" viewBox="0 0 150 26" preserveAspectRatio="none" style="--sc:#e0a33c"><path class="area" d="M0.0,24.0 L21.4,20.1 L42.9,14.6 L64.3,9.8 L85.7,6.4 L107.1,4.0 L128.6,4.9 L150.0,5.8 L150.0,26 L0,26 Z"/><path d="M0.0,24.0 L21.4,20.1 L42.9,14.6 L64.3,9.8 L85.7,6.4 L107.1,4.0 L128.6,4.9 L150.0,5.8" stroke="#e0a33c" style="--len:152"/></svg><div class="mdelta">пик за сорок лет</div></div><div class="mcell"><div class="mlbl">Энергия</div><div class="mval dn">+140%</div><svg class="spark" viewBox="0 0 150 26" preserveAspectRatio="none" style="--sc:#e0574f"><path class="area" d="M0.0,24.0 L21.4,21.4 L42.9,14.9 L64.3,8.0 L85.7,4.0 L107.1,5.7 L128.6,10.3 L150.0,12.3 L150.0,26 L0,26 Z"/><path d="M0.0,24.0 L21.4,21.4 L42.9,14.9 L64.3,8.0 L85.7,4.0 L107.1,5.7 L128.6,10.3 L150.0,12.3" stroke="#e0574f" style="--len:153"/></svg><div class="mdelta">газ и электроэнергия</div></div></div><div class="ev-head">Что происходило</div>
     <div class="ev"><span class="d" style="--dc:var(--orange)"></span>Начало полномасштабного конфликта России и Украины</div>
     <div class="ev"><span class="d" style="--dc:var(--blue)"></span>Энергетический кризис в Европе</div>
     <div class="ev"><span class="d" style="--dc:var(--blue)"></span>Глобальный всплеск инфляции</div>
@@ -1012,14 +1060,14 @@ a{color:inherit;text-decoration:none}
     <div class="ev-head" style="margin-top:17px">Что делали мы</div><div class="mile" style="--mc:var(--red)"><div class="mh">7 июня 2022</div><h4>Архив · база исследований</h4><p>Наблюдение становится системой. Сценарии, взаимосвязи и датированные гипотезы в одном месте.</p><div class="chips"><span class="chip">Сценарии</span><span class="chip">Прогнозы</span><span class="chip">Стратегии</span><span class="chip">Аналитика</span><span class="chip">Страны</span><span class="chip">Сообщество</span><span class="chip">Адаптация</span><span class="chip">Стратегические активы</span></div></div>
   </div></div>
   <div class="panel" data-i="3"><div class="pcard">
-    <div class="yr-lbl">Узел 4 из 5 · Хронология</div><div class="yr">2024</div><div class="yr-rule"></div><div class="ev-head">Что происходило</div>
+    <div class="yr-lbl">Узел 4 из 5 · Хронология</div><div class="yr">2024</div><div class="yr-rule"></div><div class="ev-head">Показатели периода</div><div class="mdash"><div class="mcell"><div class="mlbl">Мощности ИИ</div><div class="mval up">×5.2</div><svg class="spark" viewBox="0 0 150 26" preserveAspectRatio="none" style="--sc:#9b6ae0"><path class="area" d="M0.0,24.0 L21.4,22.6 L42.9,19.7 L64.3,16.4 L85.7,12.6 L107.1,8.8 L128.6,5.9 L150.0,4.0 L150.0,26 L0,26 Z"/><path d="M0.0,24.0 L21.4,22.6 L42.9,19.7 L64.3,16.4 L85.7,12.6 L107.1,8.8 L128.6,5.9 L150.0,4.0" stroke="#9b6ae0" style="--len:151"/></svg><div class="mdelta">рост вычислений</div></div><div class="mcell"><div class="mlbl">Дата-центры</div><div class="mval up">+38%</div><svg class="spark" viewBox="0 0 150 26" preserveAspectRatio="none" style="--sc:#9b6ae0"><path class="area" d="M0.0,24.0 L21.4,20.8 L42.9,16.6 L64.3,12.9 L85.7,9.8 L107.1,7.2 L128.6,5.1 L150.0,4.0 L150.0,26 L0,26 Z"/><path d="M0.0,24.0 L21.4,20.8 L42.9,16.6 L64.3,12.9 L85.7,9.8 L107.1,7.2 L128.6,5.1 L150.0,4.0" stroke="#9b6ae0" style="--len:151"/></svg><div class="mdelta">потребление энергии</div></div></div><div class="ev-head">Что происходило</div>
     <div class="ev"><span class="d" style="--dc:var(--blue)"></span>Усиление геополитической фрагментации мировой экономики</div>
     <div class="ev"><span class="d" style="--dc:var(--orange)"></span>Нарастание напряжённости конфликтов в Украине и на Ближнем Востоке и их влияние на безопасность и экономику</div>
     <div class="ev"><span class="d" style="--dc:var(--purple)"></span>Массовое внедрение ИИ в бизнес и государственный сектор</div>
     <div class="ev"><span class="d" style="--dc:var(--green)"></span>Рост числа климатических катастроф</div>
   </div></div>
   <div class="panel" data-i="4"><div class="pcard">
-    <div class="yr-lbl">Узел 5 из 5 · Хронология</div><div class="yr">2026</div><div class="yr-rule"></div><div class="ev-head">Что происходило</div>
+    <div class="yr-lbl">Узел 5 из 5 · Хронология</div><div class="yr">2026</div><div class="yr-rule"></div><div class="ev-head">Показатели периода</div><div class="mdash"><div class="mcell"><div class="mlbl">Источников</div><div class="mval ">89</div><svg class="spark" viewBox="0 0 150 26" preserveAspectRatio="none" style="--sc:#1faacc"><path class="area" d="M0.0,24.0 L21.4,20.9 L42.9,17.2 L64.3,13.9 L85.7,10.8 L107.1,8.4 L128.6,6.1 L150.0,4.0 L150.0,26 L0,26 Z"/><path d="M0.0,24.0 L21.4,20.9 L42.9,17.2 L64.3,13.9 L85.7,10.8 L107.1,8.4 L128.6,6.1 L150.0,4.0" stroke="#1faacc" style="--len:151"/></svg><div class="mdelta">поток в реальном времени</div></div><div class="mcell"><div class="mlbl">Обновление</div><div class="mval ">30 мин</div><svg class="spark" viewBox="0 0 150 26" preserveAspectRatio="none" style="--sc:#1faacc"><path class="area" d="M0.0,4.0 L21.4,9.3 L42.9,12.0 L64.3,14.7 L85.7,17.3 L107.1,20.0 L128.6,22.7 L150.0,24.0 L150.0,26 L0,26 Z"/><path d="M0.0,4.0 L21.4,9.3 L42.9,12.0 L64.3,14.7 L85.7,17.3 L107.1,20.0 L128.6,22.7 L150.0,24.0" stroke="#1faacc" style="--len:152"/></svg><div class="mdelta">цикл сбора и разбора</div></div></div><div class="ev-head">Что происходило</div>
     <div class="ev"><span class="d" style="--dc:var(--blue)"></span>Мировая экономика остаётся в условиях высокой неопределённости</div>
     <div class="ev"><span class="d" style="--dc:var(--green)"></span>Сильные волны жары, засухи и лесные пожары в Европе, Северной Америке и других регионах</div>
     <div class="ev"><span class="d" style="--dc:var(--orange)"></span>Любая нестабильность в Ормузском проливе немедленно отражается на нефтяном рынке</div>
@@ -1595,7 +1643,13 @@ a{color:inherit;text-decoration:none}
    /* --g управляет ростом карточки, длиной нити и ореолом. Берётся из той
       же величины, что прозрачность: карточка разворачивается ровно по мере
       подлёта камеры к узлу и сворачивается, когда камера уходит. */
-   panelEls[i].style.setProperty('--g',(_o*_o).toFixed(3));}
+   panelEls[i].style.setProperty('--g',(_o*_o).toFixed(3));
+   /* Класс live запускает дашборд: числа выкатываются, линии дорисовываются.
+      Порог 0.55, а не любое ненулевое значение — иначе графики начинали бы
+      рисоваться, пока карточка ещё далеко и почти прозрачна.
+      Класс снимается при уходе, поэтому при возврате к узлу всё
+      проигрывается заново. */
+   if(_o>0.55) panelEls[i].classList.add('live'); else panelEls[i].classList.remove('live');}
     finalEl.style.opacity=(ease(Math.min(Math.max((pb-0.55)/0.45,0),1))*(1-past)).toFixed(3);
     if(finalA){var fa=ease(Math.min(Math.max((pb-0.55)/0.45,0),1));finalA.style.opacity=fa.toFixed(3);finalFine.style.opacity=fa.toFixed(3);}
     var yi=Math.round(idx);if(yi!==curYear&&yi>=0&&yi<YATMO.length&&yearsReveal>0.5){curYear=yi;atmo.style.background=YATMO[yi];}
