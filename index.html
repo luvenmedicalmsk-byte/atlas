@@ -900,10 +900,7 @@ a{color:inherit;text-decoration:none}
 /* Кнопка масштаба уводится на вторую строку и прижимается влево:
    в одной строке с заголовком она вставала под круглую кнопку закрытия
    и перехватывала касания, из-за чего крестик плохо нажимался. */
-#pdfFull .bar{position:relative;z-index:4;padding-right:66px;
-  align-items:flex-start;row-gap:8px}
-#pdfFull .ttl{flex:0 0 100%}
-#pdfFull #pfZoom{margin-right:auto}
+#pdfFull .bar{position:relative;z-index:4;align-items:center;row-gap:9px}
 #pdfFull.on{display:flex;opacity:1}
 #pdfFull .bar{display:flex;align-items:center;gap:8px;padding:12px 16px;flex-wrap:wrap;
   border-bottom:1px solid rgba(212,175,90,.12);background:rgba(6,5,10,.7);
@@ -911,9 +908,12 @@ a{color:inherit;text-decoration:none}
 /* flex:0 0 100% вместо flex:1. Прежнее значение стояло НИЖЕ моей
    правки и перебивало её по каскаду: заголовок оставался в одной строке
    с кнопкой масштаба, крестик ложился поверх кнопки и обрезал её. */
-#pdfFull .ttl{flex:0 0 100%;font-family:var(--label);font-size:10px;
+#pdfFull .ttl{flex:1 1 auto;order:1;min-width:0;font-family:var(--label);font-size:10px;
   letter-spacing:.12em;text-transform:uppercase;color:rgba(212,175,90,.6);
-  padding-right:52px;line-height:1.4}
+  line-height:1.4}
+/* Масштаб уходит на вторую строку целиком. */
+#pdfFull #pfZoom{order:3;flex:0 0 100%;align-self:flex-start;
+  margin-right:auto;width:max-content}
 #pdfFull .act{font-family:var(--label);font-size:10px;letter-spacing:.08em;
   text-transform:uppercase;font-weight:600;color:rgba(212,175,90,.85);text-decoration:none;
   border:1px solid rgba(212,175,90,.3);border-radius:30px;padding:8px 16px;
@@ -922,8 +922,13 @@ a{color:inherit;text-decoration:none}
 /* Закрытие — отдельная круглая кнопка поверх сцены, а не элемент панели.
    В панели с переносом строк она уезжала на вторую строку и попасть по ней
    на телефоне было трудно. 44px — минимальный размер зоны касания. */
-#pdfFull .pf-x{position:absolute;top:calc(8px + env(safe-area-inset-top));right:10px;
-  z-index:9;width:46px;height:46px;border-radius:50%;
+/* Крестик БОЛЬШЕ НЕ absolute. Абсолютное позиционирование не знает
+   о содержимом строки: при любой раскладке панели кнопка могла лечь
+   поверх соседней. Теперь он обычный элемент первой строки, и flex
+   сам разводит его с заголовком — пересечение невозможно
+   по построению, а не по подобранным отступам. */
+#pdfFull .pf-x{flex:0 0 auto;order:2;margin-left:auto;
+  width:44px;height:44px;border-radius:50%;
   border:1px solid rgba(255,255,255,.16);background:rgba(6,5,10,.86);
   backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
   color:rgba(226,232,240,.9);font-size:15px;line-height:1;cursor:pointer;
