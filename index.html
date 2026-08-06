@@ -2192,7 +2192,8 @@ var EVC=[
   {t:'Конфликт',          i:74, d:0},
   {t:'Сбой поставок',     i:53, d:1},
   {t:'Протесты',          i:61, d:4},
-  {t:'Водный стресс',     i:66, d:2}
+  {t:'Водный стресс',     i:66, d:2},
+  {t:'Дефицит энергии',   i:73, d:1}
 ];
 // Мысли движка: короткие строки внизу оси, каждая держится две секунды.
 // Это не подписи объектов, а ход рассуждения — то, чем система занята сейчас.
@@ -2307,9 +2308,14 @@ function frame(now){requestAnimationFrame(frame);var r=hero.getBoundingClientRec
      var fs=(W<420?9:10), pad=7;
      ctx.font='600 '+fs+'px Inter,system-ui,sans-serif';
      var tw=ctx.measureText(ev.t).width;
+     /* Индекс со знаменателем: «83» само по себе не говорит о шкале,
+        «83/100» читается как оценка. Знаменатель мельче и приглушён,
+        чтобы не спорить со значением. */
      ctx.font='500 '+(fs-1)+'px Inter,system-ui,sans-serif';
      var iw=ctx.measureText(String(ev.i)).width;
-     var bw=tw+iw+pad*3+6, bh=fs+13;
+     ctx.font='500 '+(fs-2.5)+'px Inter,system-ui,sans-serif';
+     var dw=ctx.measureText('/100').width;
+     var bw=tw+iw+dw+pad*3+6, bh=fs+13;
      // Зажим по краям: карточка не должна уезжать за экран.
      var bx=Math.min(Math.max(ox-bw/2,4),W-bw-4), by=oyy-bh/2;
      // Подложка: тёмная, чтобы текст читался поверх связей.
@@ -2328,7 +2334,10 @@ function frame(now){requestAnimationFrame(frame);var r=hero.getBoundingClientRec
      // Индекс справа цветом домена: число — главное, что несёт карточка.
      ctx.font='500 '+(fs-1)+'px Inter,system-ui,sans-serif';
      ctx.fillStyle='rgba('+col[0]+','+col[1]+','+col[2]+','+(0.9*al).toFixed(3)+')';
-     ctx.fillText(String(ev.i), bx+bw-pad-iw, by+bh/2);
+     ctx.fillText(String(ev.i), bx+bw-pad-iw-dw, by+bh/2);
+     ctx.font='500 '+(fs-2.5)+'px Inter,system-ui,sans-serif';
+     ctx.fillStyle='rgba('+col[0]+','+col[1]+','+col[2]+','+(0.45*al).toFixed(3)+')';
+     ctx.fillText('/100', bx+bw-pad-dw, by+bh/2);
    }
    ctx.restore();
  }
