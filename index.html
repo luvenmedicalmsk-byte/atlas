@@ -544,7 +544,10 @@ body{background:var(--bg);color:var(--white);font-family:var(--sans);-webkit-fon
 
 a{color:inherit;text-decoration:none}
 .eyebrow{font-family:var(--label);font-weight:600;font-size:11px;letter-spacing:.4em;text-transform:uppercase;color:var(--gold)}
-.cy{color:var(--cyan);font-family:var(--serif);font-weight:600}.rd{color:#E5382E;font-family:var(--serif);font-weight:600}
+/* Антиква при одинаковом кегле выглядит мельче гротеска: строчные
+   буквы у неё ниже. Названия продуктов набраны ею и терялись рядом
+   с обычным текстом — компенсируется увеличением на 12%. */
+.cy{color:var(--cyan);font-family:var(--serif);font-weight:600;font-size:1.12em}.rd{color:#E5382E;font-family:var(--serif);font-weight:600;font-size:1.12em}
 
 .wrap{position:relative;z-index:2;max-width:860px;margin:0 auto;padding:0 28px}
 .hero{min-height:82svh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:90px 0 40px}
@@ -1682,7 +1685,7 @@ a{color:inherit;text-decoration:none}
       <span class="rail"></span><span class="dot"></span>
       <ul class="checks">
       <li><span class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="#D4AF5A" stroke-width="2.4"><path d="M4 12l5 5L20 6"/></svg></span>15 месяцев <span class="cy">Atlas Intelligence</span></li>
-      <li><span class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="#D4AF5A" stroke-width="2.4"><path d="M4 12l5 5L20 6"/></svg></span>пожизненный доступ к <span class="rd">Архиву системных рисков</span></li>
+      <li><span class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="#D4AF5A" stroke-width="2.4"><path d="M4 12l5 5L20 6"/></svg></span>пожизненный доступ&nbsp;к <span class="rd">Архиву системных рисков</span></li>
       <li><span class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="#D4AF5A" stroke-width="2.4"><path d="M4 12l5 5L20 6"/></svg></span>постоянное обновление стратегической базы знаний</li>
       <li><span class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="#D4AF5A" stroke-width="2.4"><path d="M4 12l5 5L20 6"/></svg></span>новые аналитические сценарии</li>
       <li><span class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="#D4AF5A" stroke-width="2.4"><path d="M4 12l5 5L20 6"/></svg></span>развитие аналитических моделей и методологий</li>
