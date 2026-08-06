@@ -98,7 +98,11 @@ body{background:var(--bg);color:var(--white);font-family:var(--sans);-webkit-fon
 #chaos .word.cyw{font-family:var(--serif);color:var(--cyan);font-weight:600;white-space:nowrap}
 #chaos .word.rdw{font-family:var(--serif);color:#E5382E;font-weight:600}
 #chaos .word em{color:var(--gold);font-style:italic}
-#chaos .cue{position:absolute;bottom:8vh;display:flex;flex-direction:column;align-items:center;gap:8px;font-family:var(--label);font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--mute-2)}
+/* Ползунок гаснет, как только человек начал листать: он подсказывает
+   первое действие, а дальше мешает и просвечивает сквозь сцену.
+   Раньше гас вместе с контейнером #chaos, но тот теперь держится
+   постоянно, и подсказка висела намертво. */
+#chaos .cue{position:absolute;bottom:8vh;transition:opacity var(--t-enter) var(--e-out);display:flex;flex-direction:column;align-items:center;gap:8px;font-family:var(--label);font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--mute-2)}
 #chaos .cue .bar{width:1px;height:44px;background:linear-gradient(var(--gold-deep),transparent);animation:cue 2.2s var(--e-soft) infinite}
 @keyframes cue{0%,100%{opacity:.3;transform:scaleY(.6)}50%{opacity:1;transform:scaleY(1)}}
 
@@ -331,6 +335,10 @@ body{background:var(--bg);color:var(--white);font-family:var(--sans);-webkit-fon
   font-family:var(--sans);color:#dfe7f2;
   top:calc(8vh + env(safe-area-inset-top));left:50%;right:auto;
   transform:translateX(-50%);padding:0 16px}
+/* Смысловой блок опущен к центру. Статусная строка остаётся вверху:
+   она относится ко всей сцене, а не к содержимому. Расстояния внутри
+   блока не менялись, сдвинулась только группа целиком. */
+#chaos .wi-body{margin-top:calc(24vh - 60px)}
 /* Статусная строка: пульсирующая точка и режим работы. */
 #chaos .wi-top{display:flex;align-items:center;gap:8px;
   font-family:var(--label);font-size:9px;letter-spacing:.2em;
@@ -372,7 +380,9 @@ body{background:var(--bg);color:var(--white);font-family:var(--sans);-webkit-fon
   border:1px solid rgba(212,175,90,.24);
   box-shadow:inset 0 1px 0 rgba(255,255,255,.06);margin-bottom:12px}
 #chaos .wi-tm-l{font-family:var(--label);font-size:8.5px;letter-spacing:.18em;
-  text-transform:uppercase;color:rgba(214,224,238,.55);width:100%}
+  text-transform:uppercase;color:rgba(212,175,90,.72);width:100%;
+  display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
+#chaos .wi-tm-x{color:rgba(214,224,238,.5);letter-spacing:.14em}
 #chaos .wi-tm-v{font-family:var(--sans);font-size:clamp(26px,6vw,34px);
   font-weight:600;line-height:1;color:var(--gold);font-variant-numeric:tabular-nums;
   letter-spacing:.01em}
@@ -451,7 +461,7 @@ body{background:var(--bg);color:var(--white);font-family:var(--sans);-webkit-fon
 #final a:hover{background:var(--gold);transform:translateY(-2px)}
 #final .fine{margin-top:20px;font-family:var(--label);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--mute-2);opacity:0}
 
-#snd{position:fixed;bottom:20px;left:22px;z-index:7;font-family:var(--label);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--mute-2);cursor:pointer;pointer-events:auto;user-select:none;display:flex;align-items:center;gap:8px;transition:color .3s}
+#snd{position:static;z-index:7;font-family:var(--label);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--mute-2);cursor:pointer;pointer-events:auto;user-select:none;display:flex;align-items:center;gap:8px;transition:color .3s}
 #snd:hover{color:var(--text)}
 #snd .ic{width:8px;height:8px;border-radius:50%;background:var(--mute-2);box-shadow:none;transition:background .3s,box-shadow .3s}
 #snd.on .ic{background:var(--cyan);box-shadow:0 0 8px 1px rgba(31,170,204,.7);animation:none}
@@ -483,7 +493,9 @@ body{background:var(--bg);color:var(--white);font-family:var(--sans);-webkit-fon
   .pcard{padding:20px 20px 16px}.pcard .yr{font-size:32px;margin-bottom:12px}.ev{font-size:12px;padding:2px 0}
   /* Звук в правый НИЖНИЙ угол: сверху он спорил с закреплённой шапкой,
      а внизу справа не пересекается ни с чем и остаётся под большим пальцем. */
-  #snd{top:auto;bottom:calc(18px + env(safe-area-inset-bottom));right:20px;left:auto}
+  /* Звук стал третьим системным индикатором верхней строки: все три
+     относятся к состоянию сцены и читаются как один блок. */
+  #snd{position:static;top:auto;bottom:auto;right:auto;left:auto}
 }
 @media(prefers-reduced-motion:reduce){#chaos .cue .bar,.pcard::after{animation:none}}
 </style>
@@ -1240,17 +1252,18 @@ a{color:inherit;text-decoration:none}
 
 <div id="chaos">
   <div class="word wintro" data-b="0">
-    <div class="wi-top"><span class="wi-dot"></span>Система активна<span class="wi-sep">·</span>реальное время</div>
-    <div class="wi-h">Будущее начинается с сигнала.</div><div class="wi-s">Глобальная аналитическая экосистема мониторинга и оценки системных рисков в режиме реального времени.</div>
+    <div class="wi-top"><span class="wi-dot"></span>Система активна<span class="wi-sep">·</span>реальное время<span class="wi-sep">·</span><span id="snd"><span class="ic"></span><span>Звук</span></span></div>
+    <div class="wi-body"><div class="wi-h">Будущее начинается с сигнала.</div><div class="wi-s">Глобальная аналитическая экосистема мониторинга и оценки системных рисков в режиме реального времени.</div>
     <div class="wi-tm">
-      <div class="wi-tm-l">До закрытия набора</div>
+      <div class="wi-tm-l">Специальные условия<span class="wi-tm-x">действуют ещё</span></div>
       <div class="wi-tm-v" id="wiTimer">00:00:00</div>
-      <div class="wi-tm-d">7 августа, 15:00 МСК</div>
+      <div class="wi-tm-d">до 07 августа · 15:00 МСК</div>
     </div>
     <div class="wi-lic">
       <div class="wi-lr"><b>8</b><span>лицензий <em class="pa">Atlas Intelligence</em> на 2 месяца</span></div>
       <div class="wi-lr"><b>8</b><span>лицензий <em class="pa">Atlas Intelligence</em> на 6 месяцев</span></div>
       <div class="wi-lr acc"><b>3</b><span>лицензии на полную экосистему<br><i><em class="pr">Архив системных рисков</em> и <em class="pa">Atlas Intelligence</em></i></span></div>
+      </div>
     </div>
   </div>
   <div class="word" data-b="1">Тысячи событий</div>
@@ -1288,7 +1301,7 @@ a{color:inherit;text-decoration:none}
 <div id="thread"></div>
 <div id="finalCue"><span class="ctxt">Листайте вниз</span><span class="cbar"></span></div>
 
-<div id="snd"><span class="ic"></span><span>Звук</span></div>
+
 <div class="fallback" id="fallback"><h2>Живая модель мира</h2><p>Этой сцене нужен WebGL. Откройте страницу в современном браузере с аппаратным ускорением. Atlas показывает, как отдельные события становятся системой.</p></div>
 
 <main><div class="spacer"></div></main>
@@ -1684,6 +1697,7 @@ a{color:inherit;text-decoration:none}
   var chaos=document.getElementById('chaos'),finalEl=document.getElementById('final'),atmo=document.getElementById('atmo'),flash=document.getElementById('flash'),brand=document.getElementById('brand');
   var words=[].slice.call(document.querySelectorAll('#chaos .word'));
   var panelEls=[].slice.call(document.querySelectorAll('.panel'));
+  var cueEl=document.querySelector('#chaos .cue');
   var finalA=finalEl.querySelector('a'),finalFine=finalEl.querySelector('.fine');
 
   if(typeof THREE==='undefined'){var _f=document.getElementById('fallback');
@@ -1899,6 +1913,8 @@ scene.add(gNodes);
    вступление, которое должно жить дольше остальных слов. Прозрачностью
    теперь управляет каждое слово отдельно. */
  chaos.style.opacity='1';
+ /* Подсказка входа живёт только на первых процентах прокрутки. */
+ if(cueEl) cueEl.style.opacity=(scrollP<0.012?1:1-Math.min((scrollP-0.012)/0.02,1)).toFixed(3);
     if(brand)brand.style.opacity=(yearsReveal*(1-pb)*(1-past)).toFixed(3);
     // panels
     /* panelIdx объявлен в общем скоупе: он нужен и здесь, и в animate для
