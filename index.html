@@ -1814,7 +1814,21 @@ scene.add(gNodes);
    нужно время на три строки. Полосы шире, поэтому слова не наезжают
    друг на друга и совпадают с ритмом фонового звука. */
  var bands=[[0.0,0.075],[0.075,0.122],[0.122,0.168],[0.168,0.214],[0.214,0.258],[0.258,0.30]];
-    for(var i=0;i<words.length;i++){var a=bands[i][0],b=bands[i][1],mid=(a+b)/2,half=(b-a)/2;var o=1-Math.min(Math.abs(scrollP-mid)/half,1);words[i].style.opacity=(scrollP<0.32?o:0).toFixed(3);}
+    for(var i=0;i<words.length;i++){
+   var a=bands[i][0],b=bands[i][1],mid=(a+b)/2,half=(b-a)/2,o;
+   if(i===0){
+     /* ПЕРВЫЙ БЛОК ВИДЕН СРАЗУ. По общей формуле прозрачность считается
+        от середины полосы, и при scrollP=0 она равна нулю: открыв
+        страницу, человек видел пустой экран, а таймер и лицензии
+        проявлялись только после прокрутки и тут же гасли.
+        Теперь блок полностью виден от начала до 60% своей полосы
+        и только потом уходит. */
+     o=scrollP<=b*0.6 ? 1 : 1-Math.min((scrollP-b*0.6)/(b*0.4),1);
+   } else {
+     o=1-Math.min(Math.abs(scrollP-mid)/half,1);
+   }
+   words[i].style.opacity=(scrollP<0.32?o:0).toFixed(3);
+ }
     chaos.style.opacity=(1-ease(Math.min(Math.max((scrollP-0.29)/0.03,0),1))).toFixed(3);
     if(brand)brand.style.opacity=(yearsReveal*(1-pb)*(1-past)).toFixed(3);
     // panels
