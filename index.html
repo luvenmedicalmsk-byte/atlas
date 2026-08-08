@@ -104,7 +104,7 @@ body{background:var(--bg);color:var(--white);font-family:var(--sans);-webkit-fon
    постоянно, и подсказка висела намертво. */
 /* Подсказка опущена к самому краю: композиция сместилась вниз,
    и на 8vh «Вход» налезал на карточку лицензий. */
-#chaos .cue{position:absolute;bottom:calc(2.5vh + env(safe-area-inset-bottom));transition:opacity var(--t-enter) var(--e-out);display:flex;flex-direction:column;align-items:center;gap:8px;font-family:var(--label);font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--mute-2)}
+#chaos .cue{position:absolute;bottom:calc(6vh + env(safe-area-inset-bottom));transition:opacity var(--t-enter) var(--e-out);display:flex;flex-direction:column;align-items:center;gap:8px;font-family:var(--label);font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--mute-2)}
 #chaos .cue .bar{width:1px;height:44px;background:linear-gradient(var(--gold-deep),transparent);animation:cue 2.2s var(--e-soft) infinite}
 @keyframes cue{0%,100%{opacity:.3;transform:scaleY(.6)}50%{opacity:1;transform:scaleY(1)}}
 
@@ -464,12 +464,19 @@ body{background:var(--bg);color:var(--white);font-family:var(--sans);-webkit-fon
    Карточка плотнее прежней: она должна читаться как аналитический
    интерфейс, а не как текст поверх графа. Заливка без размытия —
    blur усредняет цвета сцены в серую муть и даёт обратный эффект. */
-#chaos .hz-r{flex:0 0 auto;margin-top:clamp(56px,22vh,220px);
-  padding:0;border-radius:14px;width:min(420px,92vw);
-  background:rgba(6,5,11,.62);
-  border:1px solid rgba(255,255,255,.14);
-  box-shadow:var(--sh-contact),0 26px 60px -40px rgba(0,0,0,.9),
-    inset 0 1px 0 rgba(255,255,255,.05)}
+/* Карточка сужена до 360px и облегчена: она показывает состояние
+   системы, а не является главным объектом экрана. Граф должен
+   оставаться видимым вокруг неё.
+
+   Заливка .48 вместо .62 — полупрозрачная, сквозь неё читается сцена.
+   Свечение минимальное: рассеянная тень без контактной, иначе карточка
+   начинает выглядеть приподнятой над графом, а не лежащей в нём. */
+#chaos .hz-r{flex:0 0 auto;margin-top:clamp(44px,17vh,180px);
+  padding:0;border-radius:13px;width:min(360px,88vw);
+  background:rgba(6,5,11,.48);
+  border:1px solid rgba(255,255,255,.11);
+  box-shadow:0 22px 52px -44px rgba(0,0,0,.8),
+    inset 0 1px 0 rgba(255,255,255,.04)}
 /* Сетка 2×2 вместо вертикального списка: четыре показателя столбиком
    дают высокую карточку, которая читается как блок преимуществ.
    В сетке они читаются как приборная панель. */
@@ -479,10 +486,10 @@ body{background:var(--bg);color:var(--white);font-family:var(--sans);-webkit-fon
 #chaos .st-grid{display:grid;grid-template-columns:1fr 1fr;gap:0}
 /* Ячейки разделены линиями сетки, а не заливкой: сетка держится
    на промежутках в 1px, сквозь которые виден граф. */
-#chaos .st-c{background:transparent;padding:12px 13px 11px}
+#chaos .st-c{background:transparent;padding:10px 12px 9px}
 #chaos .st-c:nth-child(1),#chaos .st-c:nth-child(3){border-right:1px solid rgba(255,255,255,.14)}
 #chaos .st-c:nth-child(1),#chaos .st-c:nth-child(2){border-bottom:1px solid rgba(255,255,255,.14)}
-#chaos .st-c b{display:block;font-size:clamp(20px,2.7vw,26px);font-weight:600;
+#chaos .st-c b{display:block;font-size:clamp(18px,2.4vw,23px);font-weight:600;
   line-height:1;color:var(--gold);font-variant-numeric:tabular-nums}
 #chaos .st-c span{display:block;font-family:var(--label);font-size:7px;
   letter-spacing:.13em;text-transform:uppercase;color:rgba(214,224,238,.55);
@@ -502,8 +509,8 @@ body{background:var(--bg);color:var(--white);font-family:var(--sans);-webkit-fon
   margin-top:4px;line-height:1.5}
 /* Логика системы одной строкой: событие — свидетельство, процесс —
    основная аналитическая сущность, риск — вывод. */
-#chaos .st-flow{display:flex;align-items:center;justify-content:center;gap:9px;
-  padding:10px 12px;background:transparent;border-radius:0 0 12px 12px;
+#chaos .st-flow{display:flex;align-items:center;justify-content:center;gap:8px;
+  padding:8px 12px;background:transparent;border-radius:0 0 12px 12px;
   border-top:1px solid rgba(255,255,255,.14);
   font-family:var(--label);font-size:7.5px;letter-spacing:.16em;
   text-transform:uppercase;color:rgba(214,224,238,.55)}
@@ -515,8 +522,9 @@ body{background:var(--bg);color:var(--white);font-family:var(--sans);-webkit-fon
 /* На узких экранах монитор уходит под заголовок: две колонки на 380px
    сжимаются до нечитаемого. */
 @media(max-width:720px){
-  #chaos .hz-r{margin-top:clamp(40px,14vh,150px)}
+  #chaos .hz-r{margin-top:clamp(34px,11vh,120px)}
   #chaos .hd{margin-bottom:clamp(14px,3vh,26px)}
+  #chaos .cue{bottom:calc(4vh + env(safe-area-inset-bottom))}
 }
 /* Кнопка к тарифам между сроком и остатком лицензий: человек уже увидел
    ограничение по времени, дальше идёт ограничение по количеству, и между
