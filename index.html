@@ -468,6 +468,18 @@ body{background:var(--bg);color:var(--white);font-family:var(--sans);-webkit-fon
   letter-spacing:.13em;text-transform:uppercase;color:rgba(214,224,238,.5);
   margin-top:6px;line-height:1.35}
 #chaos .st-c b.nn{font-size:clamp(16px,2.1vw,20px);letter-spacing:.03em}
+/* Метка Live у числа стран: показатель живой и меняется вместе
+   с охватом — 113 на 30 июля, 118 на 8 августа. Без метки он читался бы
+   как характеристика, однажды установленная на сайте. */
+#chaos .st-lv{display:inline-block;margin-left:6px;padding:1px 5px;border-radius:4px;
+  font-style:normal;font-size:6.5px;letter-spacing:.14em;
+  color:var(--cyan);border:1px solid rgba(31,170,204,.4);
+  animation:stLive 2.4s var(--e-soft) infinite}
+/* Перечень доменов второй строкой: пять названий в строку растянули бы
+   ячейку и сломали сетку. */
+#chaos .st-c span i{display:block;font-style:normal;font-size:6.5px;
+  letter-spacing:.05em;text-transform:none;color:rgba(214,224,238,.36);
+  margin-top:4px;line-height:1.5}
 /* Логика системы одной строкой: событие — свидетельство, процесс —
    основная аналитическая сущность, риск — вывод. */
 #chaos .st-flow{display:flex;align-items:center;justify-content:center;gap:9px;
@@ -1479,9 +1491,9 @@ a{color:inherit;text-decoration:none}
       </div>
       <div class="hz-r">
         <div class="st-grid">
-          <div class="st-c"><b data-to="37">0</b><span>аналитических движков</span></div>
-          <div class="st-c"><b data-to="698">0</b><span>процессов в работе</span></div>
-          <div class="st-c"><b data-to="5" data-pad="2">0</b><span>доменов наблюдения</span></div>
+          <div class="st-c"><b id="ccNum" data-to="118">0</b><span>стран<em class="st-lv">Live</em></span></div>
+          <div class="st-c"><b data-to="5" data-pad="2">0</b><span>доменов<i>климат · экономика · геополитика · технологии · социум</i></span></div>
+          <div class="st-c"><b data-to="37">0</b><span>математических движков</span></div>
           <div class="st-c"><b class="nn">24/7</b><span>мониторинг</span></div>
         </div>
         <div class="st-flow"><i>Сигналы</i><em>→</em><i>Процессы</i><em>→</em><i>Риски</i></div>
@@ -1897,6 +1909,30 @@ a{color:inherit;text-decoration:none}
   var cueEl=document.querySelector('#chaos .cue');
   /* Показатели набираются от нуля: блок должен ощущаться работающим,
      а не нарисованным. Идёт один раз, вскоре после загрузки. */
+  /* ЧИСЛО СТРАН — ЖИВОЙ ПОКАЗАТЕЛЬ, а не константа в вёрстке.
+     Охват растёт: 113 стран на 30 июля, 118 на 8 августа. Значение
+     подтягивается из coverage_totals.json, который пайплайн переписывает
+     каждый прогон, и подставляется в data-to ДО запуска счёта — иначе
+     цифра набралась бы до старого значения и дёрнулась после ответа.
+
+     В разметке остаётся последнее известное число: если запрос не пройдёт
+     (сеть, кэш, недоступность), покажется оно, а не ноль и не пустое место.
+
+     Путь /docs/, а не корень: Pages репозитория secrett-archive публикует
+     корень ветки, поэтому файл лежит по адресу docs/coverage_totals.json.
+     Проверено по настройке публикации, source.path = '/'. */
+  (function(){
+    var el=document.getElementById('ccNum');
+    if(!el || !window.fetch) return;
+    fetch('https://secrett-archive.com/docs/coverage_totals.json', {cache:'no-store'})
+      .then(function(r){ return r.ok ? r.json() : null; })
+      .then(function(j){
+        var n = j && j.countries ? Object.keys(j.countries).length : 0;
+        if(n > 0) el.setAttribute('data-to', String(n));
+      })
+      .catch(function(){});
+  })();
+
   setTimeout(function(){
     [].slice.call(document.querySelectorAll('#chaos .st-c b[data-to]')).forEach(function(b,i){
       var to=parseInt(b.getAttribute('data-to'),10);
