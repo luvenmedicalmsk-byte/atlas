@@ -1522,7 +1522,7 @@ a{color:inherit;text-decoration:none}
           <div class="st-c"><b id="ccNum" data-to="118">0</b><span>стран<em class="st-lv">Live</em></span></div>
           <div class="st-c"><b data-to="5" data-pad="2">0</b><span>доменов<i>климат · экономика · геополитика · технологии · социум</i></span></div>
           <div class="st-c"><b data-to="37">0</b><span>математических движков</span></div>
-          <div class="st-c"><b class="nn">24/7</b><span>мониторинг</span></div>
+          <div class="st-c"><b data-to="3300" data-suf="+">0</b><span>материалов в архиве</span></div>
         </div>
         <div class="st-flow"><i>Сигналы</i><em>→</em><i>Процессы</i><em>→</em><i>Риски</i></div>
       </div>
@@ -1965,11 +1965,15 @@ a{color:inherit;text-decoration:none}
     [].slice.call(document.querySelectorAll('#chaos .st-c b[data-to]')).forEach(function(b,i){
       var to=parseInt(b.getAttribute('data-to'),10);
       var pad=parseInt(b.getAttribute('data-pad')||'0',10);
+      var suf=b.getAttribute('data-suf')||'';
       if(!isFinite(to)) return;
       function put(v){
         var s=String(v);
         while(pad && s.length<pad) s='0'+s;
-        b.textContent=s;
+        /* Разряды тысяч неразрывным пробелом: 3 300 читается как объём,
+           3300 — как идентификатор. */
+        if(v>=1000) s=s.replace(/\B(?=(\d{3})+(?!\d))/g,'\u00a0');
+        b.textContent=s+suf;
       }
       put(0);
       var t0=null;
