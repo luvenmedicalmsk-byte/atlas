@@ -449,26 +449,33 @@ body{background:var(--bg);color:var(--white);font-family:var(--sans);-webkit-fon
    чтобы верхний край не выравнивался с заголовком — так два элемента
    не читаются одной строкой. */
 #chaos .hz-r{flex:0 0 auto;margin-top:clamp(30px,9vh,110px);
-  padding:14px 16px 13px;border-radius:14px;min-width:186px;
+  padding:2px;border-radius:14px;min-width:min(300px,86vw);
   background:rgba(9,8,15,.3);
   backdrop-filter:blur(11px) saturate(1.45);
   -webkit-backdrop-filter:blur(11px) saturate(1.45);
   border:1px solid rgba(255,255,255,.1);
   box-shadow:var(--sh-contact),0 24px 56px -40px rgba(0,0,0,.86),
     inset 0 1px 0 rgba(255,255,255,.06)}
-#chaos .st-row{margin-bottom:13px}
-#chaos .st-row.last{margin-bottom:0}
-#chaos .st-row b{display:block;font-size:clamp(19px,2.6vw,25px);font-weight:600;
+/* Сетка 2×2 вместо вертикального списка: четыре показателя столбиком
+   дают высокую карточку, которая читается как блок преимуществ.
+   В сетке они читаются как приборная панель. */
+#chaos .st-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;
+  background:rgba(255,255,255,.07);border-radius:12px 12px 0 0;overflow:hidden}
+#chaos .st-c{background:rgba(6,5,11,.5);padding:12px 13px 11px}
+#chaos .st-c b{display:block;font-size:clamp(20px,2.7vw,26px);font-weight:600;
   line-height:1;color:var(--gold);font-variant-numeric:tabular-nums}
-#chaos .st-row span{display:block;font-family:var(--label);font-size:7.5px;
-  letter-spacing:.14em;text-transform:uppercase;color:rgba(214,224,238,.5);
-  margin-top:5px;line-height:1.35}
-/* Перечень доменов идёт второй строкой под подписью: пять названий
-   в одну строку растянули бы карточку вдвое и сломали её пропорции. */
-#chaos .st-dom i{display:block;font-style:normal;font-size:7px;
-  letter-spacing:.06em;text-transform:none;color:rgba(214,224,238,.38);
-  margin-top:4px;line-height:1.5;max-width:19ch}
-#chaos .st-row b.nn{font-size:clamp(15px,2vw,19px);letter-spacing:.03em}
+#chaos .st-c span{display:block;font-family:var(--label);font-size:7px;
+  letter-spacing:.13em;text-transform:uppercase;color:rgba(214,224,238,.5);
+  margin-top:6px;line-height:1.35}
+#chaos .st-c b.nn{font-size:clamp(16px,2.1vw,20px);letter-spacing:.03em}
+/* Логика системы одной строкой: событие — свидетельство, процесс —
+   основная аналитическая сущность, риск — вывод. */
+#chaos .st-flow{display:flex;align-items:center;justify-content:center;gap:9px;
+  padding:10px 12px;background:rgba(6,5,11,.5);border-radius:0 0 12px 12px;
+  font-family:var(--label);font-size:7.5px;letter-spacing:.16em;
+  text-transform:uppercase;color:rgba(214,224,238,.55)}
+#chaos .st-flow i{font-style:normal}
+#chaos .st-flow em{font-style:normal;color:var(--gold);opacity:.7}
 #chaos .wi-dot{animation:stLive 2.4s var(--e-soft) infinite}
 @keyframes stLive{0%,100%{opacity:.4;transform:scale(.85)}50%{opacity:1;transform:scale(1)}}
 
@@ -1471,9 +1478,13 @@ a{color:inherit;text-decoration:none}
         <h1 class="hz-h">Будущее<br>начинается<br>с сигнала</h1>
       </div>
       <div class="hz-r">
-        <div class="st-row"><b data-to="37">0</b><span>математических движков</span></div>
-        <div class="st-row"><b data-to="5" data-pad="2">0</b><span class="st-dom">доменов<i>климат · экономика · геополитика · технологии · социум</i></span></div>
-        <div class="st-row last"><b class="nn">24/7</b><span>мониторинг</span></div>
+        <div class="st-grid">
+          <div class="st-c"><b data-to="37">0</b><span>аналитических движков</span></div>
+          <div class="st-c"><b data-to="698">0</b><span>процессов в работе</span></div>
+          <div class="st-c"><b data-to="5" data-pad="2">0</b><span>доменов наблюдения</span></div>
+          <div class="st-c"><b class="nn">24/7</b><span>мониторинг</span></div>
+        </div>
+        <div class="st-flow"><i>Сигналы</i><em>→</em><i>Процессы</i><em>→</em><i>Риски</i></div>
       </div>
     </div>
   </div>
@@ -1483,7 +1494,7 @@ a{color:inherit;text-decoration:none}
   <div class="word" data-b="3">Процессы</div>
   <div class="word" data-b="4">Годы наблюдений</div>
   <div class="word nm rdw" data-b="5">Архив системных<br>рисков</div>
-  <div class="cue"><span>Войти</span><span class="bar"></span></div>
+  <div class="cue"><span>Войти в аналитический центр</span><span class="bar"></span></div>
 </div>
 
 <div id="panels">
@@ -1887,7 +1898,7 @@ a{color:inherit;text-decoration:none}
   /* Показатели набираются от нуля: блок должен ощущаться работающим,
      а не нарисованным. Идёт один раз, вскоре после загрузки. */
   setTimeout(function(){
-    [].slice.call(document.querySelectorAll('#chaos .st-row b[data-to]')).forEach(function(b,i){
+    [].slice.call(document.querySelectorAll('#chaos .st-c b[data-to]')).forEach(function(b,i){
       var to=parseInt(b.getAttribute('data-to'),10);
       var pad=parseInt(b.getAttribute('data-pad')||'0',10);
       if(!isFinite(to)) return;
