@@ -448,25 +448,30 @@ body{background:var(--bg);color:var(--white);font-family:var(--sans);-webkit-fon
 /* Диагностический монитор: стекло, а не текст поверх графа. Сдвинут вниз,
    чтобы верхний край не выравнивался с заголовком — так два элемента
    не читаются одной строкой. */
-/* БЕЗ ЗАЛИВКИ ВООБЩЕ. Читаемость держит только размытие: оно смазывает
-   граф под карточкой, не затемняя его. Любая заливка, даже слабая,
-   гасит цвета сцены и возвращает ощущение подложки. */
+/* НИ ЗАЛИВКИ, НИ РАЗМЫТИЯ. Размытие само по себе давало серое пятно:
+   blur усредняет цвета графа в однородную муть, и карточка выглядела
+   залитой, хотя background был transparent. Это оказалось причиной,
+   а не заливка.
+
+   Карточку держат только рамка и разделительные линии. Читаемость
+   текста — тени под буквами, они работают точечно и сцену не трогают. */
 #chaos .hz-r{flex:0 0 auto;margin-top:clamp(30px,9vh,110px);
-  padding:2px;border-radius:14px;min-width:min(300px,86vw);
+  padding:0;border-radius:14px;min-width:min(300px,86vw);
   background:transparent;
-  backdrop-filter:blur(14px) saturate(1.5);
-  -webkit-backdrop-filter:blur(14px) saturate(1.5);
-  border:1px solid rgba(255,255,255,.12);
-  box-shadow:var(--sh-contact),0 24px 56px -40px rgba(0,0,0,.86),
-    inset 0 1px 0 rgba(255,255,255,.07)}
+  border:1px solid rgba(255,255,255,.16);
+  box-shadow:0 24px 56px -44px rgba(0,0,0,.7)}
 /* Сетка 2×2 вместо вертикального списка: четыре показателя столбиком
    дают высокую карточку, которая читается как блок преимуществ.
    В сетке они читаются как приборная панель. */
-#chaos .st-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;
-  background:rgba(255,255,255,.13);border-radius:12px 12px 0 0;overflow:hidden}
+/* Линии — границы самих ячеек. Прежде сетка держалась на фоне
+   контейнера, просвечивающем в зазорах: при прозрачном контейнере
+   просвечивать стало нечему, и разделители исчезли. */
+#chaos .st-grid{display:grid;grid-template-columns:1fr 1fr;gap:0}
 /* Ячейки разделены линиями сетки, а не заливкой: сетка держится
    на промежутках в 1px, сквозь которые виден граф. */
 #chaos .st-c{background:transparent;padding:12px 13px 11px}
+#chaos .st-c:nth-child(1),#chaos .st-c:nth-child(3){border-right:1px solid rgba(255,255,255,.14)}
+#chaos .st-c:nth-child(1),#chaos .st-c:nth-child(2){border-bottom:1px solid rgba(255,255,255,.14)}
 #chaos .st-c b{display:block;font-size:clamp(20px,2.7vw,26px);font-weight:600;
   line-height:1;color:var(--gold);font-variant-numeric:tabular-nums;
   text-shadow:0 2px 6px rgba(0,0,0,.6)}
@@ -490,7 +495,7 @@ body{background:var(--bg);color:var(--white);font-family:var(--sans);-webkit-fon
    основная аналитическая сущность, риск — вывод. */
 #chaos .st-flow{display:flex;align-items:center;justify-content:center;gap:9px;
   padding:10px 12px;background:transparent;border-radius:0 0 12px 12px;
-  border-top:1px solid rgba(255,255,255,.13);
+  border-top:1px solid rgba(255,255,255,.14);
   font-family:var(--label);font-size:7.5px;letter-spacing:.16em;
   text-transform:uppercase;color:rgba(214,224,238,.55)}
 #chaos .st-flow i{font-style:normal}
