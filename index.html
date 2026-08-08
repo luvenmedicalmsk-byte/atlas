@@ -1387,11 +1387,7 @@ a{color:inherit;text-decoration:none}
   <div class="word wintro" data-b="0">
     <div class="wi-top"><span class="wi-dot"></span>Система активна<span class="wi-sep">·</span>24/7<span class="wi-sep">·</span><span id="snd"><span class="ic"></span><span>Звук</span></span></div>
     <div class="wi-body"><div class="wi-h">Будущее начинается с сигнала</div><div class="wi-s">Глобальная аналитическая экосистема мониторинга и оценки системных рисков в режиме реального времени</div>
-    <div class="wi-tm">
-      <div class="wi-tm-l">Специальные условия<span class="wi-tm-x">действуют ещё</span></div>
-      <div class="wi-tm-v" id="wiTimer">00:00:00</div>
-      <div class="wi-tm-d">до 07 августа · 15:00 МСК</div>
-    </div>
+    
     
     </div>
   </div>
@@ -2740,25 +2736,6 @@ requestAnimationFrame(frame);})();</script>
     en.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('seen'); io.unobserve(e.target); } });
   },{threshold:.22});
   revs.forEach(function(r){io.observe(r);});
-})();</script>
-<script>(function(){
-  // Отсчёт до закрытия набора. Цель задана в московском времени через
-  // явное смещение +03:00, а не через локальную зону устройства:
-  // иначе у читателя в другом часовом поясе таймер показывал бы
-  // не тот момент.
-  var el=document.getElementById('wiTimer'); if(!el) return;
-  var TARGET=new Date('2026-08-07T15:00:00+03:00').getTime();
-  function pad(n){return (n<10?'0':'')+n;}
-  function tick(){
-    var left=TARGET-Date.now();
-    if(left<=0){ el.textContent='Набор закрыт'; el.style.fontSize='20px'; return; }
-    var h=Math.floor(left/3600000),
-        m=Math.floor(left%3600000/60000),
-        s=Math.floor(left%60000/1000);
-    el.textContent=pad(h)+':'+pad(m)+':'+pad(s);
-    setTimeout(tick, 1000-(Date.now()%1000));
-  }
-  tick();
 })();</script>
 <!-- Cloudflare Web Analytics.
      Без cookies и без сбора персональных данных: согласие пользователя
