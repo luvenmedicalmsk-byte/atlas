@@ -436,8 +436,11 @@ body{background:var(--bg);color:var(--white);font-family:var(--sans);-webkit-fon
 
 /* Заголовок слева вверху, монитор справа со сдвигом вниз: между ними
    и под ними остаётся открытое поле для графа. */
-#chaos .hz{display:flex;align-items:flex-start;justify-content:space-between;
-  gap:clamp(20px,6vw,80px)}
+/* Вертикальная композиция: бренд → позиционирование → тезис → пауза →
+   состояние системы. Цифры справа от заголовка появлялись слишком рано
+   и забирали внимание у графа; теперь между тезисом и ними — открытое
+   поле, где сцена работает без конкуренции. */
+#chaos .hz{display:flex;flex-direction:column;align-items:flex-start;gap:0}
 #chaos .hz-l{flex:0 1 auto;min-width:0}
 #chaos .hz-eyebrow{font-family:var(--label);font-size:9px;letter-spacing:.26em;
   text-transform:uppercase;color:var(--gold);margin-bottom:10px}
@@ -455,11 +458,18 @@ body{background:var(--bg);color:var(--white);font-family:var(--sans);-webkit-fon
 
    Карточку держат только рамка и разделительные линии. Читаемость
    текста — тени под буквами, они работают точечно и сцену не трогают. */
-#chaos .hz-r{flex:0 0 auto;margin-top:clamp(30px,9vh,110px);
-  padding:0;border-radius:14px;min-width:min(300px,86vw);
-  background:transparent;
-  border:1px solid rgba(255,255,255,.16);
-  box-shadow:0 24px 56px -44px rgba(0,0,0,.7)}
+/* Пауза перед состоянием системы: 22vh открытого поля. Именно она
+   отделяет смысловой блок от доказательства масштаба.
+
+   Карточка плотнее прежней: она должна читаться как аналитический
+   интерфейс, а не как текст поверх графа. Заливка без размытия —
+   blur усредняет цвета сцены в серую муть и даёт обратный эффект. */
+#chaos .hz-r{flex:0 0 auto;margin-top:clamp(56px,22vh,220px);
+  padding:0;border-radius:14px;width:min(420px,92vw);
+  background:rgba(6,5,11,.62);
+  border:1px solid rgba(255,255,255,.14);
+  box-shadow:var(--sh-contact),0 26px 60px -40px rgba(0,0,0,.9),
+    inset 0 1px 0 rgba(255,255,255,.05)}
 /* Сетка 2×2 вместо вертикального списка: четыре показателя столбиком
    дают высокую карточку, которая читается как блок преимуществ.
    В сетке они читаются как приборная панель. */
@@ -473,11 +483,10 @@ body{background:var(--bg);color:var(--white);font-family:var(--sans);-webkit-fon
 #chaos .st-c:nth-child(1),#chaos .st-c:nth-child(3){border-right:1px solid rgba(255,255,255,.14)}
 #chaos .st-c:nth-child(1),#chaos .st-c:nth-child(2){border-bottom:1px solid rgba(255,255,255,.14)}
 #chaos .st-c b{display:block;font-size:clamp(20px,2.7vw,26px);font-weight:600;
-  line-height:1;color:var(--gold);font-variant-numeric:tabular-nums;
-  text-shadow:0 2px 6px rgba(0,0,0,.6)}
+  line-height:1;color:var(--gold);font-variant-numeric:tabular-nums}
 #chaos .st-c span{display:block;font-family:var(--label);font-size:7px;
-  letter-spacing:.13em;text-transform:uppercase;color:rgba(214,224,238,.62);
-  margin-top:6px;line-height:1.35;text-shadow:0 1px 3px rgba(0,0,0,.55)}
+  letter-spacing:.13em;text-transform:uppercase;color:rgba(214,224,238,.55);
+  margin-top:6px;line-height:1.35}
 #chaos .st-c b.nn{font-size:clamp(16px,2.1vw,20px);letter-spacing:.03em}
 /* Метка Live у числа стран: показатель живой и меняется вместе
    с охватом — 113 на 30 июля, 118 на 8 августа. Без метки он читался бы
@@ -506,9 +515,8 @@ body{background:var(--bg);color:var(--white);font-family:var(--sans);-webkit-fon
 /* На узких экранах монитор уходит под заголовок: две колонки на 380px
    сжимаются до нечитаемого. */
 @media(max-width:720px){
-  #chaos .hz{flex-direction:column;gap:22px}
-  #chaos .hz-r{margin-top:0;align-self:flex-start}
-  #chaos .hd{margin-bottom:clamp(18px,4vh,30px)}
+  #chaos .hz-r{margin-top:clamp(40px,14vh,150px)}
+  #chaos .hd{margin-bottom:clamp(14px,3vh,26px)}
 }
 /* Кнопка к тарифам между сроком и остатком лицензий: человек уже увидел
    ограничение по времени, дальше идёт ограничение по количеству, и между
