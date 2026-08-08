@@ -404,55 +404,73 @@ body{background:var(--bg);color:var(--white);font-family:var(--sans);-webkit-fon
   text-transform:uppercase;color:rgba(212,175,90,.72);width:100%;
   display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
 #chaos .wi-tm-x{color:rgba(214,224,238,.5);letter-spacing:.14em}
-/* ═══ ПЕРВЫЙ ЭКРАН: АНАЛИТИЧЕСКИЙ ЦЕНТР ═══════════════════════════════
-   Раскладка разведена по краям: имя и статус сверху, заголовок слева,
-   показатели справа. Центр остаётся графу — он главный объект, а не фон.
-   Прежняя композиция стояла по центру и накрывала самую плотную часть
-   сети. */
-#chaos .word.wintro{max-width:min(1180px,94vw);text-align:left;
+/* ═══ ПЕРВЫЙ ЭКРАН: ВХОД В АНАЛИТИЧЕСКИЙ ЦЕНТР ════════════════════════
+   Принцип: много пространства, один сильный объект, несколько точных
+   элементов. Граф занимает основную площадь и остаётся главным; текст
+   работает интерфейсным слоем поверх него, а не колонкой заголовков.
+
+   Блок прижат к верхней трети: ниже начинается поле графа, и заполнять
+   его элементами не нужно. */
+#chaos .word.wintro{max-width:min(1240px,94vw);text-align:left;
   font-family:var(--sans);color:#dfe7f2;
   top:calc(4vh + env(safe-area-inset-top));left:50%;right:auto;
   transform:translateX(-50%);padding:0 16px}
 
-/* Верхняя строка: имя слева, состояние справа. */
+/* Верх: только имя и состояние. Ничего больше. */
 #chaos .hd{display:flex;align-items:center;justify-content:space-between;
-  gap:14px;flex-wrap:wrap;margin-bottom:clamp(22px,7vh,64px)}
+  gap:14px;flex-wrap:wrap;margin-bottom:clamp(26px,8vh,72px)}
 #chaos .hd-brand{font-size:clamp(15px,2.2vw,20px);letter-spacing:.01em}
-#chaos .hd-st{display:flex;align-items:center;gap:14px;flex-wrap:wrap;
+#chaos .hd-st{display:flex;align-items:center;gap:16px;flex-wrap:wrap;
   font-family:var(--label);font-size:9px;letter-spacing:.2em;
   text-transform:uppercase;color:rgba(31,170,204,.8)}
 #chaos .hd-s{display:flex;align-items:center;gap:8px}
 
-/* Заголовок и показатели по краям, центр свободен для графа. */
+/* Заголовок слева вверху, монитор справа со сдвигом вниз: между ними
+   и под ними остаётся открытое поле для графа. */
 #chaos .hz{display:flex;align-items:flex-start;justify-content:space-between;
-  gap:clamp(20px,6vw,90px)}
+  gap:clamp(20px,6vw,80px)}
 #chaos .hz-l{flex:0 1 auto;min-width:0}
 #chaos .hz-eyebrow{font-family:var(--label);font-size:9px;letter-spacing:.26em;
-  text-transform:uppercase;color:var(--gold);margin-bottom:14px}
-#chaos .hz-h{margin:0;font-size:clamp(30px,6.4vw,62px);line-height:1.06;
-  letter-spacing:-.022em;font-weight:600;color:#f2f6fb}
+  text-transform:uppercase;color:var(--gold);margin-bottom:12px}
+/* Кегль уменьшен примерно на 30%: заголовок не должен спорить с графом. */
+#chaos .hz-h{margin:0;font-size:clamp(23px,4.6vw,44px);line-height:1.1;
+  letter-spacing:-.02em;font-weight:600;color:#f2f6fb}
 
-/* Показатели: это приборные значения, а не рекламные тезисы,
-   поэтому набраны как таблица — число, затем подпись. */
-#chaos .hz-r{flex:0 0 auto;text-align:left;padding-top:6px}
-#chaos .st-cap{font-family:var(--label);font-size:8.5px;letter-spacing:.22em;
-  text-transform:uppercase;color:rgba(214,224,238,.42);margin-bottom:12px}
-#chaos .st-row{display:flex;align-items:baseline;gap:10px;margin-bottom:9px}
-#chaos .st-row b{flex:0 0 auto;min-width:2.4em;text-align:right;
-  font-size:clamp(17px,2.6vw,24px);font-weight:600;line-height:1;
-  color:var(--gold);font-variant-numeric:tabular-nums}
-#chaos .st-row b.nn{font-size:clamp(12px,1.7vw,15px);letter-spacing:.06em}
-#chaos .st-row b.live{color:var(--cyan);animation:stLive 2.4s var(--e-soft) infinite}
-@keyframes stLive{0%,100%{opacity:.5}50%{opacity:1}}
-#chaos .st-row span{font-family:var(--label);font-size:8px;letter-spacing:.13em;
-  text-transform:uppercase;color:rgba(214,224,238,.55);line-height:1.4}
+/* Диагностический монитор: стекло, а не текст поверх графа. Сдвинут вниз,
+   чтобы верхний край не выравнивался с заголовком — так два элемента
+   не читаются одной строкой. */
+#chaos .hz-r{flex:0 0 auto;margin-top:clamp(30px,9vh,110px);
+  padding:14px 16px 13px;border-radius:14px;min-width:186px;
+  background:rgba(9,8,15,.3);
+  backdrop-filter:blur(11px) saturate(1.45);
+  -webkit-backdrop-filter:blur(11px) saturate(1.45);
+  border:1px solid rgba(255,255,255,.1);
+  box-shadow:var(--sh-contact),0 24px 56px -40px rgba(0,0,0,.86),
+    inset 0 1px 0 rgba(255,255,255,.06)}
+#chaos .st-cap{font-family:var(--label);font-size:8px;letter-spacing:.26em;
+  text-transform:uppercase;color:rgba(214,224,238,.4)}
+#chaos .st-on{font-family:var(--label);font-size:10px;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--cyan);margin-top:3px}
+#chaos .st-rule{height:1px;background:rgba(255,255,255,.09);margin:11px 0 10px}
+#chaos .st-row{margin-bottom:9px}
+#chaos .st-row b{display:block;font-size:clamp(19px,2.6vw,25px);font-weight:600;
+  line-height:1;color:var(--gold);font-variant-numeric:tabular-nums}
+#chaos .st-row span{display:block;font-family:var(--label);font-size:7.5px;
+  letter-spacing:.14em;text-transform:uppercase;color:rgba(214,224,238,.5);
+  margin-top:5px;line-height:1.35}
+#chaos .st-live{display:flex;align-items:center;gap:7px;margin-top:12px;
+  font-family:var(--label);font-size:8.5px;letter-spacing:.2em;
+  text-transform:uppercase;color:rgba(31,170,204,.85)}
+#chaos .st-dot{width:5px;height:5px;border-radius:50%;background:var(--cyan);
+  box-shadow:0 0 8px var(--cyan);animation:stLive 2.4s var(--e-soft) infinite}
+@keyframes stLive{0%,100%{opacity:.35;transform:scale(.85)}50%{opacity:1;transform:scale(1)}}
 
-/* На узких экранах колонки складываются: показатели уходят под заголовок,
-   иначе обе колонки сжимаются до нечитаемого. */
+/* На узких экранах монитор уходит под заголовок: две колонки на 380px
+   сжимаются до нечитаемого. */
 @media(max-width:720px){
-  #chaos .hz{flex-direction:column;gap:26px}
-  #chaos .hz-r{padding-top:0}
-  #chaos .hd{margin-bottom:clamp(18px,4vh,32px)}
+  #chaos .hz{flex-direction:column;gap:22px}
+  #chaos .hz-r{margin-top:0;align-self:flex-start}
+  #chaos .hd{margin-bottom:clamp(18px,4vh,30px)}
 }
 /* Кнопка к тарифам между сроком и остатком лицензий: человек уже увидел
    ограничение по времени, дальше идёт ограничение по количеству, и между
@@ -1448,11 +1466,12 @@ a{color:inherit;text-decoration:none}
         <h1 class="hz-h">Будущее<br>начинается<br>с сигнала</h1>
       </div>
       <div class="hz-r">
-        <div class="st-cap">Состояние системы</div>
+        <div class="st-cap">Система</div>
+        <div class="st-on">Активна</div>
+        <div class="st-rule"></div>
         <div class="st-row"><b data-to="37">0</b><span>математических движков</span></div>
         <div class="st-row"><b data-to="5" data-pad="2">0</b><span>областей наблюдения</span></div>
-        <div class="st-row"><b class="nn">24/7</b><span>мониторинг</span></div>
-        <div class="st-row"><b class="nn live">Live</b><span>текущие сигналы</span></div>
+        <div class="st-live"><span class="st-dot"></span>Live</div>
       </div>
     </div>
   </div>
@@ -1462,7 +1481,7 @@ a{color:inherit;text-decoration:none}
   <div class="word" data-b="3">Процессы</div>
   <div class="word" data-b="4">Годы наблюдений</div>
   <div class="word nm rdw" data-b="5">Архив системных<br>рисков</div>
-  <div class="cue"><span>Войти в аналитический центр</span><span class="bar"></span></div>
+  <div class="cue"><span>Войти в систему</span><span class="bar"></span></div>
 </div>
 
 <div id="panels">
