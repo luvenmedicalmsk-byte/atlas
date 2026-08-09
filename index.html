@@ -748,6 +748,7 @@ body{background:var(--bg);color:var(--white);font-family:var(--sans);-webkit-fon
 .lf-list.dot li:before{content:"";width:5px;height:5px;border-radius:50%;background:#9b6ae0;top:8px;left:6px}
 .lf-casc{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;line-height:1.9;color:rgba(242,239,230,.66);white-space:pre-wrap}
 .lf-out{border:1px solid rgba(184,151,58,.26);border-radius:12px;padding:18px;margin-top:22px;background:rgba(184,151,58,.045)}
+.lf-disc{font-size:11px;line-height:1.6;color:rgba(242,239,230,.34);margin-top:16px}
 @media(max-width:640px){.lf-card{padding:20px 16px}.lf-ttl{font-size:17px}.lf-risk b{font-size:34px}}
 </style>
 <style>
@@ -2906,14 +2907,17 @@ requestAnimationFrame(frame);})();</script>
     var m=String(s||'').match(/^(\d{4})-(\d{2})-(\d{2})/);
     return m?(+m[3]+' '+M[+m[2]-1]+' '+m[1]):'';
   }
+  function domRu(d){
+    return ({economy:'Экономика',geopolitics:'Геополитика',climate:'Климат',
+             technology:'Технологии',social:'Социум'})[String(d||'').trim()]||d;
+  }
   function render(a){
     var slot=document.getElementById('lf-slot'); if(!slot) return;
     var risk=a.risk_index||a.risk||0;
-    var lvl=risk>=70?'Высокий риск':(risk>=40?'Средний риск':'低');
-    lvl=risk>=70?'Высокий риск':(risk>=40?'Средний риск':'Низкий риск');
+    var lvl=risk>=70?'Высокий риск':(risk>=40?'Средний риск':'Низкий риск');
     var h='<div class="lf-card">'
       + '<div class="lf-badges">'
-      +   '<span class="lf-b dom">'+esc((a.domains||a.domain||'').split(',')[0]||'Процесс')+'</span>'
+      +   '<span class="lf-b dom">'+esc(domRu(Array.isArray(a.domains)?a.domains[0]:String(a.domains||a.domain||'').split(',')[0])||'Процесс')+'</span>'
       +   '<span class="lf-b eng">Atlas Intelligence</span>'
       +   '<span class="lf-b cnf">Высокая уверенность</span>'
       + '</div>'
@@ -2921,15 +2925,17 @@ requestAnimationFrame(frame);})();</script>
       +   '<div class="lf-ttl">'+esc(a.title||'')+'<div class="lf-date">'+esc(ruDate(a.date))+'</div></div>'
       +   '<div class="lf-risk"><b>'+esc(risk)+'</b><i>/100</i><span>'+lvl+'</span></div>'
       + '</div>'
-      + sec('Объект', a.object?'<div class="lf-txt">'+esc(a.object)+'</div>':'')
+      + sec('Объект', a.object?'<div class="lf-txt">'+esc(a.object)+(a.location?'<br>'+esc(a.location):'')+'</div>':'')
+      + sec('Оценка риска', a.risk_assessment?'<div class="lf-txt">'+esc(a.risk_assessment)+'</div>':'')
       + sec('Свидетельства', li(a.evidence))
       + sec('Инженерная интерпретация', a.engineering_interpretation?'<div class="lf-txt">'+esc(a.engineering_interpretation)+'</div>':'')
       + sec('Каскад процесса', a.cascade?'<div class="lf-casc">'+esc(a.cascade)+'</div>':'')
-      + sec('Что это значит', li(a.what_means,'dot'))
+      + sec('Что это значит', li(a.what_it_means,'dot'))
       + sec('Что отслеживать', li(a.monitoring,'dot'))
       + sec('Для бизнеса', li(a.impact_business,'dot'))
       + sec('Для частных лиц', li(a.impact_people,'dot'))
       + (a.systemic_conclusion?('<div class="lf-out"><div class="lf-h gold">Инженерный вывод</div><div class="lf-txt">'+esc(a.systemic_conclusion)+'</div></div>'):'')
+      + (a.disclaimer?('<div class="lf-disc">'+esc(a.disclaimer)+'</div>'):'')
       + '</div>';
     slot.innerHTML=h;
   }
