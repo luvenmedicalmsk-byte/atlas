@@ -723,33 +723,73 @@ body{background:var(--bg);color:var(--white);font-family:var(--sans);-webkit-fon
 
 .lf-empty{font-size:12px;color:rgba(242,239,230,.4);line-height:1.6;padding:18px 4px;text-align:center}
 #lf-slot{margin-top:26px}
-.lf-card{border:1px solid rgba(184,151,58,.3);border-radius:14px;padding:24px 22px;background:rgba(11,10,16,.72);text-align:left}
-.lf-badges{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px}
-.lf-b{font-size:10px;letter-spacing:.09em;text-transform:uppercase;border:1px solid;border-radius:999px;padding:5px 13px;white-space:nowrap}
-.lf-b.dom{color:#1faacc;border-color:rgba(31,170,204,.42)}
-.lf-b.eng{color:#7fd4b0;border-color:rgba(127,212,176,.34)}
-.lf-b.cnf{color:#97c459;border-color:rgba(151,196,89,.32)}
-.lf-top{display:flex;gap:20px;align-items:flex-start;flex-wrap:wrap}
-.lf-ttl{flex:1 1 260px;min-width:0;font-size:19px;font-weight:600;line-height:1.35;color:#f2efe6;margin:0}
-.lf-date{font-size:12px;color:rgba(242,239,230,.42);margin-top:8px}
+.lf-card{border:1px solid rgba(184,151,58,.28);border-radius:16px;padding:26px 22px;background:rgba(11,10,16,.75);text-align:left}
+.lf-badges{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px}
+.lf-b{font-size:10px;letter-spacing:.1em;text-transform:uppercase;border:1px solid;border-radius:999px;padding:6px 15px;white-space:nowrap}
+.lf-b.dom{color:#1faacc;border-color:rgba(31,170,204,.45)}
+.lf-b.eng{color:#7fd4b0;border-color:rgba(127,212,176,.36)}
+.lf-b.cnf{color:#97c459;border-color:rgba(151,196,89,.34)}
+.lf-top{display:flex;gap:22px;align-items:flex-start;flex-wrap:wrap}
+.lf-ttl{flex:1 1 250px;min-width:0;font-size:21px;font-weight:600;line-height:1.32;color:#f2efe6;margin:0}
+.lf-date{font-size:13px;color:rgba(242,239,230,.4);margin-top:9px;font-weight:400}
 .lf-risk{text-align:right;flex:0 0 auto}
-.lf-risk b{font-size:40px;font-weight:600;color:#D4AF5A;line-height:1}
-.lf-risk i{font-style:normal;font-size:15px;color:rgba(212,175,90,.5)}
-.lf-risk span{display:block;font-size:10px;letter-spacing:.09em;text-transform:uppercase;color:#BA7517;margin-top:6px}
-.lf-sec{margin-top:22px;padding-top:18px;border-top:1px solid rgba(242,239,230,.07)}
-.lf-h{font-size:11px;letter-spacing:.11em;text-transform:uppercase;color:#1faacc;margin-bottom:12px}
-.lf-h.gold{color:#D4AF5A}
-.lf-txt{font-size:13.5px;line-height:1.75;color:rgba(242,239,230,.74);white-space:pre-line}
-.lf-list{list-style:none;padding:0;margin:0}
-.lf-list li{position:relative;padding-left:26px;margin-bottom:11px;font-size:13px;line-height:1.65;color:rgba(242,239,230,.68)}
-.lf-list li b{display:block;color:#f2efe6;font-weight:600;margin-bottom:2px}
-.lf-list li:before{content:counter(lfi,decimal-leading-zero);counter-increment:lfi;position:absolute;left:0;top:1px;font-size:10px;color:#1faacc;letter-spacing:.04em}
-.lf-list{counter-reset:lfi}
-.lf-list.dot li:before{content:"";width:5px;height:5px;border-radius:50%;background:#9b6ae0;top:8px;left:6px}
-.lf-casc{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;line-height:1.9;color:rgba(242,239,230,.66);white-space:pre-wrap}
-.lf-out{border:1px solid rgba(184,151,58,.26);border-radius:12px;padding:18px;margin-top:22px;background:rgba(184,151,58,.045)}
-.lf-disc{font-size:11px;line-height:1.6;color:rgba(242,239,230,.34);margin-top:16px}
-@media(max-width:640px){.lf-card{padding:20px 16px}.lf-ttl{font-size:17px}.lf-risk b{font-size:34px}}
+.lf-risk b{font-size:44px;font-weight:600;color:#D4AF5A;line-height:1}
+.lf-risk i{font-style:normal;font-size:16px;color:rgba(212,175,90,.5)}
+.lf-risk span{display:block;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#BA7517;margin-top:7px}
+.lf-risk em{display:block;font-style:normal;font-size:9px;letter-spacing:.11em;text-transform:uppercase;color:rgba(242,239,230,.26);margin-top:5px;line-height:1.5}
+.lf-sec{margin-top:26px}
+.lf-sh{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:13px}
+.lf-h{font-size:11.5px;letter-spacing:.13em;text-transform:uppercase;color:#1faacc;font-weight:500}
+.lf-h.gold{color:#D4AF5A}.lf-h.pur{color:#9b6ae0}.lf-h.grn{color:#7fd4b0}
+.lf-hm{font-size:9.5px;letter-spacing:.11em;text-transform:uppercase;color:rgba(242,239,230,.24);white-space:nowrap}
+.lf-pass{border:1px solid rgba(242,239,230,.07);border-radius:12px;overflow:hidden}
+.lf-pr{display:flex;gap:14px;padding:14px 16px;border-bottom:1px solid rgba(242,239,230,.055)}
+.lf-pr:last-child{border-bottom:0}
+.lf-pk{flex:0 0 88px;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:rgba(242,239,230,.32);padding-top:3px}
+.lf-pv{flex:1;font-size:13.5px;line-height:1.6;color:rgba(242,239,230,.82)}
+.lf-pv b{color:#D4AF5A;font-size:22px;font-weight:600;letter-spacing:-.01em}
+.lf-pv u{text-decoration:none;color:rgba(212,175,90,.55);font-size:13px}
+.lf-pv s{text-decoration:none;color:#BA7517;font-size:13px;margin-left:8px}
+.lf-ev{border-left:2px solid rgba(31,170,204,.55);border-radius:0 10px 10px 0;background:rgba(31,170,204,.03);padding:15px 16px;margin-bottom:9px;display:flex;gap:13px}
+.lf-en{flex:0 0 auto;font-size:11px;color:#1faacc;padding-top:2px;font-variant-numeric:tabular-nums}
+.lf-et{flex:1;font-size:13.5px;line-height:1.65;color:rgba(242,239,230,.78)}
+.lf-quote{border-left:2px solid rgba(184,151,58,.4);padding:2px 0 2px 18px}
+.lf-lead{font-size:15px;line-height:1.55;color:#f2efe6;font-weight:500;margin-bottom:14px}
+.lf-txt{font-size:13.5px;line-height:1.75;color:rgba(242,239,230,.7);white-space:pre-line}
+.lf-casc{border:1px solid rgba(31,170,204,.16);border-radius:12px;padding:20px 18px}
+.lf-cr{display:flex;gap:14px;align-items:flex-start;position:relative;padding-bottom:16px}
+.lf-cr:last-child{padding-bottom:0}
+.lf-cr:before{content:"";position:absolute;left:11px;top:24px;bottom:0;width:1px;background:rgba(31,170,204,.22)}
+.lf-cr:last-child:before{display:none}
+.lf-cn{flex:0 0 23px;height:23px;border-radius:50%;border:1px solid rgba(31,170,204,.45);display:flex;align-items:center;justify-content:center;font-size:11px;color:#1faacc;background:rgba(11,10,16,.9);position:relative;z-index:1}
+.lf-ct{flex:1;font-size:13.5px;line-height:1.6;color:#f2efe6;padding-top:3px}
+.lf-ct.dim{color:rgba(242,239,230,.55)}
+.lf-imp{border:1px solid rgba(155,106,224,.16);border-radius:11px;padding:14px 16px;margin-bottom:9px}
+.lf-in{font-size:13.5px;font-weight:600;color:#f2efe6;margin-bottom:5px;display:flex;gap:9px;align-items:baseline}
+.lf-in:before{content:"";width:5px;height:5px;border-radius:50%;background:#9b6ae0;flex:0 0 auto}
+.lf-id{font-size:13px;line-height:1.65;color:rgba(242,239,230,.6);padding-left:14px}
+.lf-chk{border:1px solid rgba(242,239,230,.07);border-radius:12px;overflow:hidden}
+.lf-ci{display:flex;gap:13px;align-items:flex-start;padding:14px 16px;border-bottom:1px solid rgba(242,239,230,.05);cursor:pointer}
+.lf-ci:last-child{border-bottom:0}
+.lf-cb{flex:0 0 18px;height:18px;border:1.5px solid rgba(31,170,204,.42);border-radius:5px;margin-top:1px;position:relative}
+.lf-ci.on .lf-cb{background:rgba(31,170,204,.2);border-color:#1faacc}
+.lf-ci.on .lf-cb:after{content:"";position:absolute;left:5px;top:1px;width:5px;height:10px;border:solid #1faacc;border-width:0 2px 2px 0;transform:rotate(45deg)}
+.lf-cl{flex:1;font-size:13.5px;line-height:1.6;color:rgba(242,239,230,.78)}
+.lf-ci.on .lf-cl{color:rgba(242,239,230,.4);text-decoration:line-through}
+.lf-prac{border:1px solid rgba(184,151,58,.22);border-radius:12px;padding:18px 16px}
+.lf-pg{font-size:10.5px;letter-spacing:.11em;text-transform:uppercase;color:#BA7517;margin-bottom:12px}
+.lf-pg.blue{color:#1faacc;margin-top:22px}
+.lf-pl{list-style:none;padding:0;margin:0}
+.lf-pl li{position:relative;padding-left:17px;margin-bottom:12px;font-size:13.5px;line-height:1.65;color:rgba(242,239,230,.62)}
+.lf-pl li:before{content:"";position:absolute;left:0;top:8px;width:5px;height:5px;border-radius:50%;background:#BA7517}
+.lf-pl.blue li:before{background:#1faacc}
+.lf-pl li b{color:#f2efe6;font-weight:600}
+.lf-out{border:1px solid rgba(184,151,58,.3);border-radius:12px;padding:20px 18px;margin-top:26px;background:rgba(184,151,58,.04)}
+.lf-disc{font-size:11.5px;line-height:1.6;color:rgba(242,239,230,.3);margin-top:16px}
+.lf-eng{border:1px solid rgba(242,239,230,.07);border-radius:11px;padding:14px 16px;margin-top:18px}
+.lf-eh{font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:#1faacc;margin-bottom:8px}
+.lf-em{display:flex;gap:20px;flex-wrap:wrap;font-size:10px;color:rgba(242,239,230,.26);letter-spacing:.04em}
+@media(max-width:640px){.lf-card{padding:20px 15px}.lf-ttl{font-size:18px}.lf-risk b{font-size:36px}.lf-pk{flex-basis:74px}.lf-top{gap:14px}}
 </style>
 <style>
 
@@ -2890,54 +2930,126 @@ requestAnimationFrame(frame);})();</script>
   // Ошибка сети или пустой ответ не ломают страницу — блок просто не рисуется.
   var API='https://api.a-atlas.com';
   function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]});}
-  function li(arr,cls){
-    if(!arr||!arr.length) return '';
-    return '<ul class="lf-list '+(cls||'')+'">'+arr.map(function(x){
-      var s=String(x||'');
-      var m=s.match(/^([^—\u2014]{3,42})\s+[—\u2014]\s+(.+)$/);
-      return '<li>'+(m?('<b>'+esc(m[1])+'</b>'+esc(m[2])):esc(s))+'</li>';
-    }).join('')+'</ul>';
-  }
-  function sec(title,body,gold){
-    if(!body) return '';
-    return '<div class="lf-sec"><div class="lf-h'+(gold?' gold':'')+'">'+esc(title)+'</div>'+body+'</div>';
-  }
+  function domRu(d){return ({economy:'Экономика',geopolitics:'Геополитика',climate:'Климат',technology:'Технологии',social:'Социум'})[String(d||'').trim()]||d;}
   function ruDate(s){
     var M=['января','февраля','марта','апреля','мая','июня','июля','августа','сентября','октября','ноября','декабря'];
     var m=String(s||'').match(/^(\d{4})-(\d{2})-(\d{2})/);
     return m?(+m[3]+' '+M[+m[2]-1]+' '+m[1]):'';
   }
-  function domRu(d){
-    return ({economy:'Экономика',geopolitics:'Геополитика',climate:'Климат',
-             technology:'Технологии',social:'Социум'})[String(d||'').trim()]||d;
+  function head(t,meta,cls){
+    return '<div class="lf-sh"><div class="lf-h'+(cls?' '+cls:'')+'">'+esc(t)+'</div>'
+      + (meta?'<div class="lf-hm">'+esc(meta)+'</div>':'')+'</div>';
+  }
+  // «Название — описание» разбивается на жирный заголовок и текст:
+  // так пункт читается как объект воздействия, а не сплошная строка.
+  function split(s){
+    var m=String(s||'').match(/^([^—\u2014]{3,46})\s+[—\u2014]\s+([\s\S]+)$/);
+    return m?{n:m[1],d:m[2]}:null;
+  }
+  function evid(arr){
+    if(!arr||!arr.length) return '';
+    return arr.map(function(x,i){
+      return '<div class="lf-ev"><div class="lf-en">'+(i<9?'0':'')+(i+1)+'</div>'
+        + '<div class="lf-et">'+esc(x)+'</div></div>';
+    }).join('');
+  }
+  // Каскад приходит текстом со значимыми отступами: строка с «+» — условие,
+  // со «→» — следствие, первая — исходная причина. Разметка это сохраняет.
+  function casc(s){
+    var rows=String(s||'').split('\n').filter(function(x){return x.trim();});
+    if(!rows.length) return '';
+    return '<div class="lf-casc">'+rows.map(function(r){
+      var t=r.trim(), mark='1', dim=false;
+      if(t.indexOf('→')===0){ mark='→'; t=t.slice(1).trim(); }
+      else if(t.indexOf('+')===0){ mark='+'; t=t.slice(1).trim(); dim=true; }
+      else { var m=t.match(/^(\d+)\s+/); if(m){ mark=m[1]; t=t.slice(m[0].length); } dim=true; }
+      return '<div class="lf-cr"><div class="lf-cn">'+esc(mark)+'</div>'
+        + '<div class="lf-ct'+(dim?' dim':'')+'">'+esc(t)+'</div></div>';
+    }).join('')+'</div>';
+  }
+  function impact(arr){
+    if(!arr||!arr.length) return '';
+    return arr.map(function(x){
+      var p=split(x);
+      return '<div class="lf-imp">'+(p
+        ? '<div class="lf-in">'+esc(p.n)+'</div><div class="lf-id">'+esc(p.d)+'</div>'
+        : '<div class="lf-in">'+esc(x)+'</div>')+'</div>';
+    }).join('');
+  }
+  function checks(arr){
+    if(!arr||!arr.length) return '';
+    return '<div class="lf-chk">'+arr.map(function(x){
+      return '<div class="lf-ci" data-chk="1"><div class="lf-cb"></div><div class="lf-cl">'+esc(x)+'</div></div>';
+    }).join('')+'</div>';
+  }
+  function bullets(arr,blue){
+    if(!arr||!arr.length) return '';
+    return '<ul class="lf-pl'+(blue?' blue':'')+'">'+arr.map(function(x){
+      var p=split(x);
+      return '<li>'+(p?('<b>'+esc(p.n)+'</b> '+esc(p.d)):esc(x))+'</li>';
+    }).join('')+'</ul>';
   }
   function render(a){
     var slot=document.getElementById('lf-slot'); if(!slot) return;
     var risk=a.risk_index||a.risk||0;
     var lvl=risk>=70?'Высокий риск':(risk>=40?'Средний риск':'Низкий риск');
+    var dom=Array.isArray(a.domains)?a.domains[0]:String(a.domains||a.domain||'').split(',')[0];
+    var ei=String(a.engineering_interpretation||''), lead='', rest=ei;
+    var cut=ei.indexOf('\n\n');
+    if(cut>0){ lead=ei.slice(0,cut); rest=ei.slice(cut+2); }
     var h='<div class="lf-card">'
       + '<div class="lf-badges">'
-      +   '<span class="lf-b dom">'+esc(domRu(Array.isArray(a.domains)?a.domains[0]:String(a.domains||a.domain||'').split(',')[0])||'Процесс')+'</span>'
+      +   '<span class="lf-b dom">'+esc(domRu(dom)||'Процесс')+'</span>'
       +   '<span class="lf-b eng">Atlas Intelligence</span>'
       +   '<span class="lf-b cnf">Высокая уверенность</span>'
       + '</div>'
       + '<div class="lf-top">'
       +   '<div class="lf-ttl">'+esc(a.title||'')+'<div class="lf-date">'+esc(ruDate(a.date))+'</div></div>'
-      +   '<div class="lf-risk"><b>'+esc(risk)+'</b><i>/100</i><span>'+lvl+'</span></div>'
-      + '</div>'
-      + sec('Объект', a.object?'<div class="lf-txt">'+esc(a.object)+(a.location?'<br>'+esc(a.location):'')+'</div>':'')
-      + sec('Оценка риска', a.risk_assessment?'<div class="lf-txt">'+esc(a.risk_assessment)+'</div>':'')
-      + sec('Свидетельства', li(a.evidence))
-      + sec('Инженерная интерпретация', a.engineering_interpretation?'<div class="lf-txt">'+esc(a.engineering_interpretation)+'</div>':'')
-      + sec('Каскад процесса', a.cascade?'<div class="lf-casc">'+esc(a.cascade)+'</div>':'')
-      + sec('Что это значит', li(a.what_it_means,'dot'))
-      + sec('Что отслеживать', li(a.monitoring,'dot'))
-      + sec('Для бизнеса', li(a.impact_business,'dot'))
-      + sec('Для частных лиц', li(a.impact_people,'dot'))
-      + (a.systemic_conclusion?('<div class="lf-out"><div class="lf-h gold">Инженерный вывод</div><div class="lf-txt">'+esc(a.systemic_conclusion)+'</div></div>'):'')
-      + (a.disclaimer?('<div class="lf-disc">'+esc(a.disclaimer)+'</div>'):'')
+      +   '<div class="lf-risk"><b>'+esc(risk)+'</b><i>/100</i><span>'+lvl+'</span>'
+      +     '<em>Engineering<br>assessment</em></div>'
       + '</div>';
+    h += '<div class="lf-sec">'+head('Паспорт события','Данные')
+      + '<div class="lf-pass">'
+      +   (a.object?'<div class="lf-pr"><div class="lf-pk">Объект</div><div class="lf-pv">'+esc(a.object)+'</div></div>':'')
+      +   (a.location?'<div class="lf-pr"><div class="lf-pk">Локация</div><div class="lf-pv">'+esc(a.location)+'</div></div>':'')
+      +   (a.date?'<div class="lf-pr"><div class="lf-pk">Дата</div><div class="lf-pv">'+esc(ruDate(a.date))+'</div></div>':'')
+      +   '<div class="lf-pr"><div class="lf-pk">Риск</div><div class="lf-pv"><b>'+esc(risk)+'</b><u>/100</u><s>'+lvl+'</s>'
+      +     (a.risk_assessment?'<div style="margin-top:6px;font-size:12.5px;color:rgba(242,239,230,.55);line-height:1.6">'+esc(a.risk_assessment)+'</div>':'')
+      +   '</div></div>'
+      + '</div></div>';
+    if(a.evidence&&a.evidence.length)
+      h += '<div class="lf-sec">'+head('Свидетельства','Доказательная база · '+a.evidence.length)+evid(a.evidence)+'</div>';
+    if(ei)
+      h += '<div class="lf-sec">'+head('Инженерная интерпретация','Тезис')
+        + '<div class="lf-quote">'+(lead?'<div class="lf-lead">'+esc(lead)+'</div>':'')
+        + '<div class="lf-txt">'+esc(rest)+'</div></div></div>';
+    if(a.cascade)
+      h += '<div class="lf-sec">'+head('Каскад процесса','Инженерная схема')+casc(a.cascade)+'</div>';
+    if(a.what_it_means&&a.what_it_means.length)
+      h += '<div class="lf-sec">'+head('Что это значит','Карта воздействия','pur')+impact(a.what_it_means)+'</div>';
+    if(a.monitoring&&a.monitoring.length)
+      h += '<div class="lf-sec">'+head('Что отслеживать','Операционный чек-лист · '+a.monitoring.length)+checks(a.monitoring)+'</div>';
+    if((a.impact_business&&a.impact_business.length)||(a.impact_people&&a.impact_people.length))
+      h += '<div class="lf-sec">'+head('Что это значит для бизнеса и людей','Практический выход','gold')
+        + '<div class="lf-prac">'
+        +   (a.impact_business&&a.impact_business.length?'<div class="lf-pg">Для бизнеса</div>'+bullets(a.impact_business):'')
+        +   (a.impact_people&&a.impact_people.length?'<div class="lf-pg blue">Для частных лиц</div>'+bullets(a.impact_people,1):'')
+        + '</div></div>';
+    if(a.systemic_conclusion)
+      h += '<div class="lf-out">'+head('Инженерный вывод','Заключение','gold')
+        + '<div class="lf-txt" style="color:rgba(242,239,230,.86)">'+esc(a.systemic_conclusion)+'</div></div>';
+    if(a.disclaimer) h += '<div class="lf-disc">'+esc(a.disclaimer)+'</div>';
+    h += '<div class="lf-eng"><div class="lf-eh">Atlas Intelligence</div>'
+      + '<div class="lf-em"><span>Engine Revision 37</span><span>Engineering Assessment</span>'
+      + '<span>Build '+esc(String(a.updated_at||a.date||'').slice(0,10).replace(/-/g,'.'))+'</span></div></div>';
+    h += '</div>';
     slot.innerHTML=h;
+    // Чек-лист интерактивен: посетитель отмечает, что уже проверил.
+    // Состояние живёт в пределах сессии страницы — хранилище не требуется.
+    var items=slot.querySelectorAll('[data-chk]');
+    for(var i=0;i<items.length;i++){
+      items[i].addEventListener('click',function(){ this.classList.toggle('on'); });
+    }
   }
   function load(){
     var ctl, t;
