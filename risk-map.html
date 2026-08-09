@@ -733,10 +733,12 @@ body{background:var(--bg);color:var(--white);font-family:var(--sans);-webkit-fon
 .lf-b.dom{color:#1faacc;border-color:rgba(31,170,204,.45)}
 .lf-b.eng{color:#7fd4b0;border-color:rgba(127,212,176,.36)}
 .lf-b.cnf{color:#97c459;border-color:rgba(151,196,89,.34)}
-.lf-top{display:flex;gap:22px;align-items:flex-start;flex-wrap:wrap}
-.lf-ttl{flex:1 1 250px;min-width:0;font-size:21px;font-weight:600;line-height:1.32;color:#f2efe6;margin:0}
+/* nowrap: при переносе индекс уезжал под заголовок, а в Atlas он всегда
+   справа. flex:1 1 0 у заголовка позволяет ему сжиматься вместо переноса. */
+.lf-top{display:flex;gap:16px;align-items:flex-start;flex-wrap:nowrap}
+.lf-ttl{flex:1 1 0;min-width:0;font-size:21px;font-weight:600;line-height:1.32;color:#f2efe6;margin:0}
 .lf-date{font-size:13px;color:rgba(242,239,230,.4);margin-top:9px;font-weight:400}
-.lf-risk{text-align:right;flex:0 0 auto}
+.lf-risk{text-align:right;flex:0 0 auto;white-space:nowrap}
 .lf-risk b{font-size:44px;font-weight:600;color:#D4AF5A;line-height:1}
 .lf-risk i{font-style:normal;font-size:16px;color:rgba(212,175,90,.5)}
 .lf-risk span{display:block;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#BA7517;margin-top:7px}
@@ -794,7 +796,7 @@ body{background:var(--bg);color:var(--white);font-family:var(--sans);-webkit-fon
 .lf-ehead{display:flex;align-items:center;gap:7px;margin-bottom:7px}
 .lf-eh{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#7ec8ea;font-weight:600}
 .lf-em{display:flex;flex-wrap:wrap;gap:5px 16px;font-size:8.5px;color:#5a6b7d;letter-spacing:.05em}
-@media(max-width:640px){.lf-card{padding:20px 15px}.lf-ttl{font-size:18px}.lf-risk b{font-size:36px}.lf-pk{flex-basis:74px}.lf-top{gap:14px}}
+@media(max-width:640px){.lf-card{padding:20px 15px}.lf-ttl{font-size:16.5px}.lf-risk b{font-size:32px}.lf-risk i{font-size:13px}.lf-risk span{font-size:9px}.lf-risk em{font-size:8px}.lf-pk{flex-basis:74px}.lf-top{gap:12px}}
 </style>
 <style>
 
@@ -1422,7 +1424,9 @@ a{color:inherit;text-decoration:none}
 .cmp-ov{position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(4,3,8,.12) 25%,rgba(4,3,8,.9))}
 .cmp.news .cmp-txt{position:absolute;left:0;right:0;bottom:16px;z-index:2;padding:0 12px}
 .cmp-live{position:absolute;left:12px;top:12px;z-index:2;width:8px;height:8px;border-radius:50%;background:#E5382E;box-shadow:0 0 10px 1px rgba(229,56,46,.8);animation:livep 1.4s var(--e-soft) infinite}
-.cmp.atlas.proc{align-items:stretch;justify-content:flex-start;text-align:left;padding:24px 20px}
+/* Блок стал подписью к карточке ниже, а не самостоятельной панелью:
+   рамка и подложка создавали вложенный прямоугольник вокруг двух строк. */
+.cmp.atlas.proc{align-items:stretch;justify-content:flex-start;text-align:left;padding:18px 10px;border:0;background:transparent;box-shadow:none;min-height:0}
 .proc .pcbody{text-align:left;width:100%}
 .proc .pc-status{display:inline-block}
 .proc .proc-head{font-family:var(--label);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--mute);margin-bottom:16px;text-align:center}
