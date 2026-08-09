@@ -792,6 +792,10 @@ body{background:var(--bg);color:var(--white);font-family:var(--sans);-webkit-fon
 .lf-pl li b{color:#f2efe6;font-weight:600}
 .lf-out{border:1px solid rgba(184,151,58,.3);border-radius:12px;padding:20px 18px;margin-top:26px;background:rgba(184,151,58,.04)}
 .lf-disc{font-size:11.5px;line-height:1.6;color:rgba(242,239,230,.3);margin-top:16px}
+.lf-cta{margin-top:30px;padding-top:26px;border-top:1px solid rgba(184,151,58,.16);text-align:center}
+.lf-ctat{font-size:14px;line-height:1.6;color:rgba(242,239,230,.72);max-width:420px;margin:0 auto}
+.lf-cta .cta{margin-top:20px}
+@media(max-width:640px){.lf-ctat{font-size:13px}.lf-cta .cta{padding:15px 26px;font-size:11px;letter-spacing:.12em}}
 .lf-eng{border:1px solid rgba(94,180,222,.2);border-radius:9px;padding:13px 14px;margin-top:18px;background:rgba(94,180,222,.04)}
 .lf-ehead{display:flex;align-items:center;gap:7px;margin-bottom:7px}
 .lf-eh{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#7ec8ea;font-weight:600}
@@ -3064,6 +3068,12 @@ requestAnimationFrame(frame);})();</script>
       + '<span class="lf-eh">Atlas Intelligence</span></div>'
       + '<div class="lf-em"><span>Engine Revision 37</span><span>Engineering Assessment</span>'
       + '<span>Build 2026.06.07</span></div></div>';
+    // Карточка показывает один процесс целиком — дальше логично предложить
+    // остальные. Кнопка та же, что в блоках выше: cta pill на менеджера.
+    h += '<div class="lf-cta">'
+      + '<div class="lf-ctat">Доступ к полной системе мониторинга и инженерных оценок</div>'
+      + '<a class="cta pill" href="https://t.me/anirisao" target="_blank" rel="noopener">Получить доступ ко всем процессам Atlas</a>'
+      + '</div>';
     h += '</div>';
     slot.innerHTML=h;
     // Карточка удлиняет секцию в разы. Наблюдатель раскрывает секции
