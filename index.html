@@ -721,8 +721,12 @@ body{background:var(--bg);color:var(--white);font-family:var(--sans);-webkit-fon
 }
 @media(prefers-reduced-motion:reduce){#chaos .cue .bar,.pcard::after{animation:none}}
 
-.lf-empty{font-size:12px;color:rgba(242,239,230,.4);line-height:1.6;padding:18px 4px;text-align:center}
-#lf-slot{margin-top:26px}
+.lf-wait{font-size:12px;color:rgba(242,239,230,.4);line-height:1.6;padding:14px 4px;text-align:center}
+/* Та же стрелка, что между «Новостью» и «Atlas»: тот же цвет и кегль,
+   развёрнута вниз — ведёт от блока сравнения к самой карточке. */
+.lf-arrow{text-align:center;color:var(--gold-deep);font-size:24px;line-height:1;margin:24px 0 2px;transform:rotate(90deg);display:none}
+.lf-arrow.on{display:block}
+#lf-slot{margin-top:20px}
 .lf-card{border:1px solid rgba(184,151,58,.28);border-radius:16px;padding:26px 22px;background:rgba(11,10,16,.75);text-align:left}
 .lf-badges{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px}
 .lf-b{font-size:10px;letter-spacing:.1em;text-transform:uppercase;border:1px solid;border-radius:999px;padding:6px 15px;white-space:nowrap}
@@ -1691,8 +1695,9 @@ a{color:inherit;text-decoration:none}
 <div class="compare">
 <div class="cmp news"><video class="cmp-vid" autoplay muted loop playsinline webkit-playsinline preload="auto" poster="assets/image-0.jpg"><source src="assets/video-1.mp4" type="video/mp4"></video><span class="cmp-live"></span><div class="cmp-ov"></div><div class="cmp-txt"><div class="cmp-h">Новость</div><div class="cmp-s">фиксирует факт</div></div></div>
 <div class="cmp-vs">&#8594;</div>
-<div class="cmp atlas proc"><div class="proc-head"><b>Atlas</b> фиксирует процесс</div><div class="pcbody"><div class="lf-empty">Аналитическая карточка подгружается из Atlas Intelligence</div></div></div>
+<div class="cmp atlas proc"><div class="proc-head"><b>Atlas</b> фиксирует процесс</div><div class="pcbody"><div class="lf-wait">Аналитическая карточка подгружается из Atlas Intelligence</div></div></div>
 </div>
+<div class="lf-arrow">&#8594;</div>
 <div id="lf-slot"></div>
 </section>
 
@@ -3062,6 +3067,9 @@ requestAnimationFrame(frame);})();</script>
     // на телефоне, и блок остаётся невидимым. Раскрываем явно.
     var sec=slot.closest?slot.closest('.block'):null;
     if(sec) sec.classList.add('in');
+    // Стрелка ведёт к карточке, поэтому появляется только вместе с ней.
+    var arw=document.querySelector('.lf-arrow');
+    if(arw) arw.classList.add('on');
     // Чек-лист интерактивен: посетитель отмечает, что уже проверил.
     // Состояние живёт в пределах сессии страницы — хранилище не требуется.
     var items=slot.querySelectorAll('[data-chk]');
