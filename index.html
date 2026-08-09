@@ -1871,7 +1871,7 @@ a{color:inherit;text-decoration:none}
   var idxEl=document.getElementById('idx'),counted=false;
   function runIdx(){if(!idxEl||counted)return;counted=true;var tg=68;if(reduce){idxEl.textContent=tg;return;}var s0=null;function st(ts){if(!s0)s0=ts;var p=Math.min((ts-s0)/1500,1);idxEl.textContent=Math.round((1-Math.pow(1-p,3))*tg);if(p<1)requestAnimationFrame(st);else idxEl.textContent=tg;}requestAnimationFrame(st);}
   if(reduce||!('IntersectionObserver' in window)){blocks.forEach(function(b){b.classList.add('in');});runIdx();}
-  else{var io=new IntersectionObserver(function(en){en.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');if(e.target.querySelector('#idx'))runIdx();if(e.target.id==='finalScene')startFinal();if(e.target.querySelector('#ecoCanvas'))startEco();}});},{threshold:.2});blocks.forEach(function(b){io.observe(b);});}
+  else{var io=new IntersectionObserver(function(en){en.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');if(e.target.querySelector('#idx'))runIdx();if(e.target.id==='finalScene')startFinal();if(e.target.querySelector('#ecoCanvas'))startEco();}});},{threshold:0,rootMargin:'0px 0px -12% 0px'});blocks.forEach(function(b){io.observe(b);});}
 
   // small ecosystem graph (07): two clusters + links
   function ecoGraph(canvas,opts){
@@ -3044,6 +3044,11 @@ requestAnimationFrame(frame);})();</script>
       + '<span>Build '+esc(String(a.updated_at||a.date||'').slice(0,10).replace(/-/g,'.'))+'</span></div></div>';
     h += '</div>';
     slot.innerHTML=h;
+    // Карточка удлиняет секцию в разы. Наблюдатель раскрывает секции
+    // по доле их высоты в кадре — у длинной секции эта доля недостижима
+    // на телефоне, и блок остаётся невидимым. Раскрываем явно.
+    var sec=slot.closest?slot.closest('.block'):null;
+    if(sec) sec.classList.add('in');
     // Чек-лист интерактивен: посетитель отмечает, что уже проверил.
     // Состояние живёт в пределах сессии страницы — хранилище не требуется.
     var items=slot.querySelectorAll('[data-chk]');
