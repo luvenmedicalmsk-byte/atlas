@@ -130,10 +130,6 @@ h3{font-size:clamp(18px,2vw,23px)}
 .pricebar .now{font-size:clamp(27px,3.4vw,38px);font-weight:600;color:var(--gold-2);letter-spacing:-.02em;line-height:1}
 .pricebar .now small{display:block;font-size:12px;font-weight:500;color:var(--muted);letter-spacing:0;margin-top:7px}
 .pricebar .after{font-size:13px;color:var(--muted);letter-spacing:.01em}
-.timer{position:absolute;top:16px;right:18px;text-align:right;display:flex;flex-direction:column;gap:5px}
-.timer .t-lbl{font-size:9.5px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--cink-3)}
-.timer .t-val{font-size:14px;font-weight:600;color:var(--gold-2);font-variant-numeric:tabular-nums;letter-spacing:.02em}
-@media(max-width:520px){.timer{top:14px;right:14px}.timer .t-lbl{font-size:8.5px;letter-spacing:.12em}.timer .t-val{font-size:12.5px}.pricebar .now{padding-right:112px}}
 .pricebar .old small{display:block;font-size:12px;font-weight:500;color:var(--muted);margin-top:7px}
 .hero .acts{margin-top:24px;display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:flex-start}
 
@@ -384,11 +380,7 @@ footer{position:relative;z-index:2;border-top:1px solid var(--line-2);padding:42
 
 .pays{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:28px}
 .pay{position:relative;display:flex;flex-direction:column;padding:26px 24px}
-.ptimer{position:absolute;top:22px;right:22px;text-align:right;display:flex;flex-direction:column;gap:4px}
-.ptimer .t-lbl{font-size:9px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--cink-3)}
-.ptimer .t-val{font-size:12.5px;font-weight:600;color:var(--gold-2);font-variant-numeric:tabular-nums}
-@media(max-width:520px){.p-top{padding-right:104px}.ptimer{top:18px;right:16px}.ptimer .t-val{font-size:11.5px}}
-.p-top{display:flex;flex-direction:column;align-items:flex-start;gap:8px;padding-right:120px}
+.p-top{display:flex;flex-direction:column;align-items:flex-start;gap:8px}
 .p-name{font-size:17px;font-weight:600;color:var(--cink);max-width:24ch}
 .p-sum{font-size:20px;font-weight:600;color:var(--gold-2);white-space:nowrap}
 .p-lead{margin-top:10px;font-size:14.5px;color:var(--cink-2)}
@@ -477,7 +469,6 @@ footer{position:relative;z-index:2;border-top:1px solid var(--line-2);padding:42
   </div>
   <p class="offerline">Atlas Intelligence + Архив системных рисков: пожизненный доступ к Архиву и 12 месяцев живого мониторинга Atlas</p>
   <div class="pricebar">
-    <div class="timer" id="timer"><span class="t-lbl">До закрытия окна</span><span class="t-val" id="tval">00 : 00 : 00 : 00</span></div>
     <div class="now">212 000 ₽<small>Цена первой волны подключения</small></div>
     <div class="after">После закрытия: 505 000 ₽</div>
   </div>
@@ -898,7 +889,6 @@ footer{position:relative;z-index:2;border-top:1px solid var(--line-2);padding:42
   <div class="pays">
 
     <div class="card pay rv">
-      <div class="ptimer"><span class="t-lbl">До закрытия окна</span><span class="t-val pt">00 : 00 : 00 : 00</span></div>
       <div class="p-top"><span class="p-name">Полная оплата</span><span class="p-sum">212 000 ₽</span></div>
       <p class="p-lead">12 месяцев Atlas Intelligence · Signal Pro</p>
       <ul class="p-list">
@@ -909,7 +899,6 @@ footer{position:relative;z-index:2;border-top:1px solid var(--line-2);padding:42
     </div>
 
     <div class="card pay rv d1">
-      <div class="ptimer"><span class="t-lbl">До закрытия окна</span><span class="t-val pt">00 : 00 : 00 : 00</span></div>
       <div class="p-top"><span class="p-name">Зафиксировать стоимость первой волны</span><span class="p-sum">20 000 ₽</span></div>
       <p class="p-lead">Зарезервируйте место и зафиксируйте стоимость подключения 212 000 ₽</p>
       <ul class="p-list">
@@ -919,7 +908,6 @@ footer{position:relative;z-index:2;border-top:1px solid var(--line-2);padding:42
     </div>
 
     <div class="card pay rv">
-      <div class="ptimer"><span class="t-lbl">До закрытия окна</span><span class="t-val pt">00 : 00 : 00 : 00</span></div>
       <div class="p-top"><span class="p-name">Официальная внутренняя рассрочка</span><span class="p-sum">212 000 ₽</span></div>
       <p class="p-lead">Без процентов и переплат</p>
       <ul class="p-list">
@@ -930,7 +918,6 @@ footer{position:relative;z-index:2;border-top:1px solid var(--line-2);padding:42
     </div>
 
     <div class="card pay rv d1">
-      <div class="ptimer"><span class="t-lbl">До закрытия окна</span><span class="t-val pt">00 : 00 : 00 : 00</span></div>
       <div class="p-top"><span class="p-name">Международная оплата</span></div>
       <p class="p-lead">Оплата другим доступным международным способом</p>
       <ul class="p-list">
@@ -940,7 +927,6 @@ footer{position:relative;z-index:2;border-top:1px solid var(--line-2);padding:42
     </div>
 
     <div class="card pay rv d2">
-      <div class="ptimer"><span class="t-lbl">До закрытия окна</span><span class="t-val pt">00 : 00 : 00 : 00</span></div>
       <div class="p-top"><span class="p-name">Оплата в USDT</span></div>
       <p class="p-lead">Полная оплата доступа в USDT</p>
       <ul class="p-list">
@@ -1072,21 +1058,6 @@ document.querySelectorAll('.qa button').forEach(b=>b.addEventListener('click',()
 })();
 
 
-// countdown to 20:00 MSK 28.08.2026
-(function(){
-  var els=[].concat([document.getElementById('tval')],[].slice.call(document.querySelectorAll('.pt'))).filter(Boolean);
-  if(!els.length) return;
-  var target=Date.UTC(2026,7,28,17,0,0); // 20:00 MSK = 17:00 UTC
-  function two(n){return String(n).padStart(2,'0');}
-  function tick(){
-    var d=target-Date.now(), txt;
-    if(d<=0){txt='Окно закрыто';}
-    else{var s=Math.floor(d/1000), dd=Math.floor(s/86400), hh=Math.floor(s%86400/3600), mm=Math.floor(s%3600/60), ss=s%60;
-      txt=two(dd)+' : '+two(hh)+' : '+two(mm)+' : '+two(ss);}
-    els.forEach(function(e){e.textContent=txt;});
-  }
-  tick(); setInterval(tick,1000);
-})();
 </script>
 </body>
 </html>
