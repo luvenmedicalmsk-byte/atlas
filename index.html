@@ -127,6 +127,8 @@ h3{font-size:clamp(18px,2vw,23px)}
 .hero .acts{margin-top:34px;display:flex;flex-wrap:wrap;gap:14px;align-items:center;justify-content:flex-start}
 /* two levels */
 .duo-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:22px}
+/* временное скрытие секции целиком */
+.is-hidden{display:none!important}
 .lvl{position:relative;overflow:hidden}
 .lvhead{display:flex;flex-direction:column;align-items:flex-start;gap:10px}
 .lvl .tag{display:inline-block;font-size:10.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;
@@ -867,8 +869,10 @@ footer{position:relative;z-index:2;border-top:1px solid var(--line-2);padding:42
 </div></section>
 
 
-<!-- PAYMENT -->
-<section class="wrap"><div class="narrow">
+<!-- PAYMENT: блок скрыт целиком, включая шапку и карточки -->
+<section class="wrap is-hidden"><div class="narrow">
+  <div class="head rv"><span class="label">Условия подключения</span>
+    <h2>Выберите удобный способ оплаты</h2></div>
   <div class="pays">
 
     <div class="card pay rv">
