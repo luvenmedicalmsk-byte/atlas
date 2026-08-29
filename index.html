@@ -65,8 +65,9 @@ h3{font-size:clamp(18px,2vw,23px)}
 .head .sub{margin-top:16px}
 
 /* top bar */
-.topbar{position:fixed;top:0;left:0;right:0;z-index:40;display:flex;align-items:center;justify-content:space-between;
-  padding:14px 24px;transition:background .35s,border-color .35s;border-bottom:1px solid transparent}
+.topbar{position:sticky;top:0;z-index:40;display:flex;align-items:center;justify-content:space-between;
+  padding:calc(14px + env(safe-area-inset-top,0px)) 24px 14px;
+  transition:background .35s,border-color .35s;border-bottom:1px solid transparent}
 .topbar.stuck{background:rgba(6,5,10,.92);backdrop-filter:blur(14px);border-bottom-color:var(--line-2)}
 .brand{display:flex;align-items:center;gap:11px;font-weight:600;font-size:14.5px}
 .brand .mark{width:34px;height:34px;flex:0 0 34px;object-fit:contain}
@@ -107,7 +108,7 @@ h3{font-size:clamp(18px,2vw,23px)}
 .d1{transition-delay:.07s}.d2{transition-delay:.14s}.d3{transition-delay:.21s}
 
 /* ===== hero ===== */
-.hero{padding-block:140px 92px}
+.hero{padding-block:76px 92px}
 .hero h1{max-width:15ch;margin-top:22px;font-size:clamp(34px,5.4vw,62px)}
 .hero .tag{margin-top:16px;font-size:clamp(17px,2.1vw,22px);font-weight:400;color:var(--text-2);max-width:38ch}
 .hero .tag .plus{color:var(--gold-2)}
