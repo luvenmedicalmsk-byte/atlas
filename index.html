@@ -222,7 +222,8 @@ h3{font-size:clamp(18px,2vw,23px)}
 .pi-foot .now{font-size:clamp(26px,3.4vw,36px);font-weight:600;color:var(--gold-2)}
 .pi-foot .old{font-size:18px;color:var(--cink-3);text-decoration:line-through}
 .pi-foot .fine{width:100%;font-size:12.5px;color:var(--cink-3)}
-.pi-acts{display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+.pi-acts{flex:1;display:flex;align-items:center;justify-content:flex-end;gap:26px;flex-wrap:wrap}
+@media(max-width:560px){.pi-acts{flex:1 1 100%;justify-content:space-between;gap:14px}}
 .pi-foot .pi-link{color:var(--cink-2);border-bottom-color:var(--cline)}
 .pi-foot .pi-link:hover{color:var(--gold-2);border-color:var(--gold)}
 @media(max-width:680px){.pi-rows{grid-template-columns:1fr}.pi-col.atlas{border-left:0}}
