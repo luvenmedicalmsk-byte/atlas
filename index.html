@@ -564,7 +564,7 @@ footer{position:relative;z-index:2;border-top:1px solid var(--line-2);padding:42
     <div class="ipanel rv d2" style="padding:24px 24px">
       <h3 style="font-size:19px">Что меняется сейчас</h3>
       <div class="livehead"><i></i>Обновляется</div>
-      <ul class="feed">
+      <ul class="feed" id="livefeed">
         <li><span class="sd" style="background:#D35400;color:#D35400"></span>Логистический коридор · перегрузка<span class="tm">2 мин</span></li>
         <li><span class="sd" style="background:#27AE60;color:#27AE60"></span>Экстремальная погода · юг Европы<span class="tm">11 мин</span></li>
         <li><span class="sd" style="background:#2980B9;color:#2980B9"></span>Давление на сырьевые цены<span class="tm">24 мин</span></li>
@@ -1066,17 +1066,70 @@ const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.targ
   {threshold:.14,rootMargin:'0px 0px -6% 0px'});
 document.querySelectorAll('.rv,#chain,#strip').forEach(el=>io.observe(el));
 
-// live counters (subtle drift)
+// Живые данные Atlas: счётчики и лента подтягиваются из открытого API.
+// Статические значения в разметке остаются запасным вариантом: при
+// недоступности API или блокировке запроса страница выглядит как раньше.
 (function(){
-  const base=[['s1',349,3],['s2',14,1],['s3',87,2]];
-  setInterval(()=>{
-    const p=base[Math.floor(Math.random()*base.length)];
-    const el=document.getElementById(p[0]); if(!el)return;
-    const cur=parseInt(el.textContent,10);
-    let next=cur+(Math.random()<.5?-1:1)*Math.ceil(Math.random()*p[2]);
-    if(next<p[1]-5)next=p[1]-5; if(next>p[1]+7)next=p[1]+7;
-    el.textContent=next;
-  },4500);
+  var API='https://api.a-atlas.com';
+  var DOM={climate:'#27AE60',economy:'#2980B9',geopolitics:'#ef4444',
+           technology:'#8E44AD',social:'#D35400'};
+  function ago(iso){
+    var t=Date.parse(iso); if(!t) return '';
+    var m=Math.max(1,Math.round((Date.now()-t)/60000));
+    if(m<60) return m+' мин';
+    var h=Math.round(m/60); if(h<24) return h+' ч';
+    return Math.round(h/24)+' дн';
+  }
+  function num(id,v){ var el=document.getElementById(id); if(el&&v!=null) el.textContent=v; }
+  function paint(events, stats){
+    if(stats){
+      num('s1', stats.total);
+      num('s2', stats.critical);
+      num('s3', stats.developing);
+    }
+    var ul=document.getElementById('livefeed');
+    if(!ul||!events||!events.length) return;
+    ul.innerHTML='';
+    events.slice(0,5).forEach(function(e){
+      var c=DOM[e.domain]||'#9B917C';
+      var li=document.createElement('li');
+      var dot=document.createElement('span');
+      dot.className='sd'; dot.style.background=c; dot.style.color=c;
+      var tm=document.createElement('span');
+      tm.className='tm'; tm.textContent=ago(e.last_update||e.first_seen||e.date);
+      li.appendChild(dot);
+      li.appendChild(document.createTextNode(String(e.title||'').slice(0,72)));
+      li.appendChild(tm);
+      ul.appendChild(li);
+    });
+  }
+  function load(){
+    // Одним запросом берём всю ленту: считаем счётчики сами, а не доверяем
+    // отдельной сводке — так три числа и пять строк заведомо об одном срезе.
+    fetch(API+'/api/events?limit=1000&sort=severity&order=desc',{cache:'no-store'})
+      .then(function(r){ return r.ok?r.json():null; })
+      .then(function(d){
+        if(!d) return;
+        var ev=d.events||d.items||[];
+        if(!ev.length) return;
+        var crit=0, dev=0;
+        for(var i=0;i<ev.length;i++){
+          if((ev[i].severity||0)>=80) crit++;
+          if(ev[i].signal_type==='escalation') dev++;
+        }
+        // Счётчики считаются по всей выборке, а лента сортируется по свежести:
+        // блок называется «что меняется сейчас», и первым должно идти
+        // последнее наблюдение, а не самое тяжёлое за неделю.
+        var recent=ev.slice().sort(function(a,b){
+          return Date.parse(b.last_update||b.first_seen||b.date||0)
+               - Date.parse(a.last_update||a.first_seen||a.date||0);
+        });
+        paint(recent, {total:(d.total!=null?d.total:ev.length), critical:crit, developing:dev});
+      })
+      .catch(function(){ /* остаётся статика из разметки */ });
+  }
+  load();
+  setInterval(load, 120000);   // edge отдаёт готовое, чаще двух минут смысла нет
 })();
 document.querySelectorAll('.qa button').forEach(b=>b.addEventListener('click',()=>b.parentElement.classList.toggle('open')));
 
