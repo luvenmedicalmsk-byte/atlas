@@ -1103,11 +1103,26 @@ document.querySelectorAll('.rv,#chain,#strip').forEach(el=>io.observe(el));
       ul.appendChild(li);
     });
   }
-  function load(){
-    // Одним запросом берём всю ленту: считаем счётчики сами, а не доверяем
-    // отдельной сводке — так три числа и пять строк заведомо об одном срезе.
-    fetch(API+'/api/events?limit=1000&sort=severity&order=desc',{cache:'no-store'})
+  // Два источника подряд. Первый — API: он отдаёт актуальный срез, но идёт
+  // через Cloudflare и на кросс-доменный запрос из браузера может ответить
+  // проверкой. Второй — тот же файл витрины на Pages: без проверки, но
+  // обновляется по расписанию публикации.
+  var SOURCES=[API+'/api/events?limit=1000&sort=severity&order=desc',
+               'https://secrett-archive.com/events.json'];
+  function fetchFirst(i){
+    if(i>=SOURCES.length) return Promise.resolve(null);
+    return fetch(SOURCES[i],{cache:'no-store'})
       .then(function(r){ return r.ok?r.json():null; })
+      .catch(function(){ return null; })
+      .then(function(d){
+        if(d&&(d.events||d.items)) return d;
+        return fetchFirst(i+1);
+      });
+  }
+  function load(){
+    // Считаем счётчики по той же выборке, из которой строим ленту:
+    // три числа и пять строк заведомо описывают один срез.
+    fetchFirst(0)
       .then(function(d){
         if(!d) return;
         var ev=d.events||d.items||[];
