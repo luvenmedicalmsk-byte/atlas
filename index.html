@@ -268,6 +268,10 @@ h3{font-size:clamp(18px,2vw,23px)}
 .pi-foot .old{font-size:18px;color:var(--cink-3);text-decoration:line-through}
 .pi-foot .fine{width:100%;font-size:12.5px;color:var(--cink-3)}
 .pi-acts{flex:1;display:flex;align-items:center;justify-content:flex-end;gap:26px;flex-wrap:wrap}
+.pi-alt{width:100%;margin-top:16px;padding-top:15px;border-top:1px solid var(--line-2);
+  display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.pa-txt{flex:1;min-width:240px;font-size:13px;line-height:1.55;color:var(--cink-3)}
+@media(max-width:560px){.pi-alt{align-items:flex-start}.pa-txt{min-width:0}}
 @media(max-width:560px){.pi-acts{flex:1 1 100%;justify-content:flex-start;gap:14px}.pi-foot .pi-link{margin-left:auto}}
 .pi-foot .pi-link{color:var(--cink-2);border-bottom-color:var(--cline)}
 .pi-foot .pi-link:hover{color:var(--gold-2);border-color:var(--gold)}
@@ -1018,6 +1022,10 @@ footer{position:relative;z-index:2;border-top:1px solid var(--line-2);padding:42
         <a class="txt-link pi-link" href="https://t.me/anirisao" target="_blank" rel="noopener">Оставить заявку</a>
       </div>
       <span class="fine">Контракт Atlas Intelligence на 5 лет без автопродления и скрытых условий. Архив системных рисков: пожизненно.</span>
+      <div class="pi-alt">
+        <div class="pa-txt">Оплата несколькими платежами, в USDT или с международной карты: напишите в поддержку, подберём способ и выставим счёт.</div>
+        <a class="btn btn-line btn-sm" href="https://t.me/anirisao" target="_blank" rel="noopener">Написать в поддержку</a>
+      </div>
     </div>
   </div>
 </div></section>
