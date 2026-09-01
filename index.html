@@ -130,7 +130,7 @@ h3{font-size:clamp(18px,2vw,23px)}
 .duo-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:22px}
 /* временное скрытие секции целиком */
 .is-hidden{display:none!important}
-/* Формула резерва: время + сигнал + план (01.09.2026) */
+/* Формула резерва: время + сигнал + стратегия (01.09.2026) */
 .hero-anchor{margin-top:16px;font-size:clamp(15px,1.9vw,17.5px);color:var(--cink-2);line-height:1.55}
 .hero-anchor b{color:var(--gold-2);font-weight:600;letter-spacing:.01em}
 .formula{margin-top:26px;display:flex;flex-direction:column;gap:1px;background:var(--line-2);
@@ -149,6 +149,15 @@ h3{font-size:clamp(18px,2vw,23px)}
 .p-note{margin-top:16px;padding-top:14px;border-top:1px solid var(--line-2);font-size:14px;line-height:1.6;color:var(--cink-2)}
 @media(max-width:520px){.f-item{padding:14px 16px;gap:10px}.f-key{min-width:0}.p-num{min-width:0;font-size:17px}}
 .foot-anchor{margin-top:18px;padding-top:16px;border-top:1px solid var(--line-2);font-size:13px;line-height:1.6;color:var(--cink-3);max-width:62ch}
+/* Горизонты стратегических активов (01.09.2026) */
+.horizons{margin-top:22px;border:1px solid var(--cline);border-radius:16px;background:var(--panel);padding:20px 22px}
+.h-head{font-size:10.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--cink-3);margin-bottom:14px}
+.h-row{display:flex;gap:18px;align-items:baseline;padding:11px 0;border-top:1px solid var(--line-2);flex-wrap:wrap}
+.h-row:first-of-type{border-top:0;padding-top:0}
+.h-t{min-width:78px;font-size:15px;font-weight:600;color:var(--gold-2)}
+.h-d{flex:1;min-width:230px;font-size:14px;line-height:1.55;color:var(--text-2)}
+.h-note{margin-top:15px;padding-top:13px;border-top:1px solid var(--line-2);font-size:13.5px;line-height:1.6;color:var(--cink-2)}
+@media(max-width:520px){.horizons{padding:16px}.h-t{min-width:0}}
 .lvl{position:relative;overflow:hidden}
 .lvhead{display:flex;flex-direction:column;align-items:flex-start;gap:10px}
 .lvl .tag{display:inline-block;font-size:10.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;
@@ -485,7 +494,7 @@ footer{position:relative;z-index:2;border-top:1px solid var(--line-2);padding:42
     <span class="pill atlas">Atlas показывает, что происходит сейчас</span>
     <span class="pill arch">Архив показывает сценарии</span>
   </div>
-  <p class="hero-anchor">Настоящий резерв это не деньги. Это <b>время + сигнал + план</b>.</p>
+  <p class="hero-anchor">Настоящий резерв это не деньги. <b>Время + сигнал + стратегия → активы будущего.</b></p>
   <p class="offerline">Atlas Intelligence + Архив системных рисков: пожизненный доступ к Архиву и 5 лет живого мониторинга Atlas</p>
   <div class="acts">
     <a class="btn btn-gold" href="#price">Получить доступ <span class="arw">→</span></a>
@@ -662,9 +671,16 @@ footer{position:relative;z-index:2;border-top:1px solid var(--line-2);padding:42
   <div class="formula rv d2">
     <div class="f-item"><span class="f-key">Время</span><span class="f-val">сигнал приходит, пока процесс только формируется, а не когда он стал новостью</span></div>
     <div class="f-item"><span class="f-key">Сигнал</span><span class="f-val">Atlas видит совпадение давления в нескольких областях: по отдельности показатели ничего не значат</span></div>
-    <div class="f-item"><span class="f-key">План</span><span class="f-val">Архив отвечает не «что случилось», а «что делать»: сценарии, разборы, стратегии адаптации</span></div>
+    <div class="f-item"><span class="f-key">Стратегия</span><span class="f-val">Архив отвечает не «что случилось», а «что делать»: сценарии по горизонтам, разборы, стратегии адаптации</span></div>
   </div>
-  <p class="f-sum rv d2">Время + сигнал + план это и есть стратегические активы. В отличие от денег, они не теряют стоимость от инфляции и не зависят от того, в какой форме вы храните сбережения.</p>
+  <p class="f-sum rv d2">Время + сигнал + стратегия дают активы будущего. Сначала вы знаете, когда система сменит режим. Потом что уже происходит. Потом что делать до сдвига. И только потом куда размещать.</p>
+  <div class="horizons rv d2">
+    <div class="h-head">Стратегические активы в Архиве: три горизонта</div>
+    <div class="h-row"><span class="h-t">2 года</span><span class="h-d">высокий приоритет ликвидности: решения принимаются в текущем режиме, окно для манёвра открыто</span></div>
+    <div class="h-row"><span class="h-t">5 лет</span><span class="h-d">средний приоритет: деньги обслуживают переход, но позицию уже не держат</span></div>
+    <div class="h-row"><span class="h-t">10 лет</span><span class="h-d">низкий приоритет: на этом горизонте решают невоспроизводимые активы, а не форма хранения</span></div>
+    <p class="h-note">В Архиве разобрано 12 стратегических активов. Деньги входят в список, но остаются расходным материалом: полная матрица по 193 странам на трёх горизонтах, четыре параметра по каждой стране, валютная диверсификация по юрисдикциям.</p>
+  </div>
 </div></section>
 
 <!-- OBJECTIONS -->
@@ -1039,7 +1055,7 @@ footer{position:relative;z-index:2;border-top:1px solid var(--line-2);padding:42
         <a href="https://secrett-archive.com/refund.html" target="_blank" rel="noopener">Политика возвратов</a>
       </nav>
     </div>
-    <div class="foot-anchor">Система раннего предупреждения · Atlas Intelligence и Архив системных рисков. Настоящий резерв это время, сигнал и план.</div>
+    <div class="foot-anchor">Система раннего предупреждения · Atlas Intelligence и Архив системных рисков. Время + сигнал + стратегия → активы будущего.</div>
     <div class="foot-sig">Мия Гекди © 2022–2026 · Все права защищены</div>
   </div>
 </footer>
