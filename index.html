@@ -559,7 +559,7 @@ footer{position:relative;z-index:2;border-top:1px solid var(--line-2);padding:42
     <div class="stats rv d1">
       <div class="ipanel stat"><div class="n" id="s1">349</div><div class="l">сигналов</div></div>
       <div class="ipanel stat crit"><div class="n" id="s2">14</div><div class="l">критических</div></div>
-      <div class="ipanel stat"><div class="n" id="s3">87</div><div class="l">в развитии</div></div>
+      <div class="ipanel stat"><div class="n" id="s3">981</div><div class="l">процессов</div></div>
     </div>
     <div class="ipanel rv d2" style="padding:24px 24px">
       <h3 style="font-size:19px">Что меняется сейчас</h3>
@@ -1100,6 +1100,10 @@ document.querySelectorAll('.rv,#chain,#strip').forEach(el=>io.observe(el));
   // обновляется по расписанию публикации.
   var SOURCES=[API+'/api/events?limit=1000&sort=severity&order=desc',
                'https://secrett-archive.com/events.json'];
+  // Счётчики берутся из отдельного маленького файла витрины: число
+  // процессов в самой ленте событий не содержится, а реестр процессов
+  // весит десятки мегабайт и для счётчика не годится.
+  var PULSE='https://secrett-archive.com/_pulse.json';
   function fetchFirst(i){
     if(i>=SOURCES.length) return Promise.resolve(null);
     return fetch(SOURCES[i],{cache:'no-store'})
@@ -1147,7 +1151,14 @@ document.querySelectorAll('.rv,#chain,#strip').forEach(el=>io.observe(el));
           return Date.parse(b.last_update||b.first_seen||b.date||0)
                - Date.parse(a.last_update||a.first_seen||a.date||0);
         });
-        paint(picked, {total:(d.total!=null?d.total:ev.length), critical:crit, developing:dev});
+        paint(picked, {total:(d.total!=null?d.total:ev.length), critical:crit, developing:null});
+        fetch(PULSE,{cache:'no-store'})
+          .then(function(r){ return r.ok?r.json():null; })
+          .then(function(p){
+            if(!p) return;
+            paint(null,{total:p.events, critical:p.critical, developing:p.processes});
+          })
+          .catch(function(){ /* остаются числа, посчитанные по ленте */ });
       })
       .catch(function(){ /* остаётся статика из разметки */ });
   }
