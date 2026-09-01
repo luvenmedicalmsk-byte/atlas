@@ -163,6 +163,7 @@ h3{font-size:clamp(18px,2vw,23px)}
    новые вставки используют типографику страницы. */
 .trg{margin-top:16px;font-size:clamp(15px,1.8vw,17px);line-height:1.65;color:var(--text-2);max-width:64ch}
 .trg.pre{color:var(--cink-2);font-size:clamp(16px,2vw,19px);font-weight:500;line-height:1.5;max-width:56ch}
+.trg.pre + .head{margin-top:34px}
 .chainline{margin-top:20px;display:flex;flex-wrap:wrap;align-items:center;gap:10px}
 .chainline .cl{border:1px solid var(--cline);border-radius:100px;padding:7px 15px;font-size:13.5px;color:var(--cink-2);background:var(--panel)}
 .chainline .arw{color:var(--gold-2);font-size:13px}
@@ -1166,9 +1167,10 @@ document.querySelectorAll('.rv,#chain,#strip').forEach(el=>io.observe(el));
 // недоступности API или блокировке запроса страница выглядит как раньше.
 (function(){
   var API='https://api.a-atlas.com';
-  // Цвета точек совпадают с доменной палитрой интерфейса Atlas.
-  var DOM={climate:'#27AE60',economy:'#2980B9',geopolitics:'#ef4444',
-           technology:'#8E44AD',social:'#D35400'};
+  // Палитра один в один с интерфейсом Atlas: геополитика оранжевая,
+  // социум красный. На лендинге эти два цвета стояли наоборот.
+  var DOM={climate:'#27AE60',economy:'#2980B9',geopolitics:'#D35400',
+           technology:'#8E44AD',social:'#ef4444',geological:'#065F46'};
   function num(id,v){ var el=document.getElementById(id); if(el&&v!=null) el.textContent=v; }
   function paint(events, stats){
     if(stats){
@@ -1185,7 +1187,7 @@ document.querySelectorAll('.rv,#chain,#strip').forEach(el=>io.observe(el));
       var dot=document.createElement('span');
       dot.className='sd'; dot.style.background=c; dot.style.color=c;
       li.appendChild(dot);
-      li.appendChild(document.createTextNode(String(e.title||'').slice(0,96)));
+      li.appendChild(document.createTextNode(String(e.title||'')));
       ul.appendChild(li);
     });
   }
