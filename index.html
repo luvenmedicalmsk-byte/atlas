@@ -157,6 +157,22 @@ h3{font-size:clamp(18px,2vw,23px)}
 .h-d{flex:1;min-width:230px;font-size:14px;line-height:1.55;color:var(--text-2)}
 .h-note{margin-top:15px;padding-top:13px;border-top:1px solid var(--line-2);font-size:13.5px;line-height:1.6;color:var(--cink-2)}
 @media(max-width:520px){.horizons{padding:16px}.h-t{min-width:0}}
+/* Триггерные прослойки (01.09.2026): существующие блоки не тронуты,
+   новые вставки используют типографику страницы. */
+.trg{margin-top:16px;font-size:clamp(15px,1.8vw,17px);line-height:1.65;color:var(--text-2);max-width:64ch}
+.trg.pre{color:var(--cink-2);font-size:clamp(16px,2vw,19px);font-weight:500;line-height:1.5;max-width:56ch}
+.chainline{margin-top:20px;display:flex;flex-wrap:wrap;align-items:center;gap:10px}
+.chainline .cl{border:1px solid var(--cline);border-radius:100px;padding:7px 15px;font-size:13.5px;color:var(--cink-2);background:var(--panel)}
+.chainline .arw{color:var(--gold-2);font-size:13px}
+.mech{margin-top:24px;border:1px solid var(--cline);border-radius:16px;background:var(--panel);padding:20px 22px}
+.m-head{font-size:10.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--cink-3);margin-bottom:14px}
+.m-row{display:flex;gap:18px;align-items:baseline;padding:11px 0;border-top:1px solid var(--line-2);flex-wrap:wrap}
+.m-row:first-of-type{border-top:0;padding-top:0}
+.m-t{min-width:190px;font-size:14.5px;font-weight:600;color:var(--gold-2)}
+.m-d{flex:1;min-width:220px;font-size:14px;line-height:1.55;color:var(--text-2)}
+.m-note{margin-top:15px;padding-top:13px;border-top:1px solid var(--line-2);font-size:13.5px;line-height:1.6;color:var(--cink-2)}
+.p-lead{margin:-6px 0 14px;font-size:13.5px;line-height:1.55;color:var(--cink-2)}
+@media(max-width:520px){.m-t{min-width:0}.mech{padding:16px}}
 .lvl{position:relative;overflow:hidden}
 .lvhead{display:flex;flex-direction:column;align-items:flex-start;gap:10px}
 .lvl .tag{display:inline-block;font-size:10.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;
@@ -501,6 +517,16 @@ footer{position:relative;z-index:2;border-top:1px solid var(--line-2);padding:42
   </div>
 </section>
 
+<!-- TRIGGER: подушка -->
+<section class="wrap"><div class="narrow">
+  <div class="head rv"><span class="label">Проверка допущения</span>
+    <h2>Вы думаете, что у вас есть финансовая подушка</h2>
+    <p class="sub">Наличные. Вклад. Валюта. Недвижимость.</p></div>
+  <p class="quote rv d1">Если меняется сама система, разные формы денег не обязательно означают разные формы защиты.</p>
+  <p class="trg rv d2">Главный вопрос не только в том, где лежат деньги. Главный вопрос в том, что произойдёт с вашей управляемостью, если система сменит режим.</p>
+</div></section>
+
+
 <!-- TWO LEVELS -->
 <section class="wrap"><div class="narrow">
   <div class="head rv"><span class="label">Два уровня одной системы</span></div>
@@ -523,6 +549,22 @@ footer{position:relative;z-index:2;border-top:1px solid var(--line-2);padding:42
     </div>
   </div>
 </div></section>
+
+<!-- TRIGGER: одна дверь -->
+<section class="wrap"><div class="narrow">
+  <div class="head rv"><span class="label">Архитектура зависимости</span>
+    <h2>Одна система. Много форм денег.</h2></div>
+  <p class="trg rv d1">Представьте, что в доме одна дверь. Можно иметь десять ключей, но если дверь захлопнулась, количество ключей не создаёт нового выхода.</p>
+  <div class="chainline rv d1">
+    <span class="cl">банк</span><span class="arw">→</span>
+    <span class="cl">наличные</span><span class="arw">→</span>
+    <span class="cl">валюта</span><span class="arw">→</span>
+    <span class="cl">карта</span>
+  </div>
+  <p class="trg rv d2">Это разные формы денег. Но они могут оставаться зависимыми от одной и той же инфраструктуры.</p>
+  <p class="quote rv d2">Диверсификация формы денег не равна диверсификации зависимости.</p>
+</div></section>
+
 
 <!-- WHAT IS -->
 <section class="wrap"><div class="narrow">
@@ -551,6 +593,22 @@ footer{position:relative;z-index:2;border-top:1px solid var(--line-2);padding:42
   </div>
 </div></section>
 
+<!-- TRIGGER: когда замечаете -->
+<section class="wrap"><div class="narrow">
+  <div class="head rv"><span class="label">Момент наблюдения</span>
+    <h2>Главная проблема не в том, что риск существует.<br>Проблема в том, когда вы его замечаете.</h2></div>
+  <p class="trg rv d1">Когда риск очевиден для всех, пространство для решения уже меньше. Поэтому важен не только сам риск, важно увидеть, как он начинает формироваться.</p>
+  <div class="chainline rv d1">
+    <span class="cl">сигнал</span><span class="arw">→</span>
+    <span class="cl">давление</span><span class="arw">→</span>
+    <span class="cl">процесс</span><span class="arw">→</span>
+    <span class="cl">каскад</span><span class="arw">→</span>
+    <span class="cl">последствия</span>
+  </div>
+  <p class="trg rv d2">Atlas работает именно в этой зоне: до того, как выбор станет вынужденным.</p>
+</div></section>
+
+
 <!-- REALTIME -->
 <section class="wrap"><div class="narrow">
   <div class="head rv"><span class="label">Реальное время</span>
@@ -574,7 +632,8 @@ footer{position:relative;z-index:2;border-top:1px solid var(--line-2);padding:42
     </div>
   </div>
   <div class="pattern rv d2">
-    <div class="p-head">Как выглядит паттерн: Россия, второй квартал 2026</div>
+    <div class="p-head">Один показатель ещё не риск · Россия, второй квартал 2026</div>
+    <p class="p-lead">Отдельный сигнал может быть шумом. Когда несколько сигналов идут в одном направлении, формируется паттерн.</p>
     <div class="p-rows">
       <div class="p-row"><span class="p-num">+10,7%</span><span class="p-txt">наличные в денежной базе с начала года: часть средств уходит из банковского контура</span></div>
       <div class="p-row"><span class="p-num">+48,9%</span><span class="p-txt">продажи наличной иностранной валюты населению за квартал</span></div>
@@ -658,6 +717,7 @@ footer{position:relative;z-index:2;border-top:1px solid var(--line-2);padding:42
 
 <!-- MAIN VALUE -->
 <section class="wrap"><div class="narrow">
+  <p class="trg pre rv">Риск нельзя отменить одним решением. Но можно не ждать момента, когда решение станет вынужденным.</p>
   <div class="head rv"><span class="label">Главная ценность</span>
     <h2>Я не продаю страх.<br>Я продаю время на решение.</h2>
     <p class="sub">Пока риск очевиден для всех, пространство для манёвра уже сокращается.</p></div>
@@ -696,6 +756,23 @@ footer{position:relative;z-index:2;border-top:1px solid var(--line-2);padding:42
   </div>
 </div></section>
 
+<!-- MONEY MECHANICS -->
+<section class="wrap"><div class="narrow">
+  <div class="head rv"><span class="label">Природа резерва</span>
+    <h2>Почему финансовая подушка не всегда является резервом</h2></div>
+  <p class="trg rv d1">Деньги нужны. Но деньги сами по себе не создают устойчивость: их стоимость меняется, доступ зависит от инфраструктуры, валюта от юрисдикции, платёжный канал от системы.</p>
+  <p class="quote rv d1">Настоящий резерв это способность сохранить управляемость, когда условия меняются.</p>
+  <div class="mech rv d2">
+    <div class="m-head">Четыре механизма, которые нужно видеть заранее</div>
+    <div class="m-row"><span class="m-t">Инфляция</span><span class="m-d">снижение покупательной способности</span></div>
+    <div class="m-row"><span class="m-t">Девальвация</span><span class="m-d">изменение стоимости национальной валюты</span></div>
+    <div class="m-row"><span class="m-t">Ограничение доступа</span><span class="m-d">риск потери оперативного доступа к капиталу</span></div>
+    <div class="m-row"><span class="m-t">Смена инфраструктуры</span><span class="m-d">изменение правил обращения и доступа к деньгам</span></div>
+    <p class="m-note">Поэтому вопрос «куда положить деньги» слишком узкий. Правильный вопрос: что должно быть готово, если система изменит режим.</p>
+  </div>
+</div></section>
+
+
 <!-- FOR BUSINESS -->
 <section class="wrap"><div class="narrow">
   <div class="rv">
@@ -724,6 +801,7 @@ footer{position:relative;z-index:2;border-top:1px solid var(--line-2);padding:42
   <div class="rv">
     <span class="label">Для частных лиц и семей</span>
     <h2 style="margin-top:14px;max-width:28ch">Видеть давление на жизнь, доход, активы и решения</h2>
+    <p class="trg pre" style="margin-top:12px">Капитал только одна из систем, которые нужно защищать.</p>
     <p class="sub" style="margin-top:14px;max-width:62ch">Atlas нужен не только бизнесу. Если вы принимаете решения о месте жизни, переезде, доходе, недвижимости, образовании, безопасности или сохранении активов, система помогает увидеть риск заранее, а Архив системных рисков позволяет глубже понять долгосрочные процессы, которые этот риск формируют.</p>
     <div class="seg">
       <div><div class="sh">Что отслеживает частное лицо</div>
@@ -770,6 +848,13 @@ footer{position:relative;z-index:2;border-top:1px solid var(--line-2);padding:42
   </div>
   <p class="note rv d2">Риск формируется на пересечении систем.</p>
 </div></section>
+
+<!-- TRIGGER: не теория -->
+<section class="wrap"><div class="narrow">
+  <p class="trg pre rv">Не теория. Вот как ранний сигнал меняет решение.</p>
+  <p class="trg rv d1">Раннее предупреждение имеет ценность только тогда, когда позволяет изменить действие до того, как пространство для манёвра сократилось.</p>
+</div></section>
+
 
 <!-- CASES -->
 <section class="wrap"><div class="narrow">
@@ -890,6 +975,14 @@ footer{position:relative;z-index:2;border-top:1px solid var(--line-2);padding:42
   </div>
   <div class="shots-hint rv d1">Листайте вправо</div>
 </div></section>
+
+<!-- TRIGGER: цена ошибки -->
+<section class="wrap"><div class="narrow">
+  <div class="head rv"><span class="label">Стоимость решения</span>
+    <h2>Цена системы это не только стоимость доступа</h2></div>
+  <p class="trg rv d1">Цена ошибки может быть намного выше стоимости информации. Но ценность Atlas не в том, чтобы сказать, что произойдёт. Она в том, чтобы показать, что уже начинает меняться, пока решение ещё можно изменить.</p>
+</div></section>
+
 
 <!-- PRICE -->
 <section class="wrap" id="price"><div class="narrow">
