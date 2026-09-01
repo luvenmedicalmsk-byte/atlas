@@ -1071,6 +1071,7 @@ document.querySelectorAll('.rv,#chain,#strip').forEach(el=>io.observe(el));
 // недоступности API или блокировке запроса страница выглядит как раньше.
 (function(){
   var API='https://api.a-atlas.com';
+  // Цвета точек совпадают с доменной палитрой интерфейса Atlas.
   var DOM={climate:'#27AE60',economy:'#2980B9',geopolitics:'#ef4444',
            technology:'#8E44AD',social:'#D35400'};
   function num(id,v){ var el=document.getElementById(id); if(el&&v!=null) el.textContent=v; }
@@ -1083,7 +1084,7 @@ document.querySelectorAll('.rv,#chain,#strip').forEach(el=>io.observe(el));
     var ul=document.getElementById('livefeed');
     if(!ul||!events||!events.length) return;
     ul.innerHTML='';
-    events.slice(0,5).forEach(function(e){
+    events.forEach(function(e){
       var c=DOM[e.domain]||'#9B917C';
       var li=document.createElement('li');
       var dot=document.createElement('span');
@@ -1122,14 +1123,31 @@ document.querySelectorAll('.rv,#chain,#strip').forEach(el=>io.observe(el));
           if((ev[i].severity||0)>=80) crit++;
           if(ev[i].signal_type==='escalation') dev++;
         }
-        // Счётчики считаются по всей выборке, а лента сортируется по свежести:
-        // блок называется «что меняется сейчас», и первым должно идти
-        // последнее наблюдение, а не самое тяжёлое за неделю.
+        // Счётчики считаются по всей выборке. Лента набирается по квотам:
+        // по два свежих события каждого домена, иначе одна катастрофа
+        // занимает все строки и картина выглядит однодоменной.
         var recent=ev.slice().sort(function(a,b){
           return Date.parse(b.last_update||b.first_seen||b.date||0)
                - Date.parse(a.last_update||a.first_seen||a.date||0);
         });
-        paint(recent, {total:(d.total!=null?d.total:ev.length), critical:crit, developing:dev});
+        var QUOTA=['economy','technology','climate','geopolitics'], PER=2;
+        var picked=[], used={};
+        QUOTA.forEach(function(dom){
+          var k=0;
+          for(var i=0;i<recent.length&&k<PER;i++){
+            if(recent[i].domain===dom&&!used[i]){ used[i]=1; picked.push(recent[i]); k++; }
+          }
+        });
+        // Добор до восьми строк: если домен молчит, место не пустует.
+        for(var i=0;i<recent.length&&picked.length<QUOTA.length*PER;i++){
+          if(!used[i]){ used[i]=1; picked.push(recent[i]); }
+        }
+        // Внутри выборки порядок снова по свежести, а не по доменам подряд.
+        picked.sort(function(a,b){
+          return Date.parse(b.last_update||b.first_seen||b.date||0)
+               - Date.parse(a.last_update||a.first_seen||a.date||0);
+        });
+        paint(picked, {total:(d.total!=null?d.total:ev.length), critical:crit, developing:dev});
       })
       .catch(function(){ /* остаётся статика из разметки */ });
   }
