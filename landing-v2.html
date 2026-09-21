@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Atlas Intelligence · Архив системных рисков</title>
+<meta name="description" content="Система раннего предупреждения и личная стратегия опережения и управления рисками.">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Cormorant+Garamond:wght@600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#06050A;--bg-2:#0A0910;--soft:#0C0B12;
+  --panel:rgba(184,151,58,.10);--panel-2:rgba(184,151,58,.13);
+  --text:#F4F2EC;--text-2:#A8A6A2;--muted:#78767A;
+  --gold:#B8973A;--gold-2:#D9B96A;--cacc:#E3C77E;
+  --atlas:#2980B9;--critical:#D5584A;
+  --line:rgba(184,151,58,.28);--line-2:rgba(184,151,58,.16);
+  --maxw:1120px;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--text);
+     font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+     font-size:16px;line-height:1.62;-webkit-font-smoothing:antialiased}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 16px}
+section{padding:60px 0;border-top:1px solid var(--line-2)}
+section:first-of-type{border-top:0}
+.eyebrow{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin:0 0 14px}
+h1,h2,h3{font-weight:600;line-height:1.2;margin:0 0 18px;letter-spacing:.01em}
+h1{font-size:clamp(26px,5.4vw,46px);text-transform:uppercase;letter-spacing:.04em}
+h2{font-size:clamp(20px,3.6vw,30px);text-transform:uppercase;letter-spacing:.05em}
+h3{font-size:clamp(15px,2.2vw,18px);color:var(--cacc);text-transform:uppercase;letter-spacing:.07em;margin-bottom:8px}
+p{margin:0 0 14px;color:var(--text-2)}
+p.lead{color:var(--text);font-size:clamp(16px,2.4vw,19px)}
+.sub{font-family:"Cormorant Garamond",Georgia,serif;font-size:clamp(18px,3vw,25px);
+     color:var(--cacc);line-height:1.38;margin:0 0 20px}
+.dim{color:var(--muted);font-size:13px}
+.chain{display:block;padding:16px 18px;margin:18px 0;border:1px solid var(--line);
+       border-radius:12px;background:var(--panel);color:var(--cacc);
+       font-size:clamp(13px,2.1vw,15px);line-height:1.75;word-break:break-word}
+ul{margin:0 0 14px;padding-left:20px;color:var(--text-2)}
+li{margin:0 0 7px}
+.grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
+.card{border:1px solid var(--line-2);border-radius:14px;padding:18px;background:var(--soft)}
+.card p:last-child{margin-bottom:0}
+.step{border-left:2px solid var(--gold);padding:2px 0 2px 16px;margin:0 0 18px}
+.step .n{font-size:11px;letter-spacing:.16em;color:var(--gold);text-transform:uppercase}
+.tiers{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+.tier{border:1px solid var(--line);border-radius:16px;padding:22px;background:var(--bg-2);
+      display:flex;flex-direction:column}
+.tier.accent{border-color:var(--gold);background:var(--panel)}
+.tier .price{margin-top:auto;padding-top:14px}
+.base{color:var(--muted);text-decoration:line-through;font-size:14px}
+.now{color:var(--cacc);font-size:clamp(19px,3.4vw,24px);font-weight:600;display:block;margin:2px 0 4px}
+.seats{font-size:12px;letter-spacing:.06em;color:var(--gold);text-transform:uppercase}
+table{width:100%;border-collapse:collapse;margin:16px 0;font-size:14px}
+th,td{padding:10px 8px;border-bottom:1px solid var(--line-2);text-align:left}
+th{color:var(--gold);font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:600}
+td{color:var(--text-2)}
+td:first-child{color:var(--text)}
+.cta{display:inline-block;margin:10px 0;padding:15px 26px;border-radius:999px;
+     background:var(--gold);color:#0B0A06;font-weight:600;text-decoration:none;
+     letter-spacing:.06em;text-transform:uppercase;font-size:13px}
+.cta.ghost{background:transparent;color:var(--cacc);border:1px solid var(--line)}
+.center{text-align:center}
+footer{padding:48px 0 64px;border-top:1px solid var(--line-2);text-align:center}
+@media (max-width:640px){section{padding:44px 0}.card,.tier{padding:16px}}
+</style>
+</head>
+<body>
+<section class="wrap center">
+  <p class="eyebrow">Atlas Intelligence · Архив системных рисков</p>
+  <h1>Система раннего предупреждения и личная стратегия опережения и управления рисками</h1>
+  <p class="sub">Увидеть сигнал раньше. Понять, куда он ведёт. Подготовить решение до того, как оно станет вынужденным.</p>
+  <p class="dim">Геополитика · экономика · инфраструктура · климат · технологии · социальные процессы</p>
+  <a class="cta" href="https://t.me/anirisao">Получить доступ / уточнить условия</a>
+</section>
+
+<section class="wrap">
+  <h2>Ваш главный резерв — время до того, как решение станет вынужденным</h2>
+  <p class="lead">Когда критическая точка уже наступила, вы выбираете не из возможностей. Вы выбираете из того, что осталось.</p>
+  <p>Раннее предупреждение работает иначе. Пока сценарий только формируется, у вас ещё есть время:</p>
+  <ul>
+    <li>увидеть изменение;</li>
+    <li>проверить его значение;</li>
+    <li>оценить последствия;</li>
+    <li>подготовить несколько вариантов;</li>
+    <li>выбрать момент действия.</li>
+  </ul>
+  <span class="chain">Сигнал → время → стратегия → пространство для решения</span>
+</section>
+
+<section class="wrap">
+  <h2>Вы видите событие. Но видите ли вы процесс?</h2>
+  <p>Новость показывает, что произошло. Но системный риск редко начинается в момент, когда о нём начинают говорить все. Он формируется раньше:</p>
+  <span class="chain">Событие → Сигнал → Процесс → Каскад → Риск → Решение</span>
+  <p>Один сигнал может ничего не изменить. Но когда несколько сигналов начинают складываться в один процесс, меняется уже не одна новость. Меняется среда, в которой вы принимаете решения.</p>
+</section>
+
+<section class="wrap">
+  <h2>Почему сейчас</h2>
+  <p class="lead">Геополитика больше не остаётся только геополитикой.</p>
+  <p>Изменение обстановки может переходить в:</p>
+  <span class="chain">границы → безопасность → инфраструктуру → логистику → энергетику → торговлю → цены → бизнес → недвижимость → капитал</span>
+  <p>Вопрос не только в том: «Что произошло?»<br>Вопрос: «Какие системы это затрагивает и куда может перейти следующий каскад?»</p>
+  <p>Именно здесь обычного новостного мониторинга уже недостаточно.</p>
+</section>
+
+<section class="wrap">
+  <h2>Один сигнал. Несколько систем.</h2>
+  <div class="grid">
+    <div class="card"><h3>Геополитика</h3><p>конфликты · союзы · санкции · границы · военная инфраструктура</p></div>
+    <div class="card"><h3>Безопасность</h3><p>угрозы · инциденты · устойчивость регионов · критические точки</p></div>
+    <div class="card"><h3>Инфраструктура</h3><p>энергия · транспорт · вода · связь · порты · снабжение</p></div>
+    <div class="card"><h3>Логистика</h3><p>маршруты · поставки · стоимость перевозок · доступность</p></div>
+    <div class="card"><h3>Экономика</h3><p>цены · инфляция · ставки · валюты · торговля</p></div>
+    <div class="card"><h3>Активы</h3><p>недвижимость · бизнес · доход · капитал</p></div>
+    <div class="card"><h3>Личное решение</h3><p>где жить · что покупать · что удерживать · куда переезжать · как защищать доход · какие сценарии готовить</p></div>
+  </div>
+  <p style="margin-top:18px">Именно поэтому системный риск нельзя оценивать по одной новости или одному показателю.</p>
+</section>
+
+<section class="wrap">
+  <h2>Что Atlas видит сейчас</h2>
+  <p>Atlas работает не как лента новостей. Система собирает сигналы из разных областей и отслеживает, когда они начинают складываться в процессы.</p>
+  <ul>
+    <li><b>Геополитика</b> — изменение военной и политической обстановки</li>
+    <li><b>Безопасность</b> — инциденты, напряжённость, критические зоны</li>
+    <li><b>Инфраструктура</b> — энергия, транспорт, связь, снабжение</li>
+    <li><b>Экономика</b> — рынки, инфляция, ставки, валюты, торговля</li>
+  </ul>
+  <p>Отдельный сигнал может быть шумом. Atlas отслеживает, когда несколько сигналов начинают складываться в один процесс.</p>
+</section>
+
+<section class="wrap">
+  <h2>Как работает Atlas Intelligence</h2>
+  <div class="step"><div class="n">01 · Сигнал</div><p>Фиксируется изменение, которое может иметь системное значение.</p></div>
+  <div class="step"><div class="n">02 · Контекст</div><p>Сигнал рассматривается не изолированно, а в связи с уже происходящими процессами.</p></div>
+  <div class="step"><div class="n">03 · География</div><p>Определяется, где именно формируется риск и какие территории затрагиваются.</p></div>
+  <div class="step"><div class="n">04 · Каскад</div><p>Система отслеживает возможные переходы риска между доменами.</p></div>
+  <div class="step"><div class="n">05 · Последствия</div><p>Что это может означать для инфраструктуры, экономики, бизнеса, активов и людей.</p></div>
+  <div class="step"><div class="n">06 · Решение</div><p>Риск переводится из общей информации в вопрос: что это означает именно для вас?</p></div>
+</section>
+
+<section class="wrap">
+  <h2>Как система видит геополитический риск</h2>
+  <div class="grid">
+    <div class="card"><h3>Сигнал</h3><p>Изменение военной и геополитической обстановки.</p></div>
+    <div class="card"><h3>Контекст</h3><p>Действия одной стороны меняют расчёты другой.</p></div>
+    <div class="card"><h3>География</h3><p>Конкретная территория становится чувствительной точкой. Например, Сувалкский коридор.</p></div>
+    <div class="card"><h3>Каскад</h3><p>Безопасность → инфраструктура → логистика → снабжение → страхование → торговля → экономика.</p></div>
+  </div>
+  <h3 style="margin-top:24px">Что это может означать</h3>
+  <p>Для людей. Для бизнеса. Для активов. Для места жизни. Для решений, которые сегодня ещё можно принять добровольно.</p>
+  <p class="lead">Это и есть разница между наблюдением за событием и системой раннего предупреждения.</p>
+</section>
+
+<section class="wrap">
+  <h2>Atlas не просто показывает события</h2>
+  <p><b>Обычный мониторинг:</b> «Что произошло?»</p>
+  <p><b>Atlas:</b></p>
+  <span class="chain">Что произошло? → Почему это сигнал? → С каким процессом он связан? → Какие системы затрагивает? → Где может возникнуть следующий каскад? → Что это означает для вашего решения?</span>
+</section>
+
+<section class="wrap">
+  <h2>Что входит в систему</h2>
+  <div class="grid">
+    <div class="card"><h3>Климат</h3><p>экстремальные события · вода · жара · пожары · устойчивость регионов</p></div>
+    <div class="card"><h3>Экономика</h3><p>инфляция · ставки · валюты · рынки · торговля</p></div>
+    <div class="card"><h3>Геополитика</h3><p>конфликты · союзы · санкции · границы · военная инфраструктура</p></div>
+    <div class="card"><h3>Технологии</h3><p>киберриски · критическая инфраструктура · технологическая зависимость</p></div>
+    <div class="card"><h3>Социум</h3><p>миграция · рынок труда · демография · социальная устойчивость</p></div>
+  </div>
+  <p style="margin-top:18px">Системный риск не заканчивается в том домене, где начался.</p>
+</section>
+
+<section class="wrap">
+  <p class="eyebrow">Atlas + Архив</p>
+  <h2>Два слоя одной системы</h2>
+  <div class="grid">
+    <div class="card"><h3>Atlas Intelligence</h3><p class="lead">Что меняется сейчас.</p><p>Сигналы. Текущие процессы. Изменение уровней риска. Критические точки. Формирование каскадов.</p></div>
+    <div class="card"><h3>Архив системных рисков</h3><p class="lead">Что уже происходило и какие сценарии можно изучать в ретроспективе.</p><p>Контекст. История событий. Сценарии. Связи между процессами. Накопленная аналитическая база.</p></div>
+    <div class="card"><h3>Личная стратегия</h3><p class="lead">Что всё это означает именно для вас.</p><p>Потому что увидеть риск — ещё не значит принять решение.</p></div>
+  </div>
+</section>
+<section class="wrap">
+  <h2>Геополитический риск может прийти в бизнес не через войну</h2>
+  <p>Он может прийти через:</p>
+  <ul>
+    <li>логистику</li><li>страхование</li><li>поставки</li><li>энергию</li>
+    <li>стоимость ресурсов</li><li>границы</li><li>рынки</li>
+  </ul>
+  <p>Поэтому для бизнеса важно видеть не только событие. Важно понимать: какой следующий уровень последствий оно может создать.</p>
+</section>
+
+<section class="wrap">
+  <h2>Для частных лиц и семей</h2>
+  <p>Система помогает рассматривать решения в контексте меняющейся среды:</p>
+  <ul>
+    <li>Где жить?</li>
+    <li>Насколько устойчиво место, в котором вы живёте?</li>
+    <li>Куда переезжать?</li>
+    <li>Какую недвижимость покупать или удерживать?</li>
+    <li>Как защищать доход?</li>
+    <li>Какие активы сохранять?</li>
+    <li>Какие сценарии готовить?</li>
+  </ul>
+</section>
+
+<section class="wrap">
+  <h2>Капитал — только один из уровней риска</h2>
+  <p>Финансовая устойчивость зависит не только от того, сколько у вас денег.</p>
+  <ul>
+    <li>инфляция</li><li>девальвация</li><li>ставки</li><li>ограничение доступа</li>
+    <li>изменение инфраструктуры</li><li>логистика</li><li>региональный риск</li>
+    <li>изменение стоимости активов</li>
+  </ul>
+  <p class="lead">Деньги — не отдельный мир. Они находятся внутри системы взаимосвязанных рисков.</p>
+</section>
+
+<section class="wrap">
+  <h2>Сценарий 01 · Геополитический каскад</h2>
+  <span class="chain">Сигнал → изменение геополитической обстановки → География → конкретный регион / критическая точка → Инфраструктура → границы / транспорт / снабжение → Экономика → страхование / торговля / цены → Актив → недвижимость / бизнес / доход → Решение → что можно было подготовить заранее</span>
+  <h2 style="margin-top:32px">Сценарий 02 · Логистический каскад</h2>
+  <span class="chain">Изменение маршрута → рост стоимости перевозки → изменение сроков поставки → дефицит или рост стоимости → изменение экономики бизнеса → изменение стоимости актива или дохода.</span>
+  <h2 style="margin-top:32px">Сценарий 03 · Финансовый каскад</h2>
+  <span class="chain">Изменение внешней среды → давление на экономику → изменение ставок / валюты / инфляции → изменение стоимости денег → изменение стоимости активов → изменение личной стратегии.</span>
+</section>
+
+<section class="wrap">
+  <h2>Системный риск становится личным решением</h2>
+  <span class="chain">Atlas — что меняется сейчас → Архив — какие сценарии уже существовали → Личная стратегия — какие решения подходят именно вашей ситуации → Триггер — когда решение необходимо пересмотреть</span>
+</section>
+
+<section class="wrap">
+  <h2>Цена позднего решения</h2>
+  <p class="lead">Раннее предупреждение не отменяет риск. Оно увеличивает количество решений, которые ещё можно принять добровольно.</p>
+  <p>Чем ближе к критической точке — тем меньше вариантов остаётся. И тем дороже обходится ошибка.</p>
+</section>
+
+<section class="wrap" id="tiers">
+  <h2>Выберите глубину работы с системой</h2>
+  <p>Сегодня доступны разные уровни поддержки — от ответа на один критический вопрос до системы раннего предупреждения и личной стратегии на 6–12 месяцев.</p>
+  <div class="tiers">
+    <div class="tier">
+      <h3>01 · Точечная экспертиза</h3>
+      <p class="lead">Получить ответ на один критический вопрос</p>
+      <p class="dim">Инженерная интерпретация Atlas Intelligence.</p>
+      <div class="price">
+        <span class="base">Базовая стоимость: 30 000 ₽</span>
+        <span class="now">До 24 сентября: 16 500 ₽</span>
+        <span class="seats">−45% · 10 мест</span>
+      </div>
+    </div>
+    <div class="tier">
+      <h3>02 · Личная стратегия на 1 месяц</h3>
+      <p class="lead">Разобрать вашу жизнь и вашу ситуацию</p>
+      <p class="dim">Инженерная интерпретация Atlas Intelligence.</p>
+      <div class="price">
+        <span class="base">Базовая стоимость: 80 000 ₽</span>
+        <span class="now">До 24 сентября: 52 000 ₽</span>
+        <span class="seats">−35% · 5 мест</span>
+      </div>
+    </div>
+    <div class="tier accent">
+      <h3>03 · Система раннего предупреждения + личная стратегия на 6–12 месяцев</h3>
+      <p class="lead">Видеть формирование негативных сценариев, получать ранние предупреждения и иметь стратегию.</p>
+      <p class="dim">Инженерная интерпретация Atlas Intelligence + Архив системных рисков.</p>
+      <div class="price">
+        <span class="base">Базовая стоимость: 310 000 ₽</span>
+        <span class="now">До 24 сентября: 232 500 ₽</span>
+        <span class="seats">−25% · 3 места</span>
+      </div>
+    </div>
+  </div>
+  <p style="margin-top:22px" class="lead">Вопрос → ситуация → система</p>
+  <p>Вы сами выбираете, какой уровень нужен вам сейчас.</p>
+  <a class="cta" href="https://t.me/anirisao">Уточнить стоимость и условия</a>
+</section>
+
+<section class="wrap">
+  <p class="eyebrow">Специальные условия до 24 сентября</p>
+  <h2>Уровни и итоговая стоимость</h2>
+  <table>
+    <thead><tr><th>Уровень</th><th>Базовая стоимость</th><th>Скидка</th><th>Итог</th></tr></thead>
+    <tbody>
+      <tr><td>Tier 1</td><td>30 000 ₽</td><td>−45%</td><td>16 500 ₽</td></tr>
+      <tr><td>Tier 2</td><td>80 000 ₽</td><td>−35%</td><td>52 000 ₽</td></tr>
+      <tr><td>Tier 3</td><td>310 000 ₽</td><td>−25%</td><td>232 500 ₽</td></tr>
+      <tr><td>Tier 4</td><td>505 000 ₽</td><td>−15%</td><td>429 250 ₽</td></tr>
+    </tbody>
+  </table>
+  <div class="tier accent" style="margin-top:18px">
+    <h3>Tier 4 · Устойчивая стратегия</h3>
+    <p class="lead">Стратегия на 12 месяцев</p>
+    <p class="dim">Atlas Intelligence на 5 лет + Архив системных рисков.</p>
+    <div class="price">
+      <span class="base">Базовая стоимость — 505 000 ₽</span>
+      <span class="now">До 24 сентября: 429 250 ₽</span>
+      <span class="seats">−15%</span>
+    </div>
+  </div>
+</section>
+
+<section class="wrap">
+  <h2>Условия входа</h2>
+  <ul>
+    <li>Специальные условия действуют до 24 сентября.</li>
+    <li>После окончания окна действуют стандартные условия.</li>
+    <li>Количество мест по уровням ограничено.</li>
+    <li>Стоимость и доступность конкретного уровня уточняются перед подключением.</li>
+  </ul>
+  <a class="cta" href="https://t.me/anirisao">Получить условия</a>
+</section>
+
+<section class="wrap center">
+  <h2>Не ждите момента, когда решение станет вынужденным</h2>
+  <p class="sub">Увидеть сигнал. Понять сценарий. Подготовить решение.</p>
+  <a class="cta" href="https://t.me/anirisao">Получить доступ / уточнить условия</a>
+</section>
+
+<footer class="wrap">
+  <p class="eyebrow">Atlas Intelligence · Архив системных рисков</p>
+  <p class="dim">Система раннего предупреждения и личная стратегия опережения и управления рисками</p>
+  <a class="cta ghost" href="https://t.me/anirisao">Получить доступ / уточнить условия</a>
+</footer>
+</body>
+</html>
