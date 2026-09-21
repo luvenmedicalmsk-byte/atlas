@@ -414,6 +414,46 @@ top:var(--sy,22vh)}
 top:var(--sy2,84vh)}
 @media(prefers-reduced-motion:reduce){.amb{display:none}
 .r:before,.kv:before,.tdir:before,.pf:before{opacity:1;transform:scaleY(1)}}
+/* === варианты фоновой сетки: ?grid=1..6, 0 - без сетки === */
+html[data-grid] body{background-attachment:scroll}
+/* 1 - классическая 72px, слабее прежней */
+html[data-grid="1"] body{background-image:
+linear-gradient(rgba(255,255,255,.042) 1px,transparent 1px),
+linear-gradient(90deg,rgba(255,255,255,.042) 1px,transparent 1px);
+background-size:72px 72px}
+/* 2 - только вертикальные линии, шаг 120px */
+html[data-grid="2"] body{background-image:
+linear-gradient(90deg,rgba(255,255,255,.05) 1px,transparent 1px);
+background-size:120px 100%}
+/* 3 - редкая сетка 160px, очень бледная */
+html[data-grid="3"] body{background-image:
+linear-gradient(rgba(255,255,255,.028) 1px,transparent 1px),
+linear-gradient(90deg,rgba(255,255,255,.028) 1px,transparent 1px);
+background-size:160px 160px}
+/* 4 - точки в узлах, шаг 44px */
+html[data-grid="4"] body{background-image:
+radial-gradient(rgba(255,255,255,.085) 1px,transparent 1px);
+background-size:44px 44px}
+/* 5 - крупная золотая сетка 240px */
+html[data-grid="5"] body{background-image:
+linear-gradient(rgba(201,162,74,.075) 1px,transparent 1px),
+linear-gradient(90deg,rgba(201,162,74,.075) 1px,transparent 1px);
+background-size:240px 240px}
+/* 6 - мелкая техническая 24px, почти на пределе видимости */
+html[data-grid="6"] body{background-image:
+linear-gradient(rgba(255,255,255,.02) 1px,transparent 1px),
+linear-gradient(90deg,rgba(255,255,255,.02) 1px,transparent 1px);
+background-size:24px 24px}
+/* панель выбора - показывается только при ?grid= в адресе */
+.gsw{position:fixed;left:50%;bottom:14px;transform:translateX(-50%);z-index:60;
+display:flex;gap:5px;padding:7px 9px;border:1px solid var(--ln2);border-radius:4px;
+background:rgba(7,7,11,.92);backdrop-filter:blur(12px)}
+.gsw b{font-family:"IBM Plex Mono",monospace;font-size:9px;letter-spacing:.16em;
+text-transform:uppercase;color:var(--ink3);align-self:center;padding-right:5px;font-weight:400}
+.gsw a{font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--ink2);
+text-decoration:none;border:1px solid var(--ln2);border-radius:3px;
+padding:5px 9px;line-height:1}
+.gsw a.on{color:#07070B;background:var(--acc2);border-color:var(--acc2)}
 /* === состав слоёв === */
 .lpg{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 @media(max-width:860px){.lpg{grid-template-columns:1fr}}
@@ -646,6 +686,22 @@ letter-spacing:.2em;text-transform:uppercase;color:var(--ink3);margin-bottom:3px
     i.textContent=(n<10?'0':'')+n;
     sec.classList.toggle('alt', n%2===0);
   });
+})();
+/* Выбор фоновой сетки: ?grid=1..6 (0 - без сетки). Панель появляется
+   только когда параметр есть в адресе, на обычной странице её нет. */
+(function(){
+  var m=/[?&]grid=(\d)/.exec(location.search);
+  if(!m) return;
+  var cur=m[1];
+  if(cur!=='0') document.documentElement.setAttribute('data-grid',cur);
+  var names={'0':'без','1':'72','2':'верт','3':'160','4':'точки','5':'золото','6':'24'};
+  var box=document.createElement('div'); box.className='gsw';
+  var html='<b>сетка</b>';
+  for(var k in names){
+    html+='<a href="?grid='+k+'"'+(k===cur?' class="on"':'')+' title="'+names[k]+'">'+k+'</a>';
+  }
+  box.innerHTML=html;
+  document.body.appendChild(box);
 })();
 /* Подвижная подсветка: строка загорается, проходя центр экрана,
    а за прокруткой идут два мягких пятна - голубое вниз, золотое вверх. */
