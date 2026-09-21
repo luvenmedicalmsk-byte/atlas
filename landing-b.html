@@ -88,7 +88,8 @@ radial-gradient(34% 40% at 74% 44%,rgba(201,162,74,.12),transparent 72%)}
 .hero .w{padding-top:50px;padding-bottom:66px}
 .kick.cy{color:var(--cy2)}
 .kick.cy b{font-weight:500;color:#FFFFFF}
-.hh{margin:0 0 20px;position:relative;padding-left:28px;font-weight:300}
+.hh{margin:0 0 20px;position:relative;padding-left:28px;font-weight:300;
+text-shadow:0 1px 2px rgba(0,0,0,.95),0 2px 14px rgba(0,0,0,.92),0 0 40px rgba(0,0,0,.85)}
 .hh:before{content:"";position:absolute;left:0;top:4px;bottom:12px;width:1px;
 background:linear-gradient(180deg,var(--cy2) 0,var(--cy2) 18%,rgba(201,162,74,.75) 62%,transparent 100%)}
 .hh span{display:block}
@@ -103,7 +104,8 @@ text-shadow:0 0 46px rgba(53,180,220,.22)}
 margin:16px 0 6px;letter-spacing:.005em}
 .hh .l4{font-size:clamp(26px,5.1vw,52px);line-height:1.02;letter-spacing:-.028em;
 background:linear-gradient(94deg,#F0DCAA 0,#E6C98A 28%,#C9A24A 62%,#9A7830 100%);
--webkit-background-clip:text;background-clip:text;color:transparent}
+-webkit-background-clip:text;background-clip:text;color:transparent;text-shadow:none;
+filter:drop-shadow(0 1px 2px rgba(0,0,0,.95)) drop-shadow(0 2px 16px rgba(0,0,0,.9))}
 .tlband{border-bottom:1px solid var(--ln2);background:var(--bg2)}
 .tlw{max-width:var(--max);margin:0 auto;padding:20px 22px 19px}
 .tlh{font-family:"IBM Plex Mono",monospace;font-size:9.5px;letter-spacing:.24em;
@@ -176,11 +178,11 @@ section{scroll-margin-top:78px}
 @keyframes glow{0%,100%{opacity:.4}50%{opacity:1}}
 @media(prefers-reduced-motion:reduce){.sg{animation:none}}
 .veil{position:absolute;inset:0;z-index:2;pointer-events:none;
-background:linear-gradient(180deg,rgba(7,7,11,0) 0,rgba(7,7,11,0) 26%,rgba(6,5,10,.5) 100%),
-linear-gradient(90deg,rgba(7,7,11,.9) 0,rgba(7,7,11,.82) 24%,rgba(7,7,11,.45) 44%,rgba(7,7,11,.06) 62%,rgba(7,7,11,0) 74%,rgba(7,7,11,.38) 92%,var(--bg) 100%),
-linear-gradient(0deg,rgba(7,7,11,.96) 0,rgba(7,7,11,0) 24%)}
+background:linear-gradient(0deg,rgba(7,7,11,.95) 0,rgba(7,7,11,.45) 9%,rgba(7,7,11,0) 20%),
+linear-gradient(90deg,rgba(7,7,11,.5) 0,rgba(7,7,11,0) 9%),
+linear-gradient(270deg,rgba(7,7,11,.5) 0,rgba(7,7,11,0) 9%)}
 @media(max-width:900px){.veil{background:
-linear-gradient(0deg,rgba(7,7,11,.95) 0,rgba(7,7,11,.88) 24%,rgba(7,7,11,.6) 44%,rgba(7,7,11,.12) 66%,rgba(7,7,11,0) 100%)}}
+linear-gradient(0deg,rgba(7,7,11,.95) 0,rgba(7,7,11,.5) 10%,rgba(7,7,11,0) 22%)}}
 .hov{position:absolute;inset:0;z-index:3;display:flex;align-items:flex-start;
 padding-top:clamp(150px,19vw,258px);pointer-events:none}
 .hovi{width:100%;max-width:var(--max);margin:0 auto;padding:0 22px}
