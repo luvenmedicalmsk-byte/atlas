@@ -5,7 +5,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
 <style>
-:root{--bg:#07070B;--bg2:#0B0B11;--ink:#EDEDF2;--ink2:#9A9AA8;--ink3:#61616E;
+:root{--bg:#07070B;--bg2:#0B0B11;--ink:#FFFFFF;--ink2:#F2F2F7;--ink3:#E8E8F0;
 --acc:#C9A24A;--acc2:#E6C98A;--cy:#4C9FD0;--cy2:#1FAACC;--cy3:#6FD2EE;
 --ln:rgba(201,162,74,.20);--ln2:rgba(255,255,255,.055);
 --pan:#0C0C13;--pan2:#0E0E16;--max:1180px}
@@ -21,7 +21,7 @@ background-size:72px 72px;background-attachment:fixed}
 .bd{min-width:0}
 .lbl{position:sticky;top:26px;align-self:start}
 @media(max-width:900px){.lbl{position:static}}
-.idx{font-family:"IBM Plex Mono",monospace;font-size:34px;color:var(--acc);display:block;line-height:1;opacity:.5}
+.idx{font-family:"IBM Plex Mono",monospace;font-size:34px;color:var(--acc);display:block;line-height:1;opacity:.85}
 .lt{font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;
 color:var(--ink3);display:block;margin-top:10px}
 h1{font-size:clamp(28px,5.2vw,50px);font-weight:400;line-height:1.14;letter-spacing:-.015em;margin:0 0 24px}
@@ -43,7 +43,7 @@ li:before{content:"";position:absolute;left:0;top:19px;width:8px;height:1px;back
 .rk{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink)}
 .rv{color:var(--ink2);font-size:14.5px}
 .stp{display:grid;grid-template-columns:54px 1fr;gap:18px;padding:17px 0;border-bottom:1px solid var(--ln2)}
-.stp .sn{font-family:"IBM Plex Mono",monospace;font-size:19px;color:var(--acc);opacity:.65}
+.stp .sn{font-family:"IBM Plex Mono",monospace;font-size:19px;color:var(--acc);opacity:.95}
 .stp .st{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink);margin-bottom:7px}
 .lay .sn{font-size:22px;line-height:1.1;opacity:1}
 .lay.cy .sn,.lay.cy .st{color:var(--cy3)}
@@ -222,7 +222,7 @@ animation:cflash 5s linear infinite;animation-delay:var(--d,0s)}
 border-bottom:1px solid var(--ln2);animation:qqflash 5s linear infinite;animation-delay:var(--d,0s)}
 .qq:last-child{border-bottom:0}
 .qqn{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.1em;
-color:var(--cy3);flex:0 0 auto;opacity:.8}
+color:var(--cy3);flex:0 0 auto;opacity:1}
 .qqt{color:var(--ink);font-size:15.5px;line-height:1.45}
 @keyframes qqflash{0%,100%{background:var(--pan)}
 2%{background:#0C1620}14%{background:var(--pan)}}
@@ -320,7 +320,7 @@ text-transform:uppercase;color:var(--ink)}
 .pwg{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:1px;
 background:var(--ln2)}
 .pwr{background:var(--bg2);padding:16px 18px;display:grid;grid-template-columns:24px 1fr;gap:10px}
-.pwn{font-family:"IBM Plex Mono",monospace;font-size:14px;color:var(--acc);opacity:.7}
+.pwn{font-family:"IBM Plex Mono",monospace;font-size:14px;color:var(--acc);opacity:1}
 .pwt{font-size:14.5px;color:var(--ink);line-height:1.4}
 .pwd{font-size:13px;color:var(--ink3);margin-top:4px;line-height:1.45}
 /* === отклики со скриншотами === */
@@ -384,7 +384,7 @@ white-space:nowrap}
 .sc{font-family:"IBM Plex Mono",monospace;font-size:34px;line-height:1}
 .s100{font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--ink3)}
 .sl{display:block;font-family:"IBM Plex Mono",monospace;font-size:8.5px;
-letter-spacing:.16em;text-transform:uppercase;margin-top:4px;opacity:.9}
+letter-spacing:.16em;text-transform:uppercase;margin-top:4px;opacity:1}
 .rcs.hi .sc,.rcs.hi .sl{color:#E8C96A}
 .rcs.cr .sc,.rcs.cr .sl{color:#E8705E}
 .rcb{display:flex;align-items:center;justify-content:space-between;gap:12px;
@@ -438,7 +438,7 @@ text-transform:uppercase;color:var(--ink)}
 .pd.a .pt{color:var(--cy3)} .pd.z .pt{color:var(--acc2)}
 .pp{font-size:13px;line-height:1.5;color:var(--ink3)}
 .pa{display:flex;align-items:center;justify-content:center;color:var(--acc);
-font-family:"IBM Plex Mono",monospace;font-size:15px;opacity:.75}
+font-family:"IBM Plex Mono",monospace;font-size:15px;opacity:1}
 @media(max-width:920px){.pa{transform:rotate(90deg);padding:3px 0}}
 @keyframes pdflash{
 0%,100%{box-shadow:0 0 0 0 rgba(63,198,232,0);border-color:rgba(255,255,255,.055)}
