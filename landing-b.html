@@ -44,7 +44,7 @@ li:before{content:"";position:absolute;left:0;top:19px;width:8px;height:1px;back
 .rv{color:var(--ink2);font-size:14.5px}
 .stp{display:grid;grid-template-columns:54px 1fr;gap:18px;padding:17px 0;border-bottom:1px solid var(--ln2)}
 .stp .sn{font-family:"IBM Plex Mono",monospace;font-size:19px;color:var(--acc);opacity:.95}
-.stp .st{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink);margin-bottom:7px}
+.stp .st{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--acc2);margin-bottom:7px}
 .lay .sn{font-size:22px;line-height:1.1;opacity:1}
 .lay.cy .sn,.lay.cy .st{color:var(--cy3)}
 .lay.au .sn,.lay.au .st{color:var(--acc2)}
@@ -172,19 +172,19 @@ color:var(--ink3);text-decoration:none;border:1px solid var(--ln2);border-radius
 padding:7px 13px;white-space:nowrap}
 @media(max-width:720px){.tbl{display:none}}
 /* === подвал с документами === */
-footer{padding:28px 0 32px;border-top:1px solid var(--ln2);background:rgba(255,255,255,.017)}
+footer{padding:18px 0 20px;border-top:1px solid var(--ln2);background:rgba(255,255,255,.017)}
 .ftop{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;
-gap:10px 24px;padding-bottom:14px;border-bottom:1px solid var(--ln2)}
+gap:7px 20px;padding-bottom:10px;border-bottom:1px solid var(--ln2)}
 .fbr{display:flex;align-items:center;gap:9px;font-family:"IBM Plex Mono",monospace;
 font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink);white-space:nowrap}
-.fbr svg{width:24px;height:24px;flex:0 0 24px;overflow:visible}
+.fbr svg{width:20px;height:20px;flex:0 0 20px;overflow:visible}
 .fbr b{color:var(--acc);font-weight:400}
 .fnav{display:flex;flex-wrap:wrap;gap:5px 18px}
 .fnav a{font-size:12px;color:var(--ink2);text-decoration:none;
 border-bottom:1px solid transparent;transition:color .25s,border-color .25s}
 .fnav a:hover{color:var(--cy3);border-bottom-color:rgba(111,210,238,.5)}
-.fsig{margin:12px 0 0;font-family:"IBM Plex Mono",monospace;font-size:10px;
-letter-spacing:.05em;color:var(--ink3)}
+.fsig{margin:8px 0 0;font-family:"IBM Plex Mono",monospace;font-size:9.5px;
+letter-spacing:.04em;color:var(--ink3)}
 @media(max-width:620px){.ftop{flex-direction:column;align-items:flex-start}
 .fnav{gap:5px 14px}.fnav a{font-size:11.5px}}
 .glb{transform-origin:60px 60px;animation:spin 26s linear infinite}
@@ -345,7 +345,7 @@ border-bottom:1px solid var(--ln2)}
 .kv:last-child{border-bottom:0;padding-bottom:0}
 @media(max-width:640px){.kv{grid-template-columns:1fr;gap:3px}}
 .kvk{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.16em;
-text-transform:uppercase;color:var(--ink)}
+text-transform:uppercase;color:var(--acc)}
 .kvv{color:var(--ink2);font-size:14px;line-height:1.55}
 .pwg{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:1px;
 background:var(--ln2)}
@@ -610,8 +610,8 @@ font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:0}
 box-shadow:0 0 14px rgba(201,162,74,.18)}
 .ctx{color:var(--ink);font-size:15.5px;line-height:1.5}
 .ctx .lv{display:block;font-family:"IBM Plex Mono",monospace;font-size:10.5px;
-letter-spacing:.2em;text-transform:uppercase;color:var(--ink3);margin-bottom:3px}
-.ctx .df{display:block;font-size:13px;line-height:1.45;color:var(--acc);margin-bottom:1px}
+letter-spacing:.2em;text-transform:uppercase;color:var(--acc2);margin-bottom:3px}
+.ctx .df{display:block;font-size:13px;line-height:1.45;color:var(--ink3);margin-bottom:1px}
 .ctx .dsc{display:block;color:var(--ink)}
 .crow:first-child .ctx .dsc{color:var(--cy3)}
 .crow:last-child .ctx .dsc{color:var(--acc2)}
@@ -633,8 +633,8 @@ letter-spacing:.2em;text-transform:uppercase;color:var(--ink3);margin-bottom:3px
 <footer><div class="w"><div class="lbl"></div><div class="bd">
 <div class="ftop"><span class="fbr"><svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><circle cx="60" cy="60" r="46" fill="none" stroke="#B8973A" stroke-width="1.4"/><g class="glb"><ellipse cx="60" cy="60" rx="18" ry="46" fill="none" stroke="#B8973A" stroke-width="1" opacity="0.28"/><ellipse cx="60" cy="60" rx="46" ry="16" fill="none" stroke="#B8973A" stroke-width="1" opacity="0.36"/></g><path d="M46.72 63.120000000000005 47.68 61.36H69.44L70.0 63.120000000000005ZM88.08 83.04Q88.47999999999999 83.04 88.47999999999999 83.52000000000001Q88.47999999999999 84.0 88.08 84.0Q85.75999999999999 84.0 83.32 83.84Q80.88 83.68 78.56 83.68Q76.0 83.68 74.12 83.84Q72.24000000000001 84.0 69.92 84.0Q69.6 84.0 69.6 83.52000000000001Q69.6 83.04 69.92 83.04Q73.84 83.04 74.72 81.80000000000001Q75.6 80.56 73.84 76.88L56.64 41.12L59.2 37.28L43.599999999999994 73.44Q41.519999999999996 78.32 43.36 80.68Q45.199999999999996 83.04 50.239999999999995 83.04Q50.64 83.04 50.64 83.52000000000001Q50.64 84.0 50.239999999999995 84.0Q47.84 84.0 45.84 83.84Q43.839999999999996 83.68 40.8 83.68Q37.839999999999996 83.68 36.03999999999999 83.84Q34.239999999999995 84.0 31.68 84.0Q31.36 84.0 31.36 83.52000000000001Q31.36 83.04 31.68 83.04Q33.839999999999996 83.04 35.44 82.2Q37.04 81.36 38.519999999999996 79.12Q40.0 76.88 41.76 72.72L58.8 33.44Q58.879999999999995 33.199999999999996 59.36 33.16Q59.84 33.12 59.92 33.44L79.12 73.03999999999999Q81.03999999999999 76.96 82.44 79.16Q83.84 81.36 85.2 82.2Q86.56 83.04 88.08 83.04Z" fill="#1FAACC"/><g class="gsat"><circle cx="92.5" cy="27.5" r="3.6" fill="#D4AF5A"/><circle cx="92.5" cy="27.5" r="8.5" fill="none" stroke="#D4AF5A" stroke-width="1.2" opacity="0.55"/></g></svg><span>Архив <b>·</b> Атлас сигналов</span></span>
 <nav class="fnav"><a href="mailto:secrettruth50@gmail.com">secrettruth50@gmail.com</a><a href="https://t.me/anirisao" target="_blank" rel="noopener">Поддержка</a><a href="https://secrett-archive.com/offer.html" target="_blank" rel="noopener">Публичная оферта</a><a href="https://secrett-archive.com/privacy.html" target="_blank" rel="noopener">Политика конфиденциальности</a><a href="https://secrett-archive.com/refund.html" target="_blank" rel="noopener">Политика возвратов</a></nav></div>
-<p class="kick cy" style="margin:14px 0 5px;font-size:9.5px">ATLAS INTELLIGENCE · <b>АРХИВ СИСТЕМНЫХ РИСКОВ</b></p>
-<p class="fsig" style="margin-top:2px">Мия Гекди © 2022-2026 · Все права защищены</p>
+<p class="kick cy" style="margin:10px 0 3px;font-size:9px">ATLAS INTELLIGENCE · <b>АРХИВ СИСТЕМНЫХ РИСКОВ</b></p>
+<p class="fsig" style="margin-top:0">Мия Гекди © 2022-2026 · Все права защищены</p>
 </div></div></footer><script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
 /* Карта один в один с secrett-archive.com: Leaflet 1.9.4, подложка MapTiler
