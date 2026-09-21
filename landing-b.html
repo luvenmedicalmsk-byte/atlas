@@ -690,6 +690,45 @@ letter-spacing:.2em;text-transform:uppercase;color:var(--ink3);margin-bottom:3px
     sec.classList.toggle('alt', n%2===0);
   });
 })();
+/* Хронология шоков: точка отзывается на наведение, нажатие и клавиатуру.
+   Наведение показывает год временно, нажатие закрепляет его. */
+(function(){
+  var out=document.getElementById('tlo');
+  if(!out) return;
+  var pts=[].slice.call(document.querySelectorAll('.tlp'));
+  if(!pts.length) return;
+  var pinned=pts[pts.length-1];
+  function years(n){
+    var d=n%10, h=n%100;
+    if(h>=11&&h<=14) return 'лет';
+    if(d===1) return 'год';
+    if(d>=2&&d<=4) return 'года';
+    return 'лет';
+  }
+  function render(btn){
+    var y=btn.getAttribute('data-y')||'';
+    var t=btn.getAttribute('data-t')||'';
+    var g=btn.getAttribute('data-g')||'';
+    var parts=t.split('→');
+    var html='<span class="y">'+y+'</span><span class="t">';
+    for(var i=0;i<parts.length;i++){
+      if(i) html+='<span class="ar">→</span>';
+      html+=parts[i].trim();
+    }
+    html+='</span>';
+    if(g) html+='<span class="g">интервал с прошлого шока: '+g+' '+years(+g)+'</span>';
+    out.innerHTML=html;
+    pts.forEach(function(p){p.classList.toggle('on',p===btn)});
+  }
+  pts.forEach(function(b){
+    b.addEventListener('mouseenter',function(){render(b)});
+    b.addEventListener('focus',function(){render(b)});
+    b.addEventListener('click',function(){pinned=b;render(b)});
+  });
+  var ax=document.querySelector('.tlax');
+  if(ax) ax.addEventListener('mouseleave',function(){render(pinned)});
+  render(pinned);
+})();
 /* Выбор фоновой сетки: ?grid=1..6 (0 - без сетки). Панель появляется
    только когда параметр есть в адресе, на обычной странице её нет. */
 (function(){
