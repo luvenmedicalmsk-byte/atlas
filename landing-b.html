@@ -700,7 +700,8 @@ letter-spacing:.2em;text-transform:uppercase;color:var(--acc2);margin-bottom:3px
       scrollWheelZoom:false,dragging:false,doubleClickZoom:false,touchZoom:false,
       keyboard:false,minZoom:2,maxZoom:2,maxBounds:[[-85,-180],[85,180]],maxBoundsViscosity:1});
     var show=window.__atlasMapShow||function(){};
-    var tl=L.tileLayer('https://api.maptiler.com/maps/darkmatter/{z}/{x}/{y}.png?key=f28lYOjwuWqhkNv6LQ2Y',{maxZoom:20});
+    /* LANDING_NIGHT_2511 (Мия, 25.11): подложка «Огни Земли» - NASA GIBS VIIRS Black Marble, как на a-atlas.com (ключ MapTiler больше не действует) */
+    var tl=L.tileLayer('https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/VIIRS_Black_Marble/default/2016-01-01/GoogleMapsCompatible_Level8/{z}/{y}/{x}.png',{maxNativeZoom:8,maxZoom:20});
     tl.on('load',function(){ show('tiles'); });
     tl.on('tileerror',function(){ show('svg'); });
     tl.addTo(m);
