@@ -32,6 +32,10 @@ jobs:
         with:
           path: '.'
 
+      # 27.11.2026: GitHub иногда не видит только что загруженный архив («Found 0 artifact(s)») - пауза
+      - name: Wait for artifact
+        run: sleep 20
+
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
