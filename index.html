@@ -630,13 +630,13 @@ letter-spacing:.2em;text-transform:uppercase;color:var(--acc2);margin-bottom:3px
   function pl(n,a,b,c){var m=n%10,h=n%100;return (m===1&&h!==11)?a:(m>=2&&m<=4&&(h<12||h>14))?b:c;}
   function draw(){
     var el=document.getElementById('pt-live'); if(!el||!D) return;
-    var n=+D.events||0, t=Date.parse(D.generated||''); if(!n||!t) return;
+    var n=+D.events||0, t=Date.parse(D.generated||''); if(!n||!t||Date.now()-t>6*3600000) return;   /* сводка старше 6 часов не показывается */
     var mins=Math.max(0,Math.round((Date.now()-t)/60000));
     var en=(document.documentElement.getAttribute('lang')==='en');
     var ago=en?(mins<1?'just now':mins+' min ago'):(mins<1?'только что':mins+' '+pl(mins,'минуту','минуты','минут')+' назад');
     el.innerHTML=en
-      ? '<b>'+n.toLocaleString('en-US')+'</b> signals in the system, updated <b>'+ago+'</b>.'
-      : '<b>'+n.toLocaleString('ru-RU')+'</b> '+pl(n,'сигнал','сигнала','сигналов')+' в системе, обновлено <b>'+ago+'</b>.';
+      ? '<b>'+n.toLocaleString('en-US')+'</b> signals in the system.'
+      : '<b>'+n.toLocaleString('ru-RU')+'</b> '+pl(n,'сигнал','сигнала','сигналов')+' в системе.';
     var row=document.getElementById('pt-row'); if(row) row.style.display='';
   }
   function load(){ fetch(U+'?t='+Math.floor(Date.now()/300000),{cache:'no-store'}).then(function(r){return r.ok?r.json():null;}).then(function(d){ if(d){D=d; draw();} }).catch(function(){}); }
